@@ -17,6 +17,8 @@ It also contains some ODE and PDE solvers.
 ## Output
 * results can be put into stream or xml. Folder output also contains some python scripts that parse the resulting xmls and plot the solutions. 
 
+## Requirement
+* NVIDIA CUDA lib >= 11.3
 
 ## Some curves from ODE solver
 Simple Two-point BVP (u''(x) = -2 with Dirichlet and Robin BC)
