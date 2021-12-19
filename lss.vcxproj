@@ -140,6 +140,10 @@
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <Warning>W1</Warning>
     </CudaCompile>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)lib\$(TargetName).dll"
+copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">
     <ClCompile>
@@ -206,6 +210,10 @@
       <Warning>W1</Warning>
       <Include>%(Include)</Include>
     </CudaCompile>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)lib\$(TargetName).dll"
+copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="main.cu">
