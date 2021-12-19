@@ -1,0 +1,96 @@
+/**
+
+    @file      lss_pde_discretization_config.hpp
+    @brief     PDE discratization configuration
+    @details   ~
+    @author    Michal Sara
+    @date      14.12.2021
+    @copyright © Michal Sara, 2021. All right reserved.
+
+**/
+#pragma once
+
+#if !defined(_LSS_PDE_DISCRETIZATION_CONFIG_HPP_)
+#define _LSS_PDE_DISCRETIZATION_CONFIG_HPP_
+
+#include "../common/lss_enumerations.hpp"
+#include "../common/lss_macros.hpp"
+#include "../common/lss_range.hpp"
+#include "../common/lss_utility.hpp"
+#include "../discretization/lss_discretization_config.hpp"
+
+namespace lss_pde_solvers
+{
+
+using lss_enumerations::dimension_enum;
+using lss_utility::range_ptr;
+using lss_utility::sptr_t;
+
+/**
+    1D pde_discretization_config structure
+ */
+struct pde_discretization_config_1d final : public lss_discretization::discretization_config_1d
+{
+  private:
+    range_ptr time_range_;
+    std::size_t number_of_time_points_;
+
+    explicit pde_discretization_config_1d() = delete;
+
+  public:
+    explicit pde_discretization_config_1d(range_ptr const &space_range, std::size_t const &number_of_space_points,
+                                          range_ptr const &time_range, std::size_t const &number_of_time_points);
+    ~pde_discretization_config_1d();
+
+    LSS_API range_ptr const &time_range() const;
+
+    LSS_API std::size_t number_of_time_points() const;
+
+    LSS_API double time_step() const;
+};
+
+/**
+    2D pde_discretization_config structure
+ */
+struct pde_discretization_config_2d
+{
+  private:
+    range_ptr space_range_1_;
+    range_ptr space_range_2_;
+    range_ptr time_range_;
+    std::size_t number_of_space_points_1_;
+    std::size_t number_of_space_points_2_;
+    std::size_t number_of_time_points_;
+
+    explicit pde_discretization_config_2d() = delete;
+
+  public:
+    explicit pde_discretization_config_2d(range_ptr const &space_range_1, range_ptr const &space_range_2,
+                                          std::size_t const &number_of_space_points_1,
+                                          std::size_t const &number_of_space_points_2, range_ptr const &time_range,
+                                          std::size_t const &number_of_time_points);
+    ~pde_discretization_config_2d();
+
+    LSS_API sptr_t<pde_discretization_config_1d> const pde_discretization_1() const;
+
+    LSS_API sptr_t<pde_discretization_config_1d> const pde_discretization_2() const;
+
+    LSS_API std::pair<range_ptr, range_ptr> const space_range() const;
+
+    LSS_API range_ptr const &time_range() const;
+
+    LSS_API std::pair<std::size_t, std::size_t> const number_of_space_points() const;
+
+    LSS_API std::size_t number_of_time_points() const;
+
+    LSS_API std::pair<double, double> space_step() const;
+
+    LSS_API double time_step() const;
+};
+
+using pde_discretization_config_1d_ptr = sptr_t<pde_discretization_config_1d>;
+using pde_discretization_config_2d_ptr = sptr_t<pde_discretization_config_2d>;
+
+} // namespace lss_pde_solvers
+
+#endif ///_LSS_PDE_DISCRETIZATION_CONFIG_HPP_

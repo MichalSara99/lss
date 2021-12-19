@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug unit_tests|x64">
+      <Configuration>Debug unit_tests</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_dll|x64">
+      <Configuration>Debug_dll</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_dll|x64">
+      <Configuration>Release_dll</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{89C912C9-522E-4E86-94FE-4E91570E35CD}</ProjectGuid>
+    <RootNamespace>lss</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.3.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\cpp_libs\boost_1_68_0\boost_1_68_0;D:\my_c_files\lss\lss;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\cpp_libs\boost_1_68_0\boost_1_68_0\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\cpp_libs\boost_1_68_0\boost_1_68_0;D:\my_c_files\lss\lss;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\cpp_libs\boost_1_68_0\boost_1_68_0\libs;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_debug</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\cpp_libs\boost_1_68_0\boost_1_68_0;D:\my_c_files\lss\lss;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\cpp_libs\boost_1_68_0\boost_1_68_0\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>D:\my_c_files\lss\lss;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">
+    <IncludePath>D:\my_c_files\lss\lss;$(IncludePath)</IncludePath>
+    <TargetName>$(ProjectName)_release</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;WIN64;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;LSS_API_EMPTY;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;cusolver.lib;cusparse.lib;cublas.lib;cublasLt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Warning>W1</Warning>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;WIN64;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;LSS_API_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <SDLCheck>false</SDLCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>include/pch.hpp</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;cusolver.lib;cusparse.lib;cublas.lib;cublasLt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Warning>W1</Warning>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;WIN64;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>D:\my_c_files\lss\lss\unit_tests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;cusolver.lib;cusparse.lib;cublas.lib;cublasLt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Warning>W1</Warning>
+      <Include>D:\my_c_files\lss\lss\unit_tests</Include>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;WIN64;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;LSS_API_EMPTY;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;cusolver.lib;cusparse.lib;cublas.lib;cublasLt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Warning>W1</Warning>
+      <Include>%(Include)</Include>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;WIN64;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;LSS_API_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;cusolver.lib;cusparse.lib;cublas.lib;cublasLt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Warning>W1</Warning>
+      <Include>%(Include)</Include>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CudaCompile Include="main.cu">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">true</ExcludedFromBuild>
+    </CudaCompile>
+    <CudaCompile Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_euler_cuda_scheme.cu" />
+    <CudaCompile Include="pde_solvers\1d\heat_type\lss_heat_equation_explicit_kernel.cu" />
+    <CudaCompile Include="pde_solvers\1d\heat_type\solver_method\lss_heat_euler_cuda_solver_method.cu" />
+    <CudaCompile Include="pde_solvers\1d\wave_type\explicit_schemes\lss_wave_euler_cuda_scheme.cu" />
+    <CudaCompile Include="pde_solvers\2d\heat_type\explicit_schemes\lss_heston_euler_cuda_solver_scheme.cu" />
+    <CudaCompile Include="sparse_solvers\general\core_cuda_solver\lss_core_cuda_solver.cu" />
+    <CudaCompile Include="sparse_solvers\general\core_sor_solver_cuda\lss_core_sor_solver_cuda.cu" />
+    <CudaCompile Include="sparse_solvers\general\core_sor_solver_cuda\lss_sor_solver_core.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="boundaries\lss_boundary.hpp" />
+    <ClInclude Include="boundaries\lss_dirichlet_boundary.hpp" />
+    <ClInclude Include="boundaries\lss_neumann_boundary.hpp" />
+    <ClInclude Include="boundaries\lss_robin_boundary.hpp" />
+    <ClInclude Include="common\lss_enumerations.hpp" />
+    <ClInclude Include="common\lss_helpers.hpp" />
+    <ClInclude Include="common\lss_macros.hpp" />
+    <ClInclude Include="common\lss_print.hpp" />
+    <ClInclude Include="common\lss_range.hpp" />
+    <ClInclude Include="common\lss_utility.hpp" />
+    <ClInclude Include="common\lss_xml.hpp" />
+    <ClInclude Include="containers\lss_container_2d.hpp" />
+    <ClInclude Include="containers\lss_container_3d.hpp" />
+    <ClInclude Include="containers\lss_flat_matrix.hpp" />
+    <ClInclude Include="dense_solvers\lss_dense_solvers_cuda.hpp" />
+    <ClInclude Include="dense_solvers\lss_dense_solvers_policy.hpp" />
+    <ClInclude Include="discretization\lss_discretization.hpp" />
+    <ClInclude Include="discretization\lss_discretization_config.hpp" />
+    <ClInclude Include="discretization\lss_grid.hpp" />
+    <ClInclude Include="discretization\lss_grid_config.hpp" />
+    <ClInclude Include="discretization\lss_grid_config_hints.hpp" />
+    <ClInclude Include="discretization\lss_grid_transform_config.hpp" />
+    <ClInclude Include="include\framework.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\boundary_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\boundary_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\dirichlet_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\dirichlet_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\neumann_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\neumann_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\robin_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\boundary\robin_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\configs\discretization_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\configs\discretization_config_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\configs\discretization_config_ode.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\configs\grid_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\configs\grid_config_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\ode\2nd\implicit_ode_tp_solver.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\ode\configs\ode_coefficient_data_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\ode\configs\ode_data_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\ode\configs\ode_nonhom_data_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\ode\configs\ode_solver_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\output\output.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\1d\heat_type\explicit_heat_solver_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\1d\heat_type\implicit_heat_solver_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\1d\wave_type\explicit_wave_solver_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\1d\wave_type\implicit_wave_solver_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\2d\heston_type\explicit_heston_solver_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\2d\heston_type\implicit_heston_solver_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_coefficient_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_coefficient_data_config_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_data_config_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_explicit_solver_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_implicit_solver_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_initial_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_initial_data_config_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_source_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\heat_source_data_config_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\splitting_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\wave_coefficient_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\wave_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\wave_explicit_solver_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\wave_implicit_solver_config.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\wave_initial_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\wave_source_data_config_1d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\utilities\container_2d.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\lss\utilities\range.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\pch.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="ode_solvers\lss_ode_data_config.hpp" />
+    <ClInclude Include="ode_solvers\lss_ode_discretization_config.hpp" />
+    <ClInclude Include="ode_solvers\lss_ode_solver_config.hpp" />
+    <ClInclude Include="ode_solvers\second_degree\implicit_coefficients\lss_ode_implicit_coefficients.hpp" />
+    <ClInclude Include="ode_solvers\second_degree\lss_ode_equation.hpp" />
+    <ClInclude Include="ode_solvers\second_degree\lss_ode_equation_implicit_kernel.hpp" />
+    <ClInclude Include="ode_solvers\second_degree\solver_method\lss_ode_implicit_solver_method.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="ode_solvers\transformation\lss_ode_data_transform.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\explicit_coefficients\lss_heat_barakat_clark_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\explicit_coefficients\lss_heat_euler_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\explicit_coefficients\lss_heat_saulyev_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_barakat_clark_scheme.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_euler_cuda_scheme.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_euler_scheme.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_saulyev_scheme.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\implicit_coefficients\lss_heat_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\lss_heat_equation.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\lss_heat_equation_explicit_kernel.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\lss_heat_equation_implicit_kernel.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\solver_method\lss_heat_barakat_clark_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\solver_method\lss_heat_euler_cuda_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\solver_method\lss_heat_euler_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\solver_method\lss_heat_explicit_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\solver_method\lss_heat_implicit_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\solver_method\lss_heat_saulyev_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\time_loop\lss_explicit_time_loop.hpp" />
+    <ClInclude Include="pde_solvers\1d\heat_type\time_loop\lss_implicit_time_loop.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\explicit_coefficients\lss_wave_explicit_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\explicit_schemes\lss_wave_euler_cuda_scheme.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\explicit_schemes\lss_wave_euler_scheme.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\implicit_coefficients\lss_wave_implicit_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\lss_wave_equation.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\lss_wave_equation_explicit_kernel.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\lss_wave_equation_implicit_kernel.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\solver_method\lss_wave_euler_cuda_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\solver_method\lss_wave_euler_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\solver_method\lss_wave_explicit_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\solver_method\lss_wave_implicit_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\time_loop\lss_wave_explicit_time_loop.hpp" />
+    <ClInclude Include="pde_solvers\1d\wave_type\time_loop\lss_wave_implicit_time_loop.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\boundary_solver\lss_heston_explicit_boundary_solver.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\explicit_coefficients\lss_heston_euler_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\explicit_schemes\lss_heston_euler_cuda_solver_scheme.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\explicit_schemes\lss_heston_euler_solver_scheme.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\implicit_coefficients\lss_heston_implicit_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\lss_heston_equation.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\lss_heston_equation_explicit_kernel.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\lss_heston_equation_implicit_kernel.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\solver_method\lss_heston_euler_cuda_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\solver_method\lss_heston_euler_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\solver_method\lss_heston_explicit_solver_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_craig_sneyd_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_douglas_rachford_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_hundsdorfer_verwer_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_modified_craig_sneyd_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_splitting_method.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\time_loop\lss_heston_explicit_time_loop.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\time_loop\lss_heston_implicit_time_loop.hpp" />
+    <ClInclude Include="pde_solvers\2d\heat_type\transformation\lss_heston_boundary_transform.hpp" />
+    <ClInclude Include="pde_solvers\lss_heat_data_config.hpp" />
+    <ClInclude Include="pde_solvers\lss_heat_solver_config.hpp" />
+    <ClInclude Include="pde_solvers\lss_pde_discretization_config.hpp" />
+    <ClInclude Include="pde_solvers\lss_pde_solver_config.hpp" />
+    <ClInclude Include="pde_solvers\lss_splitting_method_config.hpp" />
+    <ClInclude Include="pde_solvers\lss_wave_data_config.hpp" />
+    <ClInclude Include="pde_solvers\lss_wave_solver_config.hpp" />
+    <ClInclude Include="pde_solvers\transformation\lss_heat_data_transform.hpp" />
+    <ClInclude Include="pde_solvers\transformation\lss_wave_data_transform.hpp" />
+    <ClInclude Include="sparse_solvers\general\core_cuda_solver\lss_core_cuda_solver.hpp" />
+    <ClInclude Include="sparse_solvers\general\core_cuda_solver\lss_core_cuda_solver_policy.hpp" />
+    <ClInclude Include="sparse_solvers\general\core_sor_solver\lss_core_sor_solver.hpp" />
+    <ClInclude Include="sparse_solvers\general\core_sor_solver_cuda\lss_core_sor_solver_cuda.hpp" />
+    <ClInclude Include="sparse_solvers\general\core_sor_solver_cuda\lss_core_sor_solver_kernels.hpp" />
+    <ClInclude Include="sparse_solvers\general\core_sor_solver_cuda\lss_sor_solver_core.hpp" />
+    <ClInclude Include="sparse_solvers\general\sor_solver_traits\lss_sor_solver_traits.hpp" />
+    <ClInclude Include="sparse_solvers\pentadiagonal\karawia_solver\lss_karawia_boundary.hpp" />
+    <ClInclude Include="sparse_solvers\pentadiagonal\karawia_solver\lss_karawia_solver.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\cuda_solver\lss_cuda_boundary.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\cuda_solver\lss_cuda_solver.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\double_sweep_solver\lss_double_sweep_boundary.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\double_sweep_solver\lss_double_sweep_solver.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\lss_tridiagonal_solver.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\sor_solver\lss_sor_boundary.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\sor_solver\lss_sor_solver.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\sor_solver_cuda\lss_sor_cuda_boundary.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\sor_solver_cuda\lss_sor_solver_cuda.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\thomas_lu_solver\lss_thomas_lu_boundary.hpp" />
+    <ClInclude Include="sparse_solvers\tridiagonal\thomas_lu_solver\lss_thomas_lu_solver.hpp" />
+    <ClInclude Include="transformation\lss_boundary_transform.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="boundaries\lss_boundary.cpp" />
+    <ClCompile Include="boundaries\lss_dirichlet_boundary.cpp" />
+    <ClCompile Include="boundaries\lss_neumann_boundary.cpp" />
+    <ClCompile Include="boundaries\lss_robin_boundary.cpp" />
+    <ClCompile Include="common\lss_print.cpp" />
+    <ClCompile Include="common\lss_range.cpp" />
+    <ClCompile Include="common\lss_utility.cpp" />
+    <ClCompile Include="common\lss_xml.cpp" />
+    <ClCompile Include="containers\lss_container_2d.cpp" />
+    <ClCompile Include="containers\lss_flat_matrix.cpp" />
+    <ClCompile Include="discretization\lss_discretization.cpp" />
+    <ClCompile Include="discretization\lss_discretization_config.cpp" />
+    <ClCompile Include="discretization\lss_grid.cpp" />
+    <ClCompile Include="discretization\lss_grid_config.cpp" />
+    <ClCompile Include="discretization\lss_grid_config_hints.cpp" />
+    <ClCompile Include="discretization\lss_grid_transform_config.cpp" />
+    <ClCompile Include="include\dllmain.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\boundary_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\boundary_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\dirichlet_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\dirichlet_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\neumann_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\neumann_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\robin_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\boundary\robin_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\configs\discretization_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\configs\discretization_config_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\configs\discretization_config_ode.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\configs\grid_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\configs\grid_config_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\ode\2nd\implicit_ode_tp_solver.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\ode\configs\ode_coefficient_data_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\ode\configs\ode_data_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\ode\configs\ode_nonhom_data_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\ode\configs\ode_solver_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\output\output.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\1d\heat_type\explicit_heat_solver_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\1d\heat_type\implicit_heat_solver_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\1d\wave_type\explicit_wave_solver_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\1d\wave_type\implicit_wave_solver_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\2d\heston_type\explicit_heston_solver_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\2d\heston_type\implicit_heston_solver_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_coefficient_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_coefficient_data_config_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_data_config_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_explicit_solver_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_implicit_solver_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_initial_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_initial_data_config_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_source_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\heat_source_data_config_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\splitting_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\wave_coefficient_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\wave_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\wave_explicit_solver_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\wave_implicit_solver_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\wave_initial_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\wave_source_data_config_1d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\utilities\container_2d.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\lss\utilities\range.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\pch.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="ode_solvers\lss_ode_data_config.cpp" />
+    <ClCompile Include="ode_solvers\lss_ode_discretization_config.cpp" />
+    <ClCompile Include="ode_solvers\lss_ode_solver_config.cpp" />
+    <ClCompile Include="ode_solvers\second_degree\implicit_coefficients\lss_ode_implicit_coefficients.cpp" />
+    <ClCompile Include="ode_solvers\second_degree\lss_ode_equation.cpp" />
+    <ClCompile Include="ode_solvers\second_degree\lss_ode_equation_implicit_kernel.cpp" />
+    <ClCompile Include="ode_solvers\second_degree\solver_method\lss_ode_implicit_solver_method.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="ode_solvers\transformation\lss_ode_data_transform.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\explicit_coefficients\lss_heat_barakat_clark_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\explicit_coefficients\lss_heat_euler_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\explicit_coefficients\lss_heat_saulyev_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_barakat_clark_scheme.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_euler_scheme.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\explicit_schemes\lss_heat_saulyev_scheme.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\implicit_coefficients\lss_heat_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\lss_heat_equation.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\lss_heat_equation_implicit_kernel.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\solver_method\lss_heat_barakat_clark_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\solver_method\lss_heat_euler_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\solver_method\lss_heat_explicit_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\solver_method\lss_heat_implicit_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\solver_method\lss_heat_saulyev_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\time_loop\lss_explicit_time_loop.cpp" />
+    <ClCompile Include="pde_solvers\1d\heat_type\time_loop\lss_implicit_time_loop.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\explicit_coefficients\lss_wave_explicit_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\explicit_schemes\lss_wave_euler_scheme.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\implicit_coefficients\lss_wave_implicit_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\lss_wave_equation.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\lss_wave_equation_explicit_kernel.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\lss_wave_equation_implicit_kernel.cpp" />
+    <CudaCompile Include="pde_solvers\1d\wave_type\solver_method\lss_wave_euler_cuda_solver_method.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <ClCompile Include="pde_solvers\1d\wave_type\solver_method\lss_wave_euler_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\solver_method\lss_wave_explicit_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\solver_method\lss_wave_implicit_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\time_loop\lss_wave_explicit_time_loop.cpp" />
+    <ClCompile Include="pde_solvers\1d\wave_type\time_loop\lss_wave_implicit_time_loop.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\boundary_solver\lss_heston_explicit_boundary_solver.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\explicit_coefficients\lss_heston_euler_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\explicit_schemes\lss_heston_euler_solver_scheme.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\implicit_coefficients\lss_heston_implicit_coefficients.cpp" />
+    <CudaCompile Include="pde_solvers\2d\heat_type\solver_method\lss_heston_euler_cuda_solver_method.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <ClCompile Include="pde_solvers\2d\heat_type\lss_heston_equation.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\lss_heston_equation_explicit_kernel.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\lss_heston_equation_implicit_kernel.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\solver_method\lss_heston_euler_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\solver_method\lss_heston_explicit_solver_method.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_craig_sneyd_method.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_douglas_rachford_method.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_hundsdorfer_verwer_method.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_modified_craig_sneyd_method.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\splitting_method\lss_heat_splitting_method.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\time_loop\lss_heston_explicit_time_loop.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\time_loop\lss_heston_implicit_time_loop.cpp" />
+    <ClCompile Include="pde_solvers\2d\heat_type\transformation\lss_heston_boundary_transform.cpp" />
+    <ClCompile Include="pde_solvers\lss_heat_data_config.cpp" />
+    <ClCompile Include="pde_solvers\lss_heat_solver_config.cpp" />
+    <ClCompile Include="pde_solvers\lss_pde_discretization_config.cpp" />
+    <ClCompile Include="pde_solvers\lss_pde_solver_config.cpp" />
+    <ClCompile Include="pde_solvers\lss_splitting_method_config.cpp" />
+    <ClCompile Include="pde_solvers\lss_wave_data_config.cpp" />
+    <ClCompile Include="pde_solvers\lss_wave_solver_config.cpp" />
+    <ClCompile Include="pde_solvers\transformation\lss_heat_data_transform.cpp" />
+    <ClCompile Include="pde_solvers\transformation\lss_wave_data_transform.cpp" />
+    <ClCompile Include="sparse_solvers\general\core_cuda_solver\lss_core_cuda_solver_policy.cpp" />
+    <ClCompile Include="sparse_solvers\general\core_sor_solver\lss_core_sor_solver.cpp" />
+    <ClCompile Include="sparse_solvers\pentadiagonal\karawia_solver\lss_karawia_boundary.cpp" />
+    <ClCompile Include="sparse_solvers\pentadiagonal\karawia_solver\lss_karawia_solver.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\cuda_solver\lss_cuda_boundary.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\cuda_solver\lss_cuda_solver.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\double_sweep_solver\lss_double_sweep_boundary.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\double_sweep_solver\lss_double_sweep_solver.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\lss_tridiagonal_solver.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\sor_solver\lss_sor_boundary.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\sor_solver\lss_sor_solver.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\sor_solver_cuda\lss_sor_cuda_boundary.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\sor_solver_cuda\lss_sor_solver_cuda.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\thomas_lu_solver\lss_thomas_lu_boundary.cpp" />
+    <ClCompile Include="sparse_solvers\tridiagonal\thomas_lu_solver\lss_thomas_lu_solver.cpp" />
+    <ClCompile Include="transformation\lss_boundary_transform.cpp" />
+    <ClInclude Include="unit_tests\common\lss_xml_t.hpp" />
+    <ClInclude Include="unit_tests\ode_solvers\second_degree\lss_odes_2_degree_t.hpp" />
+    <ClInclude Include="unit_tests\pde_solvers\1d\lss_advection_equation_t.hpp" />
+    <ClInclude Include="unit_tests\pde_solvers\1d\lss_black_scholes_equation_t.hpp" />
+    <ClInclude Include="unit_tests\pde_solvers\1d\lss_pure_heat_equation_t.hpp" />
+    <ClInclude Include="unit_tests\pde_solvers\1d\lss_pure_wave_equation_t.hpp" />
+    <ClInclude Include="unit_tests\pde_solvers\2d\lss_heston_equation_t.hpp" />
+    <ClInclude Include="unit_tests\pde_solvers\2d\lss_sabr_equation_t.hpp" />
+    <ClInclude Include="unit_tests\sparse_solvers\lss_core_cuda_solver_t.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
+      <Include Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">D:\my_c_files\lss\lss\unit_tests;%(Include)</Include>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">D:\my_c_files\lss\lss\unit_tests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug unit_tests|x64'">true</DeploymentContent>
+    </ClInclude>
+    <CudaCompile Include="dense_solvers\lss_dense_solvers_cuda.cu">
+      <FileType>Document</FileType>
+    </CudaCompile>
+    <ClCompile Include="dense_solvers\lss_dense_solvers_policy.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.3.targets" />
+  </ImportGroup>
+</Project>
