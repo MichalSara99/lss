@@ -1,3 +1,5 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
 ## Boundary and initial/terminal conditions conventions
 
 ### Boundary Conditions
@@ -6,18 +8,18 @@ LSS supports three types of boundary conditions: **Dirichlet**, **Neumann** and 
 
 ### ODE Solvers
 
-For ODEs we assume the 
-
 #### Dirichlet Boundary
-
+  
+LSS assumes Dirichlet boundary of following form
+  
+ ![dirichlet_ode](https://latex.codecogs.com/gif.latex?u%28x_%7B0%7D%29%20%3D%20A%28t%29)
+  
 #### Neumann Boundary
 
 #### Robin Boundary
 
 
 ### 1D PDE Solvers
-
-$$\frac{\partial f(y)}{\partial x} = \frac{\partial f}{\partial y} \times \frac{\partial y}{\partial x}$$
 
 
 
