@@ -34,7 +34,7 @@ It also contains some ODE and PDE solvers.
 #### 2.step
    Place lss_debug.dll,lss_debug.lib (lss_release.dll, lss_release.lib in case of Release configuration) into your executable folder
 #### 3.step
-   Now you should be ready to use the library. Test is using following example
+   Now you should be ready to use the library. Test it using following example
 
 
 ```cpp
