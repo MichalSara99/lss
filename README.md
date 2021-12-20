@@ -14,6 +14,10 @@ It also contains some ODE and PDE solvers.
  (support for Douglas-Rachford ADI, Craig-Sneyd ADI, Modified Craig-Sneyd ADI, Hundsdorfer-Verwer ADI)
 * All solvers support uniform and non-uniform grid with variable scaling
 
+## Requirement
+* Library is being developed in VS2019 for win-x64 arch
+* NVIDIA CUDA lib >= v11.3
+
 ## Usage
 ### Visual Studio:
 
@@ -30,10 +34,6 @@ It also contains some ODE and PDE solvers.
 
 ## Output
 * results can be put into stream or xml. Folder output also contains some python scripts that parse the resulting xmls and plot the solutions. 
-
-## Requirement
-* Library is being developed in VS2019 for win-x64 arch
-* NVIDIA CUDA lib >= v11.3
 
 ## Some curves from ODE solver
 Simple Two-point BVP (u''(x) = -2 with Dirichlet and Robin BC)
