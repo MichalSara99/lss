@@ -10,7 +10,7 @@ LSS supports three types of boundary conditions: Dirichlet, Neumann and Robin. A
 
 #### Neumann Boundary
 
-### Robin Boundary
+#### Robin Boundary
 
 
 
