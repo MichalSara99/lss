@@ -23,15 +23,15 @@ Make sure to create CUDA project (>= v11.3) in VS
 
 ##### 2.Step
 Open property pages for the newly created project and
-1. under Debugging set Environment to point to CUDA binaries folder (in my case it is PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin)
-2. under VC++ Directories set Include Directories to point to include folder of this library
-3. under VC++ Directories set Library Directories to point to lib folder of this library
-4. under Linker->Input tab add to Additional Dependencies cusolver.lib;cusparse.lib; cublas.lib; cublasLt.lib;lss_debug.lib (or lss_release.lib in case of Release configuration)
-5. under Linker->General tab set Additional Library Dependencies to point to lib folder of this library
-6. under CUDA Linker->General tab set Additional Library Directories to point to lib folder of this library
+1. under **Debugging** tab set **Environment** to point to CUDA binaries folder (in my case it is *PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin*)
+2. under **VC++ Directories** tab set **Include Directories** to point to include folder of this library
+3. under **VC++ Directories** tab set **Library Directories** to point to lib folder of this library
+4. under **Linker->Input** tab add to **Additional Dependencies** *cusolver.lib*;*cusparse.lib*; *cublas.lib*; *cublasLt.lib*;*lss_debug.lib* (or *lss_release.lib* in case of Release configuration)
+5. under **Linker->General** tab set **Additional Library Dependencies** to point to lib folder of this library
+6. under **CUDA Linker->General** tab set **Additional Library Directories** to point to lib folder of this library
 
 ##### 3.Step
-Place lss_debug.dll,lss_debug.lib (lss_release.dll, lss_release.lib in case of Release configuration) into your executable folder
+Place *lss_debug.dll*, *lss_debug.lib* (*lss_release.dll*, *lss_release.lib* in case of Release configuration) into your executable folder
 
 ##### 4.Step
 Now you should be ready to use the library. Test it using following example
