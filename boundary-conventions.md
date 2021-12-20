@@ -1,3 +1,5 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
 ## Boundary and initial/terminal conditions conventions
 
 ### Boundary Conditions
@@ -16,6 +18,8 @@ For ODEs we assume the
 
 
 ### 1D PDE Solvers
+
+$$\frac{\partial f(y)}{\partial x} = \frac{\partial f}{\partial y} \times \frac{\partial y}{\partial x}$$
 
 
 
