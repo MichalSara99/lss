@@ -15,15 +15,16 @@ It also contains some ODE and PDE solvers.
 * All solvers support uniform and non-uniform grid with variable scaling
 
 ## Usage
-Visual Studio:
+# Visual Studio:
+
 0. make sure to create CUDA project (>= v11.3) in VS
 1. open property pages for the newly created project
-   a) under Debugging set Environment to point to CUDA binaries folder (in my case it is PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin\)
-   b) under VC++ Directories set Include Directories to point to include folder of this library
-   c) under VC++ Directories set Library Directories to point to lib folder of this library
-   d) under Linker|Input add to Additional Dependencies cusolver.lib;cusparse.lib; cublas.lib; cublasLt.lib;lss_debug.lib (or lss_release.lib in case of Release configuration)
-   e) under Linker|General set Additional Library Dependencies to point to lib folder of this library
-   f) under CUDA Linker|General set Additional Library Directories to point to lib folder of this library
+   1. under Debugging set Environment to point to CUDA binaries folder (in my case it is PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin\)
+   2. under VC++ Directories set Include Directories to point to include folder of this library
+   3. under VC++ Directories set Library Directories to point to lib folder of this library
+   4. under Linker|Input add to Additional Dependencies cusolver.lib;cusparse.lib; cublas.lib; cublasLt.lib;lss_debug.lib (or lss_release.lib in case of Release configuration)
+   5. under Linker|General set Additional Library Dependencies to point to lib folder of this library
+   6. under CUDA Linker|General set Additional Library Directories to point to lib folder of this library
 2. place lss_debug.dll,lss_debug.lib (lss_release.dll, lss_release.lib in case of Release configuration) into your executable folder
 3. now you should be ready to use the library
 
