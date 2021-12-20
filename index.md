@@ -72,6 +72,14 @@ int main()
     return 0;
 }
 ```
+If it does not compile or run ok make sure you did not miss any of the previous steps. Otherwise you can drop me a line on my github page.
+
+
+### Contents
+
+In this section I will try to describe how to work with the library on several examples. I will also list several conventions which a client has to follow in order to properly use the solvers inside the library. Some of these conventions will be relaxed as the developement progresses.
+
+
 
 
 
