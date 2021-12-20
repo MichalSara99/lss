@@ -21,8 +21,10 @@ It also contains some ODE and PDE solvers.
 ## Usage
 ### Visual Studio:
 
-0. make sure to create CUDA project (>= v11.3) in VS
-1. open property pages for the newly created project
+##### 0.step
+   make sure to create CUDA project (>= v11.3) in VS
+##### 1.step 
+   open property pages for the newly created project
    1. under Debugging set Environment to point to CUDA binaries folder (in my case it is PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin\)
    2. under VC++ Directories set Include Directories to point to include folder of this library
    3. under VC++ Directories set Library Directories to point to lib folder of this library
