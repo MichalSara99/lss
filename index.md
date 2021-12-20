@@ -1,5 +1,16 @@
 ## LSS (Linear System Solvers)
 
+LSS is C++ library written written in VS2019 on win-x64 platform using C++17 standard. It contains several linear system solvers plus some ODE and PDE solvers. 
+It also has some output functionalities.
+
+### Requirements
+
+LSS uses among others some CUDA solvers. Therefore NVidia's CUDA library v11.3 (and above) is required.
+
+### Dependency
+
+* NVidia's CUDA library v11.3 (and newer)
+
 You can use the [editor on GitHub](https://github.com/MichalSara99/lss/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
