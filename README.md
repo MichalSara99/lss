@@ -34,7 +34,41 @@ It also contains some ODE and PDE solvers.
 #### 2.step
    Place lss_debug.dll,lss_debug.lib (lss_release.dll, lss_release.lib in case of Release configuration) into your executable folder
 #### 3.step
-   Now you should be ready to use the library :-)
+   Now you should be ready to use the library. Test is using following example
+
+
+```cpp
+#include <iostream>
+#include <string>
+#include <lss/utilities/range.hpp>
+#include <lss/configs/discretization_config_1d.hpp>
+
+
+int main()
+{
+
+    // number of space subdivisions:
+    std::size_t const Sd = 100;
+    // number of time subdivisions:
+    std::size_t const Td = 100;
+    // space range:
+    auto const &space_range_ptr = lss::range_builder().lower(0.0).upper(20.0).build();
+    // time range
+    auto const &time_range_ptr = lss::range_builder().lower(0.0).upper(1.0).build();
+
+    //// discretization config:
+    auto const &discretization_ptr = lss::discretization_config_1d_builder()
+                                        .space_range(space_range_ptr)
+                                        .number_of_space_points(Sd)
+                                        .time_range(time_range_ptr)
+                                        .number_of_time_points(Td)
+                                        .build();
+
+    std::cout<<"Uniform space step value: "<< discretization_ptr->space_step()<<"\n";
+
+    return 0;
+}
+```
 
 ## Output
 * results can be put into stream or xml. Folder output also contains some python scripts that parse the resulting xmls and plot the solutions. 
