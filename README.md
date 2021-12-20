@@ -15,7 +15,7 @@ It also contains some ODE and PDE solvers.
 * All solvers support uniform and non-uniform grid with variable scaling
 
 ## Usage
-# Visual Studio:
+### Visual Studio:
 
 0. make sure to create CUDA project (>= v11.3) in VS
 1. open property pages for the newly created project
