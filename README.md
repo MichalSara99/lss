@@ -14,11 +14,25 @@ It also contains some ODE and PDE solvers.
  (support for Douglas-Rachford ADI, Craig-Sneyd ADI, Modified Craig-Sneyd ADI, Hundsdorfer-Verwer ADI)
 * All solvers support uniform and non-uniform grid with variable scaling
 
+## Usage
+Visual Studio:
+0. make sure to create CUDA project (>= v11.3) in VS
+1. open property pages for the newly created project
+   a) under Debugging set Environment to point to CUDA binaries folder (in my case it is PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\bin\)
+   b) under VC++ Directories set Include Directories to point to include folder of this library
+   c) under VC++ Directories set Library Directories to point to lib folder of this library
+   d) under Linker|Input add to Additional Dependencies cusolver.lib;cusparse.lib; cublas.lib; cublasLt.lib;lss_debug.lib (or lss_release.lib in case of Release configuration)
+   e) under Linker|General set Additional Library Dependencies to point to lib folder of this library
+   f) under CUDA Linker|General set Additional Library Directories to point to lib folder of this library
+2. place lss_debug.dll,lss_debug.lib (lss_release.dll, lss_release.lib in case of Release configuration) into your executable folder
+3. now you should be ready to use the library
+
 ## Output
 * results can be put into stream or xml. Folder output also contains some python scripts that parse the resulting xmls and plot the solutions. 
 
 ## Requirement
-* NVIDIA CUDA lib >= 11.3
+* Library is being developed in VS2019 for win-x64 arch
+* NVIDIA CUDA lib >= v11.3
 
 ## Some curves from ODE solver
 Simple Two-point BVP (u''(x) = -2 with Dirichlet and Robin BC)
@@ -67,9 +81,3 @@ Heston equation from explicit solver
 
 SABR equation from explicit solver
 ![SABR equation expl](/outputs/pics/expl_sabr_euler_host_numerical.png)
-
-## Usage
-Will be described shortly.
-
-## Note
-It is DLL library tested on win64 
