@@ -1,3 +1,4 @@
 theme: jekyll-theme-midnight
-title: LSS (Linear System Solvers) C++ Library
+title: LSS
+subtitle: (Linear System Solvers) C++ Library
 description: Library containing some ODE and PDE solvers
