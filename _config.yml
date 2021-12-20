@@ -1,7 +1,7 @@
 theme: jekyll-theme-midnight
 title: LSS
 subtitle: (Linear System Solvers) C++ Library
-description: Library containing some ODE and PDE solvers
+description: C++ Library containing some ODE and PDE solvers
 github:
   zip_url: https://github.com/MichalSara99/lss/archive/refs/tags/v0.0.0-alpha.zip
   tar_url: https://github.com/MichalSara99/lss/archive/refs/tags/v0.0.0-alpha.tar.gz
