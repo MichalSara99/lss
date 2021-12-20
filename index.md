@@ -80,6 +80,8 @@ If it does not compile or run ok make sure you did not miss any of the previous 
 In this section I will try to describe how to work with the library on several examples. I will also list several conventions which a client has to follow in order to properly use the solvers inside the library. Some of these conventions will be relaxed as the developement progresses.
 
 [1D Heat type equations](heat-type-1d.md)
+[1D Wave type equations](wave-type-1d.md)
+[2D Heston type equations](heston-type-2d.md)
 
 
 
