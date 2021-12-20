@@ -6,11 +6,11 @@ LSS supports three types of boundary conditions: Dirichlet, Neumann and Robin. A
 
 ### ODE Solvers
 
-## Dirichlet Boundary
+#### Dirichlet Boundary
 
-## Neumann Boundary
+#### Neumann Boundary
 
-## Robin Boundary
+### Robin Boundary
 
 
 
