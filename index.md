@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## LSS (Linear System Solvers)
 
 You can use the [editor on GitHub](https://github.com/MichalSara99/lss/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
