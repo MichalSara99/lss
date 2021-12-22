@@ -4,6 +4,6 @@ description: C++ Library containing some ODE and PDE solvers
 show_downloads: true
 google_analytics:
 github:
-  zip_url: https://github.com/MichalSara99/lss/archive/refs/tags/v1.0.0-alpha.zip
-  tar_url: https://github.com/MichalSara99/lss/archive/refs/tags/v1.0.0-alpha.tar.gz
+  zip_url: https://github.com/MichalSara99/lss/archive/refs/tags/v2.0.0-alpha.zip
+  tar_url: https://github.com/MichalSara99/lss/archive/refs/tags/v2.0.0-alpha.tar.gz
 theme: jekyll-theme-midnight
