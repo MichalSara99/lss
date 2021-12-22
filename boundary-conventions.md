@@ -192,6 +192,31 @@ translates into C++ code
 
 Note that builder *lss::heat_initial_data_config_1d_builder()* is used for either initial or terminal condition.
 
+In case we have two initial/terminal conditions (as in case of wave type equations)
+
+![initial_first_1d_pde_w](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20u%28t_%7B0%7D%2Cx%29%20%3D%20I%28x%29%7D)
+
+![initial_second_1d_pde_w](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20%5Cfrac%7B%5Cpartial%20u%28t_%7B0%7D%2Cx%29%20%7D%7B%5Cpartial%20t%7D%20%3D%20J%28x%29%7D)
+
+we will have for 
+
+![initial_first_exampl_1d_pde_w](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20I%28x%29%20%3D%20%5Csin%7B%28%5Cpi%20*x%29%7D%7D)
+
+![initial_second_exampl_1d_pde_w](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20J%28x%29%20%3D%200.0%7D)
+
+C++ code
+
+```cpp
+  #include <lss/pde/configs/wave_initial_data_config_1d.hpp>
+
+  // initial condition:
+  auto first_condition = [](double x) { return std::sin(pi() * x); };
+  auto second_condition = [](double x) { return 0.0; };
+  auto const wave_init_data_ptr = std::make_shared<wave_initial_data_config_1d>(initial_condition, second_condition);
+
+
+```
+
 
 
 
