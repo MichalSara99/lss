@@ -15,18 +15,18 @@ In what follows ![solution_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B10
   
 LSS assumes Dirichlet boundary of following form
   
- ![dirichlet_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B200%2C200%2C200%7D%20u%28x_%7B0%7D%29%20%3D%20A%28t%29%7D)
+ ![dirichlet_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20u%28x_%7B0%7D%29%20%3D%20A%7D)
 
 Specifically, if we have following Dirichlet boundary:
 
-![dirichlat_exampl_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B200%2C200%2C200%7D%20u%28x_%7B0%7D%29%20%3D%20t%20%7D)
+![dirichlat_exampl_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20u%28x_%7B0%7D%29%20%3D%203.1415%7D)
 
 then in code we write:
 
 ```cpp
   #include <lss/boundary/dirichlet_1d.hpp>
 
-  auto const &dirichlet = [](double t) { return t; };
+  auto const dirichlet =  3.1415; 
   
   // build boundary conditions from above function:
   auto const &boundary_ptr = lss::dirichlet_1d_builder().value(dirichlet).build();
@@ -38,48 +38,47 @@ then in code we write:
 
 LSS assumes Neumann boundary of following form
 
- ![neumann_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B200%2C200%2C200%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20&plus;%20A%28t%29%20%3D%200%20%7D)
+ ![neumann_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20&plus;%20A%20%3D%200%7D)
  
 Specifically, if we have following Neumann boundary:
 
-![neumann_exampl_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B200%2C200%2C200%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20%3D%201%20%7D)
+![neumann_exampl_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20%3D%201%7D)
 
 then in code we write:
 
 ```cpp
   #include <lss/boundary/neumann_1d.hpp>
 
-  auto const &neumann = [](double t) { return -1.0; };
+  auto const &neumann = -1.0;
   
   // build boundary conditions from above function:
   auto const &boundary_ptr = lss::neumann_1d_builder().value(neumann).build();
 
 ```
 
-Note *-1.0* inside the lambda rather then *1.0*. We must pay attention to the aforementioned convention or we get completely different solution.
+Note *-1.0* rather then *1.0*. We must pay attention to the aforementioned convention or we get completely different solution.
 
 #### Robin Boundary
 
 LSS assumes Robin boundary of following form
 
- ![robin_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B200%2C200%2C200%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20&plus;%20A%28t%29u%28x_%7B0%7D%29%20&plus;%20B%28t%29%20%3D%200%20%7D)
+ ![robin_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20&plus;%20Au%28x_%7B0%7D%29%20&plus;%20B%20%3D%200%7D)
 
 Specifically, if we have following Robin boundary:
 
-![robin_exampl_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B200%2C200%2C200%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20&plus;%202u%28x_%7B0%7D%29%20%3D%200%20%7D)
+![robin_exampl_ode](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20%5Cfrac%7Bdu%28x_%7B0%7D%29%7D%7Bdx%7D%20&plus;%202u%28x_%7B0%7D%29%20%3D%200%7D)
 
 then in code we write:
 
 ```cpp
   #include <lss/boundary/robin_1d.hpp>
 
-  auto const &robin_first = [](double t) { return 2.0; };
-  auto const &robin_second = [](double t) { return 0.0; };
+  auto const &robin_first =  2.0; 
+  auto const &robin_second =  0.0;
   
   // build boundary conditions from above function:
   auto const &boundary_ptr = lss::robin_1d_builder()
-                                  .linear_value(robin_first)
-                                  .value(robin_second)
+                                  .values(robin_first,robin_second)
                                   .build();
 
 ```
