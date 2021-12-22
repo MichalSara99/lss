@@ -49,7 +49,7 @@ then in code we write:
 ```cpp
   #include <lss/boundary/neumann_1d.hpp>
 
-  auto const &neumann = -1.0;
+  auto const neumann = -1.0;
   
   // build boundary conditions from above function:
   auto const &boundary_ptr = lss::neumann_1d_builder().value(neumann).build();
@@ -73,8 +73,8 @@ then in code we write:
 ```cpp
   #include <lss/boundary/robin_1d.hpp>
 
-  auto const &robin_first =  2.0; 
-  auto const &robin_second =  0.0;
+  auto const robin_first =  2.0; 
+  auto const robin_second =  0.0;
   
   // build boundary conditions from above function:
   auto const &boundary_ptr = lss::robin_1d_builder()
