@@ -163,7 +163,7 @@ then in code we write:
 
 ```
 
-#### Initial/Terminal Condition
+### Initial/Terminal Condition for 1D PDEs 
 
 Initial/terminal condition follows similar pattern. 
 
