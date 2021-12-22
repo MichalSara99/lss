@@ -23,11 +23,10 @@ struct wave_initial_data_config_1d_builder
   public:
     LSS_API explicit wave_initial_data_config_1d_builder();
 
-    LSS_API wave_initial_data_config_1d_builder &first_initial_condition(
-        std::function<double(double)> const &first_initial_condition);
+    LSS_API wave_initial_data_config_1d_builder &first_condition(std::function<double(double)> const &first_condition);
 
-    LSS_API wave_initial_data_config_1d_builder &second_initial_condition(
-        std::function<double(double)> const &second_initial_condition);
+    LSS_API wave_initial_data_config_1d_builder &second_condition(
+        std::function<double(double)> const &second_condition);
 
     LSS_API wave_initial_data_config_1d_ptr build();
 };

@@ -7,10 +7,10 @@ heat_initial_data_config_1d_builder::heat_initial_data_config_1d_builder()
 {
 }
 
-heat_initial_data_config_1d_builder &heat_initial_data_config_1d_builder::initial_condition(
-    std::function<double(double)> const &initial_condition)
+heat_initial_data_config_1d_builder &heat_initial_data_config_1d_builder::condition(
+    std::function<double(double)> const &condition)
 {
-    initial_condition_ = initial_condition;
+    initial_condition_ = condition;
     return *this;
 }
 
