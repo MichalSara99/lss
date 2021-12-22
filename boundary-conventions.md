@@ -129,14 +129,14 @@ then in code we write:
 ```cpp
   #include <lss/boundary/neumann_1d.hpp>
 
-  auto const neumann = [](double t) { return -2*t; }; 
+  auto const neumann = [](double t) { return -2.0*t; }; 
   
   // build boundary conditions from above function:
   auto const &boundary_ptr = lss::neumann_1d_builder().value(neumann).build();
 
 ```
 
-Note *-1.0* rather then *1.0*. We must pay attention to the aforementioned convention or we get completely different solution.
+Note *-2.0t* rather then *2.0t*. We must pay attention to the aforementioned convention or we get completely different solution.
 
 #### Robin Boundary
 
