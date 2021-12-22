@@ -163,6 +163,6 @@ then in code we write:
 
 ```
 
-#### Initial/Terminal Contidion
+#### Initial/Terminal Condition
 
 TBC
