@@ -165,4 +165,33 @@ then in code we write:
 
 #### Initial/Terminal Condition
 
-TBC
+Initial/terminal condition follows similar pattern. 
+
+![initial_1d_pde](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20u%28t_%7B0%7D%2Cx%29%20%3D%20I%28x%29%7D)
+
+which for
+
+![initial_exampl_1d_pde](https://latex.codecogs.com/gif.latex?%5Cdpi%7B100%7D%20%7B%5Ccolor%5BRGB%5D%7B240%2C240%2C240%7D%20I%28x%29%20%3D%20max%280.0%2Cx-strike%29%7D)
+
+translates into C++ code
+
+```cpp
+  #include <lss/pde/configs/heat_initial_data_config_1d.hpp>
+
+  // strike
+  auto const strike = 20.0;
+  // terminal condition function (payoff of call):
+  auto terminal_condition = [=](double x) { return std::max<double>(0.0, x - strike); };
+
+  // build initial data config:
+  auto const &heat_init_data_ptr =
+        lss::heat_initial_data_config_1d_builder().condition(terminal_condition).build();
+
+
+```
+
+Note that builder *lss::heat_initial_data_config_1d_builder()* is used for either initial or terminal condition.
+
+
+
+
