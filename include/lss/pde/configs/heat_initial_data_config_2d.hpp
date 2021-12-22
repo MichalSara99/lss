@@ -22,8 +22,7 @@ struct heat_initial_data_config_2d_builder
   public:
     LSS_API explicit heat_initial_data_config_2d_builder();
 
-    LSS_API heat_initial_data_config_2d_builder &initial_condition(
-        std::function<double(double, double)> const &initial_condition);
+    LSS_API heat_initial_data_config_2d_builder &condition(std::function<double(double, double)> const &condition);
 
     LSS_API heat_initial_data_config_2d_ptr build();
 };
