@@ -16,10 +16,13 @@ using neumann_1d = lss_boundary::neumann_boundary_1d;
 struct neumann_1d_builder
 {
   private:
-    std::function<double(double)> value_;
+    double const_value_;
+    std::function<double(double)> fun_value_;
 
   public:
     LSS_API explicit neumann_1d_builder();
+
+    LSS_API neumann_1d_builder &value(double value);
 
     LSS_API neumann_1d_builder &value(const std::function<double(double)> &value);
 

@@ -54,7 +54,7 @@ void test_impl_simple_ode_dirichlet_bc_cuda_solver_device_qr()
     // ode data config:
     auto const ode_data_ptr = std::make_shared<ode_data_config>(ode_coeffs_data_ptr, ode_nonhom_data_ptr);
     // boundary conditions:
-    auto const &dirichlet = [](double t) { return 0.0; };
+    auto const &dirichlet = 0.0;
     auto const &boundary_ptr = std::make_shared<dirichlet_boundary_1d>(dirichlet);
     auto const &boundary_pair = std::make_pair(boundary_ptr, boundary_ptr);
     // grid config:
@@ -140,8 +140,8 @@ void test_impl_simple_ode_dirichlet_neumann_bc_cuda_solver_device_qr()
     // ode data config:
     auto const ode_data_ptr = std::make_shared<ode_data_config>(ode_coeffs_data_ptr, ode_nonhom_data_ptr);
     // boundary conditions:
-    auto const &dirichlet = [](double t) { return 1.0; };
-    auto const &neumann = [](double t) { return 0.0; };
+    auto const dirichlet = 1.0;
+    auto const neumann = 0.0;
     auto const &boundary_low_ptr = std::make_shared<dirichlet_boundary_1d>(dirichlet);
     auto const &boundary_high_ptr = std::make_shared<neumann_boundary_1d>(neumann);
     auto const &boundary_pair = std::make_pair(boundary_low_ptr, boundary_high_ptr);
@@ -229,9 +229,9 @@ void test_impl_simple_ode_dirichlet_robin_bc_cuda_solver_device_qr()
     // ode data config:
     auto const ode_data_ptr = std::make_shared<ode_data_config>(ode_coeffs_data_ptr, ode_nonhom_data_ptr);
     // boundary conditions:
-    auto const &dirichlet = [](double t) { return 1.0; };
-    auto const &robin_first = [](double t) { return 1.0; };
-    auto const &robin_second = [](double t) { return 0.0; };
+    auto const &dirichlet = 1.0;
+    auto const &robin_first = 1.0;
+    auto const &robin_second = 0.0;
     auto const &boundary_low_ptr = std::make_shared<dirichlet_boundary_1d>(dirichlet);
     auto const &boundary_high_ptr = std::make_shared<robin_boundary_1d>(robin_first, robin_second);
     auto const &boundary_pair = std::make_pair(boundary_low_ptr, boundary_high_ptr);
@@ -319,9 +319,9 @@ void test_impl_simple_ode_neumann_robin_bc_cuda_solver_device_qr()
     // ode data config:
     auto const ode_data_ptr = std::make_shared<ode_data_config>(ode_coeffs_data_ptr, ode_nonhom_data_ptr);
     // boundary conditions:
-    auto const &neumann = [](double t) { return 0.0; };
-    auto const &robin_first = [](double t) { return 2.0; };
-    auto const &robin_second = [](double t) { return 0.0; };
+    auto const &neumann = 0.0;
+    auto const &robin_first = 2.0;
+    auto const &robin_second = 0.0;
     auto const &boundary_low_ptr = std::make_shared<neumann_boundary_1d>(neumann);
     auto const &boundary_high_ptr = std::make_shared<robin_boundary_1d>(robin_first, robin_second);
     auto const &boundary_pair = std::make_pair(boundary_low_ptr, boundary_high_ptr);
@@ -409,9 +409,9 @@ void test_impl_simple_ode1_neumann_robin_bc_cuda_solver_device_qr()
     // ode data config:
     auto const ode_data_ptr = std::make_shared<ode_data_config>(ode_coeffs_data_ptr, ode_nonhom_data_ptr);
     // boundary conditions:
-    auto const &neumann = [](double t) { return -1.0; };
-    auto const &robin_first = [](double t) { return 2.0; };
-    auto const &robin_second = [](double t) { return 0.0; };
+    auto const &neumann = -1.0;
+    auto const &robin_first = 2.0;
+    auto const &robin_second = 0.0;
     auto const &boundary_low_ptr = std::make_shared<neumann_boundary_1d>(neumann);
     auto const &boundary_high_ptr = std::make_shared<robin_boundary_1d>(robin_first, robin_second);
     auto const &boundary_pair = std::make_pair(boundary_low_ptr, boundary_high_ptr);

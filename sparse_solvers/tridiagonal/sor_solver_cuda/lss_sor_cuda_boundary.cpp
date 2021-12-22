@@ -92,7 +92,7 @@ void sor_cuda_boundary::initialise(boundary_1d_pair const &boundary, double time
     auto const &first_bnd = boundary.first;
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(first_bnd))
     {
-        const auto cst_val = ptr->value(time);
+        const auto cst_val = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 1;
         b_init_ = b_1;
         c_init_ = c_1;
@@ -100,7 +100,7 @@ void sor_cuda_boundary::initialise(boundary_1d_pair const &boundary, double time
     }
     else if (auto ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(first_bnd))
     {
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 0;
         b_init_ = b_0;
         c_init_ = a_0 + c_0;
@@ -108,8 +108,9 @@ void sor_cuda_boundary::initialise(boundary_1d_pair const &boundary, double time
     }
     else if (auto ptr = std::dynamic_pointer_cast<robin_boundary_1d>(first_bnd))
     {
-        const auto lin_val = two * space_step_ * ptr->linear_value(time);
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto lin_val =
+            two * space_step_ * (ptr->is_time_dependent() ? ptr->linear_value(time) : ptr->linear_value());
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 0;
         b_init_ = b_0 + a_0 * cst_val;
         c_init_ = a_0 + c_0;
@@ -180,7 +181,7 @@ void sor_cuda_boundary::finalise(boundary_1d_pair const &boundary, double time)
     auto const &second_bnd = boundary.second;
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(second_bnd))
     {
-        const auto cst_val = ptr->value(time);
+        const auto cst_val = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         end_index_ = discretization_size_ - 2;
         a_end_ = a;
         b_end_ = b;
@@ -188,7 +189,7 @@ void sor_cuda_boundary::finalise(boundary_1d_pair const &boundary, double time)
     }
     else if (auto ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(second_bnd))
     {
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         end_index_ = discretization_size_ - 1;
         a_end_ = a_end + c_end;
         b_end_ = b_end;
@@ -196,8 +197,9 @@ void sor_cuda_boundary::finalise(boundary_1d_pair const &boundary, double time)
     }
     else if (auto ptr = std::dynamic_pointer_cast<robin_boundary_1d>(second_bnd))
     {
-        const auto lin_val = two * space_step_ * ptr->linear_value(time);
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto lin_val =
+            two * space_step_ * (ptr->is_time_dependent() ? ptr->linear_value(time) : ptr->linear_value());
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         end_index_ = discretization_size_ - 1;
         a_end_ = a_end + c_end;
         b_end_ = b_end - c_end * lin_val;
@@ -258,7 +260,7 @@ const double sor_cuda_boundary::upper_boundary(boundary_1d_pair const &boundary,
     double ret{};
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(boundary.second))
     {
-        ret = ptr->value(time);
+        ret = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
     }
     return ret;
 }
@@ -278,7 +280,7 @@ const double sor_cuda_boundary::lower_boundary(boundary_1d_pair const &boundary,
     double ret{};
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(boundary.first))
     {
-        ret = ptr->value(time);
+        ret = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
     }
     return ret;
 }

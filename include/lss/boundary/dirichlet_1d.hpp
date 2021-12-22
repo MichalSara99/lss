@@ -16,12 +16,15 @@ using dirichlet_1d = lss_boundary::dirichlet_boundary_1d;
 struct dirichlet_1d_builder
 {
   private:
-    std::function<double(double)> value_;
+    double const_value_;
+    std::function<double(double)> fun_value_{nullptr};
 
   public:
     LSS_API explicit dirichlet_1d_builder();
 
     LSS_API dirichlet_1d_builder &value(const std::function<double(double)> &value);
+
+    LSS_API dirichlet_1d_builder &value(double value);
 
     LSS_API dirichlet_1d_ptr build();
 };

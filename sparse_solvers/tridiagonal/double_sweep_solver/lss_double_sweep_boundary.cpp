@@ -63,22 +63,22 @@ void double_sweep_boundary::initialise(boundary_1d_pair const &boundary, double 
     auto const &first_bnd = boundary.first;
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(first_bnd))
     {
-        const auto cst_val = ptr->value(time);
+        const auto cst_val = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 1;
         k_ = cst_val;
         l_ = double{};
     }
     else if (auto ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(first_bnd))
     {
-        const auto cst_val = ptr->value(time);
+        const auto cst_val = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 0;
         k_ = (f - a * space_step_ * two * cst_val) / b;
         l_ = mone * (a + c) / b;
     }
     else if (auto ptr = std::dynamic_pointer_cast<robin_boundary_1d>(first_bnd))
     {
-        const auto lin_val = ptr->linear_value(time);
-        const auto cst_val = ptr->value(time);
+        const auto lin_val = (ptr->is_time_dependent() ? ptr->linear_value(time) : ptr->linear_value());
+        const auto cst_val = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 0;
         const auto tmp = b + a * space_step_ * two * lin_val;
         k_ = (f - a * space_step_ * two * cst_val) / tmp;
@@ -136,17 +136,18 @@ void double_sweep_boundary::finalise(boundary_1d_pair const &boundary, const dou
     auto const &second_bnd = boundary.second;
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(second_bnd))
     {
-        upper_ = ptr->value(time);
+        upper_ = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
     }
     else if (auto ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(second_bnd))
     {
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         upper_ = (l_n * (k_nm1 - cst_val) + k_n) / (one - l_n * l_nm1);
     }
     else if (auto ptr = std::dynamic_pointer_cast<robin_boundary_1d>(second_bnd))
     {
-        const auto lin_val = two * space_step_ * ptr->linear_value(time);
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto lin_val =
+            two * space_step_ * (ptr->is_time_dependent() ? ptr->linear_value(time) : ptr->linear_value());
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         upper_ = (l_n * (k_nm1 - cst_val) + k_n) / (one - l_n * (l_nm1 - lin_val));
     }
     else
@@ -216,7 +217,7 @@ const double double_sweep_boundary::lower_boundary(boundary_1d_pair const &bound
     double ret{};
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(boundary.first))
     {
-        ret = ptr->value(time);
+        ret = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
     }
     return ret;
 }

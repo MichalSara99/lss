@@ -16,15 +16,17 @@ using robin_1d = lss_boundary::robin_boundary_1d;
 struct robin_1d_builder
 {
   private:
-    std::function<double(double)> linear_value_;
-    std::function<double(double)> value_;
+    double const_linear_value_, const_value_;
+    std::function<double(double)> fun_linear_value_;
+    std::function<double(double)> fun_value_;
 
   public:
     LSS_API explicit robin_1d_builder();
 
-    LSS_API robin_1d_builder &linear_value(const std::function<double(double)> &linear_value);
+    LSS_API robin_1d_builder &values(double linear_value, double value);
 
-    LSS_API robin_1d_builder &value(const std::function<double(double)> &value);
+    LSS_API robin_1d_builder &values(const std::function<double(double)> &linear_value,
+                                     const std::function<double(double)> &value);
 
     LSS_API robin_1d_ptr build();
 };

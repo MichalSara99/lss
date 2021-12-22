@@ -14,6 +14,15 @@
 int main()
 {
 
+     // ======================================================
+     // =============== lss_odes_2_degree_t ==================
+     // ======================================================
+     // test_impl_simple_ode_dirichlet_bc_cuda_solver_device();
+     // test_impl_simple_ode_dirichlet_neumann_bc_cuda_solver_device();
+     // test_impl_simple_ode_dirichlet_robin_bc_cuda_solver_device();
+     // test_impl_simple_ode_neumann_robin_bc_cuda_solver_device();
+     // test_impl_simple_ode1_neumann_robin_bc_cuda_solver_device();
+
     // ======================================================
     // ============= lss_core_cuda_solver_t =================
     // ======================================================

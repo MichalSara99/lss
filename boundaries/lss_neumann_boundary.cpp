@@ -6,9 +6,19 @@ neumann_boundary_1d::neumann_boundary_1d(const std::function<double(double)> &va
 {
 }
 
+neumann_boundary_1d::neumann_boundary_1d(double value) : boundary_1d(double{}, value)
+{
+}
+
 double neumann_boundary_1d::value(double time) const
 {
-    return this->const_(time);
+    LSS_ASSERT(is_time_dependent_ == true, "neumann_boundary_1d: Boundary must not be time independent.");
+    return this->const_fun_(time);
+}
+
+double neumann_boundary_1d::value() const
+{
+    return this->const_val_;
 }
 
 neumann_boundary_2d::neumann_boundary_2d(const std::function<double(double, double)> &value)

@@ -94,7 +94,7 @@ void thomas_lu_solver_boundary::initialise(boundary_1d_pair const &boundary, dou
     auto const first_bnd = boundary.first;
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(first_bnd))
     {
-        const auto cst_val = ptr->value(time);
+        const auto cst_val = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 1;
         beta_ = b_1;
         gamma_ = c_1 / beta_;
@@ -103,7 +103,7 @@ void thomas_lu_solver_boundary::initialise(boundary_1d_pair const &boundary, dou
     }
     else if (auto ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(first_bnd))
     {
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 0;
         beta_ = b_0;
         gamma_ = (a_0 + c_0) / beta_;
@@ -112,8 +112,9 @@ void thomas_lu_solver_boundary::initialise(boundary_1d_pair const &boundary, dou
     }
     else if (auto ptr = std::dynamic_pointer_cast<robin_boundary_1d>(first_bnd))
     {
-        const auto lin_val = two * space_step_ * ptr->linear_value(time);
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto lin_val =
+            two * space_step_ * (ptr->is_time_dependent() ? ptr->linear_value(time) : ptr->linear_value());
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         start_index_ = 0;
         beta_ = b_0 + a_0 * lin_val;
         gamma_ = (a_0 + c_0) / beta_;
@@ -186,7 +187,7 @@ void thomas_lu_solver_boundary::finalise(boundary_1d_pair const &boundary, doubl
     auto const second_bnd = boundary.second;
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(second_bnd))
     {
-        const auto cst_val = ptr->value(time);
+        const auto cst_val = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         end_index_ = discretization_size_ - 2;
         alpha_n_ = a;
         beta_n_ = b;
@@ -194,7 +195,7 @@ void thomas_lu_solver_boundary::finalise(boundary_1d_pair const &boundary, doubl
     }
     else if (auto ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(second_bnd))
     {
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         end_index_ = discretization_size_ - 1;
         alpha_n_ = a_end + c_end;
         beta_n_ = b_end;
@@ -202,8 +203,9 @@ void thomas_lu_solver_boundary::finalise(boundary_1d_pair const &boundary, doubl
     }
     else if (auto ptr = std::dynamic_pointer_cast<robin_boundary_1d>(second_bnd))
     {
-        const auto lin_val = two * space_step_ * ptr->linear_value(time);
-        const auto cst_val = two * space_step_ * ptr->value(time);
+        const auto lin_val =
+            two * space_step_ * (ptr->is_time_dependent() ? ptr->linear_value(time) : ptr->linear_value());
+        const auto cst_val = two * space_step_ * (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
         end_index_ = discretization_size_ - 1;
         alpha_n_ = a_end + c_end;
         beta_n_ = b_end - c_end * lin_val;
@@ -264,7 +266,7 @@ const double thomas_lu_solver_boundary::upper_boundary(boundary_1d_pair const &b
     auto const second_bnd = boundary.second;
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(second_bnd))
     {
-        ret = ptr->value(time);
+        ret = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
     }
 
     return ret;
@@ -287,7 +289,7 @@ const double thomas_lu_solver_boundary::lower_boundary(boundary_1d_pair const &b
     double ret{};
     if (auto ptr = std::dynamic_pointer_cast<dirichlet_boundary_1d>(boundary.first))
     {
-        ret = ptr->value(time);
+        ret = (ptr->is_time_dependent() ? ptr->value(time) : ptr->value());
     }
     return ret;
 }

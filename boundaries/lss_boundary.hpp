@@ -32,17 +32,25 @@ using lss_utility::sptr_t;
 class boundary_1d
 {
   protected:
-    std::function<double(double)> linear_;
-    std::function<double(double)> const_;
+    double linear_val_, const_val_;
+    std::function<double(double)> linear_fun_{nullptr};
+    std::function<double(double)> const_fun_{nullptr};
+    bool is_time_dependent_{true};
 
     explicit boundary_1d() = delete;
 
   public:
+    explicit boundary_1d(double linear, double constant);
+
     explicit boundary_1d(const std::function<double(double)> &linear, const std::function<double(double)> &constant);
 
     virtual ~boundary_1d();
 
+    bool const &is_time_dependent() const;
+
     LSS_API virtual double value(double time) const = 0;
+
+    LSS_API virtual double value() const = 0;
 };
 
 using boundary_1d_ptr = sptr_t<boundary_1d>;

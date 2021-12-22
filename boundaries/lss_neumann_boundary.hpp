@@ -34,9 +34,13 @@ class neumann_boundary_1d final : public boundary_1d
     neumann_boundary_1d() = delete;
 
   public:
-    neumann_boundary_1d(const std::function<double(double)> &value);
+    explicit neumann_boundary_1d(double value);
+
+    explicit neumann_boundary_1d(const std::function<double(double)> &value);
 
     LSS_API double value(double time) const override;
+
+    LSS_API double value() const override;
 };
 using neumann_boundary_1d_ptr = sptr_t<neumann_boundary_1d>;
 
@@ -53,7 +57,7 @@ class neumann_boundary_2d final : public boundary_2d
     neumann_boundary_2d() = delete;
 
   public:
-    neumann_boundary_2d(const std::function<double(double, double)> &value);
+    explicit neumann_boundary_2d(const std::function<double(double, double)> &value);
 
     LSS_API double value(double time, double space_arg) const override;
 };

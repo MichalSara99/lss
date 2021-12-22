@@ -34,7 +34,13 @@ class robin_boundary_1d final : public boundary_1d
     robin_boundary_1d() = delete;
 
   public:
-    robin_boundary_1d(const std::function<double(double)> &linear_value, const std::function<double(double)> &value);
+    explicit robin_boundary_1d(double linear_value, double value);
+
+    explicit robin_boundary_1d(const std::function<double(double)> &linear_value,
+                               const std::function<double(double)> &value);
+
+    LSS_API double linear_value() const;
+    LSS_API double value() const override;
 
     LSS_API double linear_value(double time) const;
     LSS_API double value(double time) const override;
@@ -54,8 +60,8 @@ class robin_boundary_2d final : public boundary_2d
     robin_boundary_2d() = delete;
 
   public:
-    robin_boundary_2d(const std::function<double(double, double)> &linear_value,
-                      const std::function<double(double, double)> &value);
+    explicit robin_boundary_2d(const std::function<double(double, double)> &linear_value,
+                               const std::function<double(double, double)> &value);
 
     LSS_API double linear_value(double time, double space_arg) const;
     LSS_API double value(double time, double space_arg) const override;

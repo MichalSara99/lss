@@ -37,9 +37,13 @@ class dirichlet_boundary_1d final : public boundary_1d
     dirichlet_boundary_1d() = delete;
 
   public:
-    dirichlet_boundary_1d(const std::function<double(double)> &value);
+    explicit dirichlet_boundary_1d(const std::function<double(double)> &value);
+
+    explicit dirichlet_boundary_1d(double value);
 
     LSS_API double value(double time) const override;
+
+    LSS_API double value() const override;
 };
 
 using dirichlet_boundary_1d_ptr = sptr_t<dirichlet_boundary_1d>;
@@ -57,7 +61,7 @@ class dirichlet_boundary_2d final : public boundary_2d
     dirichlet_boundary_2d() = delete;
 
   public:
-    dirichlet_boundary_2d(const std::function<double(double, double)> &value);
+    explicit dirichlet_boundary_2d(const std::function<double(double, double)> &value);
 
     LSS_API double value(double time, double space_arg) const override;
 };

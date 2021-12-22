@@ -46,14 +46,31 @@ void boundary_transform_1d::initialize(boundary_1d_pair const &boundary_pair,
     }
     else if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(lower_orig))
     {
-        auto const &lower_trans = [=](double t) -> double { return ptr->value(t) * a_der(zero); };
-        lower_ptr = std::make_shared<neumann_boundary_1d>(lower_trans);
+        if (ptr->is_time_dependent())
+        {
+            auto const &lower_trans = [=](double t) -> double { return ptr->value(t) * a_der(zero); };
+            lower_ptr = std::make_shared<neumann_boundary_1d>(lower_trans);
+        }
+        else
+        {
+            auto const lower_trans = ptr->value() * a_der(zero);
+            lower_ptr = std::make_shared<neumann_boundary_1d>(lower_trans);
+        }
     }
     else if (auto const &ptr = std::dynamic_pointer_cast<robin_boundary_1d>(lower_orig))
     {
-        auto const &lower_trans_lin = [=](double t) -> double { return ptr->linear_value(t) * a_der(zero); };
-        auto const &lower_trans = [=](double t) -> double { return ptr->value(t) * a_der(zero); };
-        lower_ptr = std::make_shared<robin_boundary_1d>(lower_trans_lin, lower_trans);
+        if (ptr->is_time_dependent())
+        {
+            auto const &lower_trans_lin = [=](double t) -> double { return ptr->linear_value(t) * a_der(zero); };
+            auto const &lower_trans = [=](double t) -> double { return ptr->value(t) * a_der(zero); };
+            lower_ptr = std::make_shared<robin_boundary_1d>(lower_trans_lin, lower_trans);
+        }
+        else
+        {
+            auto const lower_trans_lin = ptr->linear_value() * a_der(zero);
+            auto const lower_trans = ptr->value() * a_der(zero);
+            lower_ptr = std::make_shared<robin_boundary_1d>(lower_trans_lin, lower_trans);
+        }
     }
     else
     {
@@ -69,14 +86,31 @@ void boundary_transform_1d::initialize(boundary_1d_pair const &boundary_pair,
     }
     else if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_1d>(upper_orig))
     {
-        auto const &upper_trans = [=](double t) -> double { return ptr->value(t) * a_der(one); };
-        upper_ptr = std::make_shared<neumann_boundary_1d>(upper_trans);
+        if (ptr->is_time_dependent())
+        {
+            auto const &upper_trans = [=](double t) -> double { return ptr->value(t) * a_der(one); };
+            upper_ptr = std::make_shared<neumann_boundary_1d>(upper_trans);
+        }
+        else
+        {
+            auto const upper_trans = ptr->value() * a_der(one);
+            upper_ptr = std::make_shared<neumann_boundary_1d>(upper_trans);
+        }
     }
     else if (auto const &ptr = std::dynamic_pointer_cast<robin_boundary_1d>(upper_orig))
     {
-        auto const &upper_trans_lin = [=](double t) -> double { return ptr->linear_value(t) * a_der(one); };
-        auto const &upper_trans = [=](double t) -> double { return ptr->value(t) * a_der(one); };
-        upper_ptr = std::make_shared<robin_boundary_1d>(upper_trans_lin, upper_trans);
+        if (ptr->is_time_dependent())
+        {
+            auto const &upper_trans_lin = [=](double t) -> double { return ptr->linear_value(t) * a_der(one); };
+            auto const &upper_trans = [=](double t) -> double { return ptr->value(t) * a_der(one); };
+            upper_ptr = std::make_shared<robin_boundary_1d>(upper_trans_lin, upper_trans);
+        }
+        else
+        {
+            auto const upper_trans_lin = ptr->linear_value() * a_der(one);
+            auto const upper_trans = ptr->value() * a_der(one);
+            upper_ptr = std::make_shared<robin_boundary_1d>(upper_trans_lin, upper_trans);
+        }
     }
     else
     {
