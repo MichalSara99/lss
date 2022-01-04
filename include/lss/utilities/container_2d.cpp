@@ -3,58 +3,58 @@
 namespace lss
 {
 
-rmatrix_builder::rmatrix_builder()
+rmatrix_2d_builder::rmatrix_2d_builder()
 {
 }
 
-rmatrix_builder &rmatrix_builder::rows(std::size_t rows)
+rmatrix_2d_builder &rmatrix_2d_builder::rows(std::size_t rows)
 {
     rows_ = rows;
     return *this;
 }
 
-rmatrix_builder &rmatrix_builder::columns(std::size_t columns)
+rmatrix_2d_builder &rmatrix_2d_builder::columns(std::size_t columns)
 {
     columns_ = columns;
     return *this;
 }
 
-rmatrix_builder &rmatrix_builder::default_value(double value)
+rmatrix_2d_builder &rmatrix_2d_builder::default_value(double value)
 {
     dvalue_ = value;
     return *this;
 }
 
-rmatrix_ptr rmatrix_builder::build()
+rmatrix_2d_ptr rmatrix_2d_builder::build()
 {
-    return std::make_shared<rmatrix>(rows_, columns_, dvalue_);
+    return std::make_shared<rmatrix_2d>(rows_, columns_, dvalue_);
 }
 
-cmatrix_builder::cmatrix_builder()
+cmatrix_2d_builder::cmatrix_2d_builder()
 {
 }
 
-cmatrix_builder &cmatrix_builder::rows(std::size_t rows)
+cmatrix_2d_builder &cmatrix_2d_builder::rows(std::size_t rows)
 {
     rows_ = rows;
     return *this;
 }
 
-cmatrix_builder &cmatrix_builder::columns(std::size_t columns)
+cmatrix_2d_builder &cmatrix_2d_builder::columns(std::size_t columns)
 {
     columns_ = columns;
     return *this;
 }
 
-cmatrix_builder &cmatrix_builder::default_value(double value)
+cmatrix_2d_builder &cmatrix_2d_builder::default_value(double value)
 {
     dvalue_ = value;
     return *this;
 }
 
-cmatrix_ptr cmatrix_builder::build()
+cmatrix_2d_ptr cmatrix_2d_builder::build()
 {
-    return std::make_shared<cmatrix>(rows_, columns_, dvalue_);
+    return std::make_shared<cmatrix_2d>(rows_, columns_, dvalue_);
 }
 
 } // namespace lss

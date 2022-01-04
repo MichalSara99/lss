@@ -19,12 +19,13 @@ namespace lss_enumerations
 
 /**
     @enum  lss_enumerations::by_enum
-    @brief Row or column-wise ordering in containers
+    @brief Row, column or layer-wise ordering in containers
 **/
 enum class by_enum
 {
     Row,
     Column,
+    Layer,
 };
 
 /**

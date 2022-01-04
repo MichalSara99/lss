@@ -21,7 +21,7 @@ void output_curve(discretization_config_ptr const &discretization_config, grid_c
 }
 
 void output_surface(discretization_config_1d_ptr const &discretization_config,
-                    grid_config_1d_ptr const &grid_config_hints, rmatrix const &container, to to, std::ostream &out)
+                    grid_config_1d_ptr const &grid_config_hints, rmatrix_2d const &container, to to, std::ostream &out)
 {
     if (to == to::stream)
     {
@@ -38,7 +38,7 @@ void output_surface(discretization_config_1d_ptr const &discretization_config,
 }
 
 void output_surface(discretization_config_2d_ptr const &discretization_config,
-                    grid_config_2d_ptr const &grid_config_hints, rmatrix const &container, to to, std::ostream &out)
+                    grid_config_2d_ptr const &grid_config_hints, rmatrix_2d const &container, to to, std::ostream &out)
 {
     if (to == to::stream)
     {

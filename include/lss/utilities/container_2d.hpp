@@ -10,12 +10,12 @@
 namespace lss
 {
 
-using rmatrix = lss_containers::rmatrix;
-using rmatrix_ptr = lss_containers::rmatrix_ptr;
-using cmatrix = lss_containers::cmatrix;
-using cmatrix_ptr = lss_containers::cmatrix_ptr;
+using rmatrix_2d = lss_containers::rmatrix_2d;
+using rmatrix_2d_ptr = lss_containers::rmatrix_2d_ptr;
+using cmatrix_2d = lss_containers::cmatrix_2d;
+using cmatrix_2d_ptr = lss_containers::cmatrix_2d_ptr;
 
-struct rmatrix_builder
+struct rmatrix_2d_builder
 {
   private:
     std::size_t rows_;
@@ -23,18 +23,18 @@ struct rmatrix_builder
     double dvalue_;
 
   public:
-    LSS_API explicit rmatrix_builder();
+    LSS_API explicit rmatrix_2d_builder();
 
-    LSS_API rmatrix_builder &rows(std::size_t rows);
+    LSS_API rmatrix_2d_builder &rows(std::size_t rows);
 
-    LSS_API rmatrix_builder &columns(std::size_t columns);
+    LSS_API rmatrix_2d_builder &columns(std::size_t columns);
 
-    LSS_API rmatrix_builder &default_value(double value);
+    LSS_API rmatrix_2d_builder &default_value(double value);
 
-    LSS_API rmatrix_ptr build();
+    LSS_API rmatrix_2d_ptr build();
 };
 
-struct cmatrix_builder
+struct cmatrix_2d_builder
 {
   private:
     std::size_t rows_;
@@ -42,15 +42,15 @@ struct cmatrix_builder
     double dvalue_;
 
   public:
-    LSS_API explicit cmatrix_builder();
+    LSS_API explicit cmatrix_2d_builder();
 
-    LSS_API cmatrix_builder &rows(std::size_t rows);
+    LSS_API cmatrix_2d_builder &rows(std::size_t rows);
 
-    LSS_API cmatrix_builder &columns(std::size_t columns);
+    LSS_API cmatrix_2d_builder &columns(std::size_t columns);
 
-    LSS_API cmatrix_builder &default_value(double value);
+    LSS_API cmatrix_2d_builder &default_value(double value);
 
-    LSS_API cmatrix_ptr build();
+    LSS_API cmatrix_2d_ptr build();
 };
 
 } // namespace lss

@@ -477,6 +477,7 @@ copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</C
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="include\lss\utilities\container_3d.hpp" />
     <ClInclude Include="include\lss\utilities\range.hpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
@@ -595,6 +596,7 @@ copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</C
     <ClCompile Include="common\lss_utility.cpp" />
     <ClCompile Include="common\lss_xml.cpp" />
     <ClCompile Include="containers\lss_container_2d.cpp" />
+    <ClCompile Include="containers\lss_container_3d.cpp" />
     <ClCompile Include="containers\lss_flat_matrix.cpp" />
     <ClCompile Include="discretization\lss_discretization.cpp" />
     <ClCompile Include="discretization\lss_discretization_config.cpp" />
@@ -820,6 +822,7 @@ copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</C
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="include\lss\utilities\container_3d.cpp" />
     <ClCompile Include="include\lss\utilities\range.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>
@@ -921,6 +924,7 @@ copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</C
     <ClCompile Include="sparse_solvers\tridiagonal\thomas_lu_solver\lss_thomas_lu_boundary.cpp" />
     <ClCompile Include="sparse_solvers\tridiagonal\thomas_lu_solver\lss_thomas_lu_solver.cpp" />
     <ClCompile Include="transformation\lss_boundary_transform.cpp" />
+    <ClInclude Include="unit_tests\common\lss_container_3d_t.hpp" />
     <ClInclude Include="unit_tests\common\lss_xml_t.hpp" />
     <ClInclude Include="unit_tests\ode_solvers\second_degree\lss_odes_2_degree_t.hpp" />
     <ClInclude Include="unit_tests\pde_solvers\1d\lss_advection_equation_t.hpp" />

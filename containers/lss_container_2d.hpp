@@ -227,11 +227,11 @@ template <by_enum by> void copy(container_2d<by> &dest, container_2d<by> const &
     }
 }
 
-using rmatrix = container_2d<by_enum::Row>;
-using cmatrix = container_2d<by_enum::Column>;
+using rmatrix_2d = container_2d<by_enum::Row>;
+using cmatrix_2d = container_2d<by_enum::Column>;
 
-using rmatrix_ptr = sptr_t<rmatrix>;
-using cmatrix_ptr = sptr_t<cmatrix>;
+using rmatrix_2d_ptr = sptr_t<rmatrix_2d>;
+using cmatrix_2d_ptr = sptr_t<cmatrix_2d>;
 
 } // namespace lss_containers
 

@@ -31,11 +31,11 @@ LSS_API extern void output_curve(discretization_config_ptr const &discretization
                                  to to, std::ostream &out = std::cout);
 
 LSS_API extern void output_surface(discretization_config_1d_ptr const &discretization_config,
-                                   grid_config_1d_ptr const &grid_config_hints, rmatrix const &container, to to,
+                                   grid_config_1d_ptr const &grid_config_hints, rmatrix_2d const &container, to to,
                                    std::ostream &out = std::cout);
 
 LSS_API extern void output_surface(discretization_config_2d_ptr const &discretization_config,
-                                   grid_config_2d_ptr const &grid_config_hints, rmatrix const &container, to to,
+                                   grid_config_2d_ptr const &grid_config_hints, rmatrix_2d const &container, to to,
                                    std::ostream &out = std::cout);
 
 } // namespace lss

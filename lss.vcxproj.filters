@@ -759,6 +759,12 @@
     <ClInclude Include="include\lss\ode\2nd\implicit_ode_tp_solver.hpp">
       <Filter>include\lss\ode\2nd</Filter>
     </ClInclude>
+    <ClInclude Include="unit_tests\common\lss_container_3d_t.hpp">
+      <Filter>unit_tests\common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lss\utilities\container_3d.hpp">
+      <Filter>include\lss\utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common\lss_range.cpp">
@@ -1180,6 +1186,12 @@
     </ClCompile>
     <ClCompile Include="include\lss\ode\2nd\implicit_ode_tp_solver.cpp">
       <Filter>include\lss\ode\2nd</Filter>
+    </ClCompile>
+    <ClCompile Include="containers\lss_container_3d.cpp">
+      <Filter>containers</Filter>
+    </ClCompile>
+    <ClCompile Include="include\lss\utilities\container_3d.cpp">
+      <Filter>include\lss\utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
