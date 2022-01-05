@@ -61,7 +61,28 @@ class neumann_boundary_2d final : public boundary_2d
 
     LSS_API double value(double time, double space_arg) const override;
 };
+
 using neumann_boundary_2d_ptr = sptr_t<neumann_boundary_2d>;
+
+/**
+
+    @class   neumann_boundary_3d
+    @brief   represents general 3D Neumann boundary
+    @details ~
+
+**/
+class neumann_boundary_3d final : public boundary_3d
+{
+  protected:
+    neumann_boundary_3d() = delete;
+
+  public:
+    explicit neumann_boundary_3d(const std::function<double(double, double, double)> &value);
+
+    LSS_API double value(double time, double space_1_arg, double space_2_arg) const override;
+};
+
+using neumann_boundary_3d_ptr = sptr_t<neumann_boundary_3d>;
 
 } // namespace lss_boundary
 

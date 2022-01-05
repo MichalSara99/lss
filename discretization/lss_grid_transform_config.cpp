@@ -115,4 +115,105 @@ double grid_transform_config_2d::value_for_2(double eta)
     return (init_2_ + beta_ * std::sinh(d_ * eta));
 }
 
+grid_transform_config_3d::grid_transform_config_3d(pde_discretization_config_3d_ptr const &discretization_config,
+                                                   grid_config_hints_3d_ptr const &grid_hints)
+{
+    initialize(discretization_config, grid_hints);
+}
+
+void grid_transform_config_3d::initialize(pde_discretization_config_3d_ptr const &discretization_config,
+                                          grid_config_hints_3d_ptr const &grid_hints)
+{
+    auto const low_1 = std::get<0>(discretization_config->space_range())->lower();
+    auto const high_1 = std::get<0>(discretization_config->space_range())->upper();
+    auto const low_2 = std::get<1>(discretization_config->space_range())->lower();
+    auto const high_2 = std::get<1>(discretization_config->space_range())->upper();
+    auto const low_3 = std::get<2>(discretization_config->space_range())->lower();
+    auto const high_3 = std::get<2>(discretization_config->space_range())->upper();
+    auto const point_1 = grid_hints->accumulation_points().first;
+    auto const point_2 = grid_hints->accumulation_points().second;
+    alpha_1_ = high_1 - low_1;
+    alpha_2_ = high_3 - low_3;
+    beta_ = high_2 - low_2;
+    // in case non-uniform spacing is requested alpha and beta are overriden
+    if (grid_hints->grid() == grid_enum::Nonuniform)
+    {
+        auto const s_1 = grid_hints->alpha_scales().first;
+        auto const s_2 = grid_hints->alpha_scales().second;
+        alpha_1_ = (point_1 - low_1) / s_1;
+        alpha_2_ = (point_2 - low_3) / s_2;
+        beta_ = (high_2 - low_2) / grid_hints->beta_scale();
+    }
+    init_1_ = point_1;
+    init_2_ = low_2;
+    init_3_ = point_2;
+    c_[0] = std::asinh((high_1 - point_1) / alpha_1_);
+    c_[1] = std::asinh((low_1 - point_1) / alpha_1_);
+    d_ = std::asinh((high_2 - low_2) / beta_);
+    e_[0] = std::asinh((high_3 - point_2) / alpha_2_);
+    e_[1] = std::asinh((low_3 - point_2) / alpha_2_);
+    auto const c_diff = (c_[0] - c_[1]);
+    auto const e_diff = (e_[0] - e_[1]);
+
+    // initialize derivatives:
+    auto const one = static_cast<double>(1.0);
+    a_1_der_ = [=](double zeta) { return (alpha_1_ * c_diff * std::cosh(c_[0] * zeta + c_[1] * (one - zeta))); };
+    a_2_der_ = [=](double zeta) {
+        return (alpha_1_ * c_diff * c_diff * std::sinh(c_[0] * zeta + c_[1] * (one - zeta)));
+    };
+
+    b_1_der_ = [=](double eta) { return (beta_ * d_ * std::cosh(d_ * eta)); };
+    b_2_der_ = [=](double eta) { return (beta_ * d_ * d_ * std::sinh(d_ * eta)); };
+
+    c_1_der_ = [=](double ny) { return (alpha_2_ * e_diff * std::cosh(e_[0] * ny + e_[1] * (one - ny))); };
+    c_2_der_ = [=](double ny) { return (alpha_2_ * e_diff * e_diff * std::sinh(e_[0] * ny + e_[1] * (one - ny))); };
+}
+
+std::function<double(double)> const &grid_transform_config_3d::a_1_derivative() const
+{
+    return a_1_der_;
+}
+
+std::function<double(double)> const &grid_transform_config_3d::a_2_derivative() const
+{
+    return a_2_der_;
+}
+
+std::function<double(double)> const &grid_transform_config_3d::b_1_derivative() const
+{
+    return b_1_der_;
+}
+
+std::function<double(double)> const &grid_transform_config_3d::b_2_derivative() const
+{
+    return b_2_der_;
+}
+
+std::function<double(double)> const &grid_transform_config_3d::c_1_derivative() const
+{
+    return c_1_der_;
+}
+
+std::function<double(double)> const &grid_transform_config_3d::c_2_derivative() const
+{
+    return c_2_der_;
+}
+
+double grid_transform_config_3d::value_for_1(double zeta)
+{
+    auto const one = static_cast<double>(1.0);
+    return (init_1_ + alpha_1_ * std::sinh(c_[0] * zeta + c_[1] * (one - zeta)));
+}
+
+double grid_transform_config_3d::value_for_2(double eta)
+{
+    return (init_2_ + beta_ * std::sinh(d_ * eta));
+}
+
+double grid_transform_config_3d::value_for_3(double ny)
+{
+    auto const one = static_cast<double>(1.0);
+    return (init_3_ + alpha_2_ * std::sinh(e_[0] * ny + e_[1] * (one - ny)));
+}
+
 } // namespace lss_grids

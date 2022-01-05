@@ -39,8 +39,6 @@ struct grid_1d
     static double transformed_value(grid_transform_config_1d_ptr const &grid_trans_config, double zeta);
 };
 
-using grid_1d_ptr = sptr_t<grid_1d>;
-
 /**
     2D grid structure
  */
@@ -64,7 +62,40 @@ struct grid_2d
     static double transformed_value_2(grid_transform_config_2d_ptr const &grid_trans_config, double eta);
 };
 
+/**
+    3D grid structure
+ */
+
+struct grid_3d
+{
+    static double value_1(grid_config_3d_ptr const &grid_config, std::size_t const &idx);
+
+    static double value_2(grid_config_3d_ptr const &grid_config, std::size_t const &idx);
+
+    static double value_3(grid_config_3d_ptr const &grid_config, std::size_t const &idx);
+
+    static double step_1(grid_config_3d_ptr const &grid_config);
+
+    static double step_2(grid_config_3d_ptr const &grid_config);
+
+    static double step_3(grid_config_3d_ptr const &grid_config);
+
+    static std::size_t index_of_1(grid_config_3d_ptr const &grid_config, double zeta);
+
+    static std::size_t index_of_2(grid_config_3d_ptr const &grid_config, double eta);
+
+    static std::size_t index_of_3(grid_config_3d_ptr const &grid_config, double ny);
+
+    static double transformed_value_1(grid_transform_config_3d_ptr const &grid_trans_config, double zeta);
+
+    static double transformed_value_2(grid_transform_config_3d_ptr const &grid_trans_config, double eta);
+
+    static double transformed_value_3(grid_transform_config_3d_ptr const &grid_trans_config, double ny);
+};
+
+using grid_1d_ptr = sptr_t<grid_1d>;
 using grid_2d_ptr = sptr_t<grid_2d>;
+using grid_3d_ptr = sptr_t<grid_3d>;
 
 } // namespace lss_grids
 #endif ///_LSS_GRID_HPP_

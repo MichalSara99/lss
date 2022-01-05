@@ -24,6 +24,7 @@ namespace lss_grids
 {
 using lss_discretization::discretization_config_1d_ptr;
 using lss_pde_solvers::pde_discretization_config_2d_ptr;
+using lss_pde_solvers::pde_discretization_config_3d_ptr;
 using lss_utility::sptr_t;
 
 /**
@@ -49,8 +50,6 @@ struct grid_transform_config_1d
 
     double value_for(double zeta);
 };
-
-using grid_transform_config_1d_ptr = sptr_t<grid_transform_config_1d>;
 
 /**
     2D grid_config structure
@@ -86,7 +85,50 @@ struct grid_transform_config_2d
     double value_for_2(double eta);
 };
 
+/**
+    3D grid_config structure
+ */
+struct grid_transform_config_3d
+{
+  private:
+    double init_1_;
+    double init_2_;
+    double init_3_;
+    double alpha_1_, alpha_2_;
+    double beta_;
+    double c_[2];
+    double e_[2];
+    double d_;
+
+    std::function<double(double)> a_1_der_;
+    std::function<double(double)> a_2_der_;
+    std::function<double(double)> b_1_der_;
+    std::function<double(double)> b_2_der_;
+    std::function<double(double)> c_1_der_;
+    std::function<double(double)> c_2_der_;
+
+    void initialize(pde_discretization_config_3d_ptr const &discretization_config,
+                    grid_config_hints_3d_ptr const &grid_hints);
+
+  public:
+    explicit grid_transform_config_3d(pde_discretization_config_3d_ptr const &discretization_config,
+                                      grid_config_hints_3d_ptr const &grid_hints);
+
+    std::function<double(double)> const &a_1_derivative() const;
+    std::function<double(double)> const &a_2_derivative() const;
+    std::function<double(double)> const &b_1_derivative() const;
+    std::function<double(double)> const &b_2_derivative() const;
+    std::function<double(double)> const &c_1_derivative() const;
+    std::function<double(double)> const &c_2_derivative() const;
+
+    double value_for_1(double zeta);
+    double value_for_2(double eta);
+    double value_for_3(double ny);
+};
+
+using grid_transform_config_1d_ptr = sptr_t<grid_transform_config_1d>;
 using grid_transform_config_2d_ptr = sptr_t<grid_transform_config_2d>;
+using grid_transform_config_3d_ptr = sptr_t<grid_transform_config_3d>;
 
 ///////////////////////////////////////////////////////////////////////////////////////
 

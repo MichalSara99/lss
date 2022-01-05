@@ -88,8 +88,53 @@ struct pde_discretization_config_2d
     LSS_API double time_step() const;
 };
 
+/**
+    3D pde_discretization_config structure
+ */
+struct pde_discretization_config_3d
+{
+  private:
+    range_ptr space_range_1_;
+    range_ptr space_range_2_;
+    range_ptr space_range_3_;
+    range_ptr time_range_;
+    std::size_t number_of_space_points_1_;
+    std::size_t number_of_space_points_2_;
+    std::size_t number_of_space_points_3_;
+    std::size_t number_of_time_points_;
+
+    explicit pde_discretization_config_3d() = delete;
+
+  public:
+    explicit pde_discretization_config_3d(range_ptr const &space_range_1, range_ptr const &space_range_2,
+                                          range_ptr const &space_range_3, std::size_t const &number_of_space_points_1,
+                                          std::size_t const &number_of_space_points_2,
+                                          std::size_t const &number_of_space_points_3, range_ptr const &time_range,
+                                          std::size_t const &number_of_time_points);
+    ~pde_discretization_config_3d();
+
+    LSS_API sptr_t<pde_discretization_config_1d> const pde_discretization_1() const;
+
+    LSS_API sptr_t<pde_discretization_config_1d> const pde_discretization_2() const;
+
+    LSS_API sptr_t<pde_discretization_config_1d> const pde_discretization_3() const;
+
+    LSS_API std::tuple<range_ptr, range_ptr, range_ptr> const space_range() const;
+
+    LSS_API range_ptr const &time_range() const;
+
+    LSS_API std::tuple<std::size_t, std::size_t, std::size_t> const number_of_space_points() const;
+
+    LSS_API std::size_t number_of_time_points() const;
+
+    LSS_API std::tuple<double, double, double> space_step() const;
+
+    LSS_API double time_step() const;
+};
+
 using pde_discretization_config_1d_ptr = sptr_t<pde_discretization_config_1d>;
 using pde_discretization_config_2d_ptr = sptr_t<pde_discretization_config_2d>;
+using pde_discretization_config_3d_ptr = sptr_t<pde_discretization_config_3d>;
 
 } // namespace lss_pde_solvers
 

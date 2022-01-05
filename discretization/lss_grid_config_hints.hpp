@@ -50,10 +50,8 @@ struct grid_config_hints_1d
     LSS_API grid_enum grid() const;
 };
 
-using grid_config_hints_1d_ptr = sptr_t<grid_config_hints_1d>;
-
 /**
-    @struct grid_config_hints_1d
+    @struct grid_config_hints_2d
     @brief  2D grid_config_hints structure
 **/
 struct grid_config_hints_2d
@@ -84,7 +82,37 @@ struct grid_config_hints_2d
     LSS_API grid_enum grid() const;
 };
 
+/**
+    @struct grid_config_hints_3d
+    @brief  3D grid_config_hints structure
+**/
+struct grid_config_hints_3d
+{
+  private:
+    double accumulation_point_1_;
+    double accumulation_point_2_;
+    double alpha_scale_1_;
+    double alpha_scale_2_;
+    double beta_scale_;
+    grid_enum grid_;
+
+  public:
+    explicit grid_config_hints_3d(double accumulation_point_1 = double(0.0), double accumulation_point_2 = double(0.0),
+                                  double alpha_scale_1 = double(3.0), double alpha_scale_2 = double(3.0),
+                                  double beta_scale = double(50.0), grid_enum grid_type = grid_enum::Uniform);
+
+    LSS_API std::pair<double, double> accumulation_points() const;
+
+    LSS_API std::pair<double, double> alpha_scales() const;
+
+    LSS_API double beta_scale() const;
+
+    LSS_API grid_enum grid() const;
+};
+
+using grid_config_hints_1d_ptr = sptr_t<grid_config_hints_1d>;
 using grid_config_hints_2d_ptr = sptr_t<grid_config_hints_2d>;
+using grid_config_hints_3d_ptr = sptr_t<grid_config_hints_3d>;
 
 ///////////////////////////////////////////////////////////////////////////////////////
 

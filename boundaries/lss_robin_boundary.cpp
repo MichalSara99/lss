@@ -47,4 +47,19 @@ double robin_boundary_2d::value(double time, double space_arg) const
 {
     return this->const_(time, space_arg);
 }
+
+robin_boundary_3d::robin_boundary_3d(const std::function<double(double, double, double)> &linear_value,
+                                     const std::function<double(double, double, double)> &value)
+    : boundary_3d(linear_value, value)
+{
+}
+
+double robin_boundary_3d::linear_value(double time, double space_1_arg, double space_2_arg) const
+{
+    return this->linear_(time, space_1_arg, space_2_arg);
+}
+double robin_boundary_3d::value(double time, double space_1_arg, double space_2_arg) const
+{
+    return this->const_(time, space_1_arg, space_2_arg);
+}
 } // namespace lss_boundary

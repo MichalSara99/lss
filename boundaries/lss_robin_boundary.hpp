@@ -68,6 +68,28 @@ class robin_boundary_2d final : public boundary_2d
 };
 
 using robin_boundary_2d_ptr = sptr_t<robin_boundary_2d>;
+
+/**
+
+    @class   robin_boundary_3d
+    @brief   represents general 3D Robin boundary
+    @details ~
+
+**/
+class robin_boundary_3d final : public boundary_3d
+{
+  protected:
+    robin_boundary_3d() = delete;
+
+  public:
+    explicit robin_boundary_3d(const std::function<double(double, double, double)> &linear_value,
+                               const std::function<double(double, double, double)> &value);
+
+    LSS_API double linear_value(double time, double space_1_arg, double space_2_arg) const;
+    LSS_API double value(double time, double space_1_arg, double space_2_arg) const override;
+};
+
+using robin_boundary_2d_ptr = sptr_t<robin_boundary_2d>;
 } // namespace lss_boundary
 
 #endif ///_LSS_ROBIN_BOUNDARY_1D_HPP_

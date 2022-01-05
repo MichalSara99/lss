@@ -259,6 +259,12 @@
     <Filter Include="include\lss\ode\configs">
       <UniqueIdentifier>{66d3a721-cc2a-47c5-846a-8d3278d2712e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pde_solvers\3d">
+      <UniqueIdentifier>{3c077afb-639e-4222-af30-c67f19e494a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\3d\heat_type">
+      <UniqueIdentifier>{51b89d72-a9bc-486c-8d49-6f3bf593a0e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\lss_enumerations.hpp">

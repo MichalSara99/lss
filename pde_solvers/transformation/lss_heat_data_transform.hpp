@@ -16,8 +16,10 @@ namespace lss_pde_solvers
 using lss_enumerations::dimension_enum;
 using lss_grids::grid_1d;
 using lss_grids::grid_2d;
+using lss_grids::grid_3d;
 using lss_grids::grid_transform_config_1d_ptr;
 using lss_grids::grid_transform_config_2d_ptr;
+using lss_grids::grid_transform_config_3d_ptr;
 using lss_utility::range;
 using lss_utility::sptr_t;
 
@@ -104,9 +106,69 @@ struct heat_data_transform_2d
     std::function<double(double, double, double)> const &f_coefficient() const;
 };
 
+/**
+    3D heat_data_transform structure
+ */
+struct heat_data_transform_3d
+{
+  private:
+    bool is_heat_source_set_{false};
+    std::function<double(double, double, double, double)> a_coeff_{nullptr};
+    std::function<double(double, double, double, double)> b_coeff_{nullptr};
+    std::function<double(double, double, double, double)> c_coeff_{nullptr};
+    std::function<double(double, double, double, double)> d_coeff_{nullptr};
+    std::function<double(double, double, double, double)> e_coeff_{nullptr};
+    std::function<double(double, double, double, double)> f_coeff_{nullptr};
+    std::function<double(double, double, double, double)> g_coeff_{nullptr};
+    std::function<double(double, double, double, double)> h_coeff_{nullptr};
+    std::function<double(double, double, double, double)> i_coeff_{nullptr};
+    std::function<double(double, double, double, double)> j_coeff_{nullptr};
+    std::function<double(double, double, double)> init_coeff_{nullptr};
+    std::function<double(double, double, double, double)> src_coeff_{nullptr};
+
+    void initialize(heat_data_config_3d_ptr const &heat_data_config,
+                    grid_transform_config_3d_ptr const &grid_transform_config);
+
+    explicit heat_data_transform_3d() = delete;
+
+  public:
+    explicit heat_data_transform_3d(heat_data_config_3d_ptr const &heat_data_config,
+                                    grid_transform_config_3d_ptr const &grid_transform_config);
+
+    ~heat_data_transform_3d();
+
+    bool const &is_heat_source_set() const;
+
+    std::function<double(double, double, double, double)> heat_source() const;
+
+    std::function<double(double, double, double)> const &initial_condition() const;
+
+    std::function<double(double, double, double, double)> const &a_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &b_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &c_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &d_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &e_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &f_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &g_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &h_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &i_coefficient() const;
+
+    std::function<double(double, double, double, double)> const &j_coefficient() const;
+};
+
 using heat_data_transform_1d_ptr = sptr_t<heat_data_transform_1d>;
 
 using heat_data_transform_2d_ptr = sptr_t<heat_data_transform_2d>;
+
+using heat_data_transform_3d_ptr = sptr_t<heat_data_transform_3d>;
 
 } // namespace lss_pde_solvers
 

@@ -17,14 +17,17 @@
 #include "../common/lss_enumerations.hpp"
 #include "../common/lss_utility.hpp"
 #include "../containers/lss_container_2d.hpp"
+#include "../containers/lss_container_3d.hpp"
 #include "lss_grid.hpp"
 #include "lss_grid_config.hpp"
 
 using lss_containers::container_2d;
+using lss_containers::container_3d;
 using lss_enumerations::by_enum;
 using lss_enumerations::dimension_enum;
 using lss_grids::grid_config_1d_ptr;
 using lss_grids::grid_config_2d_ptr;
+using lss_grids::grid_config_3d_ptr;
 
 /**
     1D discretization structure
@@ -107,6 +110,38 @@ template <template <typename, typename> typename container, typename allocator> 
     static void of_function(grid_config_2d_ptr const &grid_config, double const &time,
                             std::function<double(double, double, double)> const &fun, std::size_t const &rows,
                             std::size_t const &cols, container<double, allocator> &cont);
+};
+
+/**
+    3D discretization structure
+ */
+template <template <typename, typename> typename container, typename allocator> struct discretization_3d
+{
+  public:
+    /**
+     * Discretize function F(x,y,z) where x=first dim variable,
+     *  y = second dim variable, z = third dim variable
+     *
+     * \param grid_config - 3D grid config object
+     * \param fun - function F(x,y,z)
+     * \param container_fun - 3D container for output
+     */
+    static void of_function(grid_config_3d_ptr const &grid_config,
+                            std::function<double(double, double, double)> const &fun,
+                            container_3d<by_enum::Row> &container_fun);
+
+    /**
+     * Discretize function F(t,x,y,z) where t=time, x=first dim variable,
+     *  y = second dim variable, z = third dim variable
+     *
+     * \param grid_config - 3D grid config object
+     * \param time  - time valraible t
+     * \param fun - function F(t,x,y,z)
+     * \param container_fun_t - 3D container for output
+     */
+    static void of_function(grid_config_3d_ptr const &grid_config, double const &time,
+                            std::function<double(double, double, double, double)> const &fun,
+                            container_3d<by_enum::Row> &container_fun_t);
 };
 
 #endif ///_LSS_DISCRETIZATION_HPP_

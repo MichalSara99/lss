@@ -5,8 +5,10 @@
 
 using lss_grids::grid_1d;
 using lss_grids::grid_2d;
+using lss_grids::grid_3d;
 using lss_grids::grid_config_1d_ptr;
 using lss_grids::grid_config_2d_ptr;
+using lss_grids::grid_config_3d_ptr;
 
 // specialization for std::vector:
 
@@ -94,6 +96,53 @@ void discretization_2d<std::vector, std::allocator<double>>::of_function(
         {
             value = fun(time, grid_2d::value_1(grid_config, r), grid_2d::value_2(grid_config, c));
             cont[c + r * cols] = value;
+        }
+    }
+}
+
+template <>
+void discretization_3d<std::vector, std::allocator<double>>::of_function(
+    grid_config_3d_ptr const &grid_config, std::function<double(double, double, double)> const &fun,
+    container_3d<by_enum::Row> &container_fun)
+{
+    LSS_ASSERT(container_fun.rows() > 0, "The input container must be initialized.");
+    LSS_ASSERT(container_fun.columns() > 0, "The input container must be initialized.");
+    LSS_ASSERT(container_fun.layers() > 0, "The input container must be initialized.");
+    double value{};
+    for (std::size_t l = 0; l < container_fun.layers(); ++l)
+    {
+        for (std::size_t r = 0; r < container_fun.rows(); ++r)
+        {
+            for (std::size_t c = 0; c < container_fun.columns(); ++c)
+            {
+                value = fun(grid_3d::value_1(grid_config, r), grid_3d::value_2(grid_config, c),
+                            grid_3d::value_3(grid_config, l));
+                container_fun(r, c, l, value);
+            }
+        }
+    }
+}
+
+template <>
+void discretization_3d<std::vector, std::allocator<double>>::of_function(
+    grid_config_3d_ptr const &grid_config, double const &time,
+    std::function<double(double, double, double, double)> const &fun, container_3d<by_enum::Row> &container_fun_t)
+{
+    LSS_ASSERT(container_fun_t.rows() > 0, "The input container must be initialized.");
+    LSS_ASSERT(container_fun_t.columns() > 0, "The input container must be initialized.");
+    LSS_ASSERT(container_fun_t.layers() > 0, "The input container must be initialized.");
+    double value{};
+
+    for (std::size_t l = 0; l < container_fun_t.layers(); ++l)
+    {
+        for (std::size_t r = 0; r < container_fun_t.rows(); ++r)
+        {
+            for (std::size_t c = 0; c < container_fun_t.columns(); ++c)
+            {
+                value = fun(time, grid_3d::value_1(grid_config, r), grid_3d::value_2(grid_config, c),
+                            grid_3d::value_3(grid_config, l));
+                container_fun_t(r, c, l, value);
+            }
         }
     }
 }

@@ -31,4 +31,14 @@ boundary_2d ::~boundary_2d()
 {
 }
 
+boundary_3d::boundary_3d(const std::function<double(double, double, double)> &linear,
+                         const std::function<double(double, double, double)> &constant)
+    : linear_{linear}, const_{constant}
+{
+}
+
+boundary_3d ::~boundary_3d()
+{
+}
+
 } // namespace lss_boundary

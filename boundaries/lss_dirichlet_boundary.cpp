@@ -31,4 +31,14 @@ double dirichlet_boundary_2d::value(double time, double space_arg) const
     return this->const_(time, space_arg);
 }
 
+dirichlet_boundary_3d::dirichlet_boundary_3d(const std::function<double(double, double, double)> &value)
+    : boundary_3d(nullptr, value)
+{
+}
+
+double dirichlet_boundary_3d::value(double time, double space_1_arg, double space_2_arg) const
+{
+    return this->const_(time, space_1_arg, space_2_arg);
+}
+
 } // namespace lss_boundary

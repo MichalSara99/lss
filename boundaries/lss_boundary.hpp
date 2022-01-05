@@ -83,6 +83,33 @@ class boundary_2d
 using boundary_2d_ptr = sptr_t<boundary_2d>;
 using boundary_2d_pair = std::pair<boundary_2d_ptr, boundary_2d_ptr>;
 
+/**
+
+    @class   boundary_3d
+    @brief   represents general 3D boundary
+    @details ~
+
+**/
+class boundary_3d
+{
+  protected:
+    std::function<double(double, double, double)> linear_;
+    std::function<double(double, double, double)> const_;
+
+    explicit boundary_3d() = delete;
+
+  public:
+    explicit boundary_3d(const std::function<double(double, double, double)> &linear,
+                         const std::function<double(double, double, double)> &constant);
+
+    virtual ~boundary_3d();
+
+    LSS_API virtual double value(double time, double space_1_arg, double space_2_arg) const = 0;
+};
+
+using boundary_3d_ptr = sptr_t<boundary_3d>;
+using boundary_3d_pair = std::pair<boundary_3d_ptr, boundary_3d_ptr>;
+
 } // namespace lss_boundary
 
 #endif ///_LSS_BOUNDARY_HPP_

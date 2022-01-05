@@ -68,6 +68,26 @@ class dirichlet_boundary_2d final : public boundary_2d
 
 using dirichlet_boundary_2d_ptr = sptr_t<dirichlet_boundary_2d>;
 
+/**
+
+    @class   dirichlet_boundary_3d
+    @brief   represents general 3D Dirichlet boundary
+    @details ~
+
+**/
+class dirichlet_boundary_3d final : public boundary_3d
+{
+  protected:
+    dirichlet_boundary_3d() = delete;
+
+  public:
+    explicit dirichlet_boundary_3d(const std::function<double(double, double, double)> &value);
+
+    LSS_API double value(double time, double space_1_arg, double space_2_arg) const override;
+};
+
+using dirichlet_boundary_3d_ptr = sptr_t<dirichlet_boundary_3d>;
+
 } // namespace lss_boundary
 
 #endif ///_LSS_DIRICHLET_BOUNDARY_HPP_
