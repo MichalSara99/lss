@@ -53,4 +53,11 @@ void tridiagonal_solver::solve(boundary_2d_pair const &boundary, container_t &so
     kernel(boundary, solution, factorization_, at_time, space_arg);
 }
 
+void tridiagonal_solver::solve(boundary_3d_pair const &boundary, container_t &solution, double at_time,
+                               double space_1_arg, double space_2_arg)
+{
+    LSS_ASSERT(solution.size() == discretization_size_, "Incorrect size of solution container");
+    kernel(boundary, solution, factorization_, at_time, space_1_arg, space_2_arg);
+}
+
 } // namespace lss_tridiagonal_solver

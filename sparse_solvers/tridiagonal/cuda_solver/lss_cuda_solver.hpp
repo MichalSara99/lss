@@ -14,6 +14,7 @@ namespace lss_cuda_solver
 
 using lss_boundary::boundary_1d_pair;
 using lss_boundary::boundary_2d_pair;
+using lss_boundary::boundary_3d_pair;
 using lss_core_cuda_solver::real_sparse_solver_cuda;
 using lss_enumerations::factorization_enum;
 using lss_enumerations::memory_space_enum;
@@ -29,7 +30,10 @@ template <memory_space_enum memory_space> class cuda_solver : public lss_tridiag
                 double time) override;
 
     void kernel(boundary_2d_pair const &boundary, container_t &solution, factorization_enum factorization, double time,
-                double space_args) override;
+                double space_arg) override;
+
+    void kernel(boundary_3d_pair const &boundary, container_t &solution, factorization_enum factorization, double time,
+                double space_1_arg, double space_2_arg) override;
 
     void initialize();
 

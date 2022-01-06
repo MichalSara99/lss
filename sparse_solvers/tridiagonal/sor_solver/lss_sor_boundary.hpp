@@ -12,6 +12,7 @@ namespace lss_sor_solver
 
 using lss_boundary::boundary_1d_pair;
 using lss_boundary::boundary_2d_pair;
+using lss_boundary::boundary_3d_pair;
 using lss_utility::sptr_t;
 using quad_t = std::tuple<double, double, double, double>;
 using triplet_t = std::tuple<double, double, double>;
@@ -33,11 +34,15 @@ class sor_boundary
 
     void initialise(boundary_1d_pair const &boundary, double time);
 
-    void initialise(boundary_2d_pair const &boundary, double time, double space_args);
+    void initialise(boundary_2d_pair const &boundary, double time, double space_arg);
+
+    void initialise(boundary_3d_pair const &boundary, double time, double space_1_arg, double space_2_arg);
 
     void finalise(boundary_1d_pair const &boundary, double time);
 
-    void finalise(boundary_2d_pair const &boundary, double time, double space_args);
+    void finalise(boundary_2d_pair const &boundary, double time, double space_arg);
+
+    void finalise(boundary_3d_pair const &boundary, double time, double space_1_arg, double space_2_arg);
 
   public:
     explicit sor_boundary(const std::size_t discretization_size, const double &space_step);
@@ -54,11 +59,17 @@ class sor_boundary
 
     const triplet_t init_coefficients(boundary_1d_pair const &boundary, double time);
 
-    const triplet_t init_coefficients(boundary_2d_pair const &boundary, double time, double space_args);
+    const triplet_t init_coefficients(boundary_2d_pair const &boundary, double time, double space_arg);
+
+    const triplet_t init_coefficients(boundary_3d_pair const &boundary, double time, double space_1_arg,
+                                      double space_2_arg);
 
     const triplet_t final_coefficients(boundary_1d_pair const &boundary, double time);
 
-    const triplet_t final_coefficients(boundary_2d_pair const &boundary, double time, double space_args);
+    const triplet_t final_coefficients(boundary_2d_pair const &boundary, double time, double space_arg);
+
+    const triplet_t final_coefficients(boundary_3d_pair const &boundary, double time, double space_1_arg,
+                                       double space_2_arg);
 
     std::size_t start_index() const;
 
@@ -66,11 +77,15 @@ class sor_boundary
 
     const double upper_boundary(boundary_1d_pair const &boundary, double time);
 
-    const double upper_boundary(boundary_2d_pair const &boundary, double time, double space_args);
+    const double upper_boundary(boundary_2d_pair const &boundary, double time, double space_arg);
+
+    const double upper_boundary(boundary_3d_pair const &boundary, double time, double space_1_arg, double space_2_arg);
 
     const double lower_boundary(boundary_1d_pair const &boundary, double time);
 
-    const double lower_boundary(boundary_2d_pair const &boundary, double time, double space_args);
+    const double lower_boundary(boundary_2d_pair const &boundary, double time, double space_arg);
+
+    const double lower_boundary(boundary_3d_pair const &boundary, double time, double space_1_arg, double space_2_arg);
 };
 
 using sor_boundary_ptr = sptr_t<sor_boundary>;

@@ -11,6 +11,7 @@ namespace lss_tridiagonal_solver
 
 using lss_boundary::boundary_1d_pair;
 using lss_boundary::boundary_2d_pair;
+using lss_boundary::boundary_3d_pair;
 using lss_enumerations::factorization_enum;
 using lss_utility::container_t;
 using lss_utility::sptr_t;
@@ -27,7 +28,10 @@ class tridiagonal_solver
                         double time) = 0;
 
     virtual void kernel(boundary_2d_pair const &boundary, container_t &solution, factorization_enum factorization,
-                        double time, double space_args) = 0;
+                        double time, double space_arg) = 0;
+
+    virtual void kernel(boundary_3d_pair const &boundary, container_t &solution, factorization_enum factorization,
+                        double time, double space_1_arg, double space_2_arg) = 0;
 
     tridiagonal_solver() = delete;
 
@@ -48,6 +52,9 @@ class tridiagonal_solver
     void solve(boundary_1d_pair const &boundary, container_t &solution, double at_time);
 
     void solve(boundary_2d_pair const &boundary, container_t &solution, double at_time, double space_arg);
+
+    void solve(boundary_3d_pair const &boundary, container_t &solution, double at_time, double space_1_arg,
+               double space_2_arg);
 };
 
 using tridiagonal_solver_ptr = sptr_t<tridiagonal_solver>;
