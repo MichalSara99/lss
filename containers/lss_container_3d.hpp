@@ -35,11 +35,11 @@ template <by_enum by> class container_3d
 /**
 
     @class   container_3d
-    @brief   row-wise 3D conatiner object
+    @brief   rowplane-wise 3D conatiner object
     @details ~
 
 **/
-template <> class container_3d<by_enum::Row>
+template <> class container_3d<by_enum::RowPlane>
 {
   private:
     std::size_t rows_;
@@ -57,13 +57,11 @@ template <> class container_3d<by_enum::Row>
 
     container_3d(container_3d const &copy);
     container_3d(container_3d &&other) noexcept;
-    container_3d(container_3d<by_enum::Column> const &copy);
-    container_3d(container_3d<by_enum::Layer> const &copy);
+    container_3d(container_3d<by_enum::ColumnPlane> const &copy);
 
     container_3d &operator=(container_3d const &copy);
     container_3d &operator=(container_3d &&other) noexcept;
-    container_3d &operator=(container_3d<by_enum::Column> const &copy);
-    container_3d &operator=(container_3d<by_enum::Layer> const &copy);
+    container_3d &operator=(container_3d<by_enum::ColumnPlane> const &copy);
 
     LSS_API void from_data(std::vector<double> const &data);
 
@@ -84,10 +82,9 @@ template <> class container_3d<by_enum::Row>
     /**
         @brief
         @param  row_idx
-        @param  lay_idx
-        @retval row container from container_3d at position (row_idx,lay_idx)
+        @retval row plane container from container_3d at position (row_idx)
     **/
-    LSS_API container_t operator()(std::size_t row_idx, std::size_t lay_idx) const;
+    LSS_API container_2d<by_enum::Row> operator()(std::size_t row_idx) const;
 
     /**
         @brief
@@ -101,18 +98,16 @@ template <> class container_3d<by_enum::Row>
     /**
         @brief
         @param  row_idx
-        @param  lay_idx
-        @retval row container from container_3d at potision (row_idx,lay_idx)
+        @retval row plane container from container_3d at potision (row_idx)
     **/
-    LSS_API container_t at(std::size_t row_idx, std::size_t lay_idx) const;
+    LSS_API container_2d<by_enum::Row> at(std::size_t row_idx) const;
 
     /**
-        @brief place row container at position (row_idx,lay_idx)
+        @brief place row plane container at position (row_idx)
         @param row_idx
-        @param lay_idx
         @param cont
     **/
-    LSS_API void operator()(std::size_t row_idx, std::size_t lay_idx, container_t const &cont);
+    LSS_API void operator()(std::size_t row_idx, container_2d<by_enum::Row> const &cont);
 
     /**
         @brief place value at position (row_idx,col_idx,lay_idx)
@@ -133,11 +128,11 @@ template <> class container_3d<by_enum::Row>
 /**
 
     @class   container_3d
-    @brief   column-wise 3D conatiner object
+    @brief   columnplane-wise 3D conatiner object
     @details ~
 
 **/
-template <> class container_3d<by_enum::Column>
+template <> class container_3d<by_enum::ColumnPlane>
 {
   private:
     std::size_t rows_;
@@ -155,13 +150,11 @@ template <> class container_3d<by_enum::Column>
 
     container_3d(container_3d const &copy);
     container_3d(container_3d &&other) noexcept;
-    container_3d(container_3d<by_enum::Row> const &copy);
-    container_3d(container_3d<by_enum::Layer> const &copy);
+    container_3d(container_3d<by_enum::RowPlane> const &copy);
 
     container_3d &operator=(container_3d const &copy);
     container_3d &operator=(container_3d &&other) noexcept;
-    container_3d &operator=(container_3d<by_enum::Row> const &copy);
-    container_3d &operator=(container_3d<by_enum::Layer> const &copy);
+    container_3d &operator=(container_3d<by_enum::RowPlane> const &copy);
 
     LSS_API void from_data(std::vector<double> const &data);
 
@@ -182,10 +175,9 @@ template <> class container_3d<by_enum::Column>
     /**
         @brief
         @param  col_idx
-        @param  lay_idx
-        @retval column container from container_3d at position (col_idx,lay_idx)
+        @retval column container from container_3d at position (col_idx)
     **/
-    LSS_API container_t operator()(std::size_t col_idx, std::size_t lay_idx) const;
+    LSS_API container_2d<by_enum::Column> operator()(std::size_t col_idx) const;
 
     /**
         @brief
@@ -199,18 +191,16 @@ template <> class container_3d<by_enum::Column>
     /**
         @brief
         @param  col_idx
-        @param  lay_idx
-        @retval column container from container_3d at potision (col_idx,lay_idx)
+        @retval column container from container_3d at potision (col_idx)
     **/
-    LSS_API container_t at(std::size_t col_idx, std::size_t lay_idx) const;
+    LSS_API container_2d<by_enum::Column> at(std::size_t col_idx) const;
 
     /**
-        @brief place column container at position (col_idx,lay_idx)
-        @param row_idx
-        @param lay_idx
+        @brief place column container at position (col_idx)
+        @param col_idx
         @param cont
     **/
-    LSS_API void operator()(std::size_t col_idx, std::size_t lay_idx, container_t const &cont);
+    LSS_API void operator()(std::size_t col_idx, container_2d<by_enum::Column> const &cont);
 
     /**
         @brief place value at position (row_idx,col_idx,lay_idx)
@@ -228,111 +218,11 @@ template <> class container_3d<by_enum::Column>
     LSS_API container_t const data() const;
 };
 
-/**
-
-    @class   container_3d
-    @brief   layer-wise 3D conatiner object
-    @details ~
-
-**/
-template <> class container_3d<by_enum::Layer>
-{
-  private:
-    std::size_t rows_;
-    std::size_t columns_;
-    std::size_t layers_;
-    std::vector<container_2d<by_enum::Column>> data_;
-
-    explicit container_3d();
-
-  public:
-    explicit container_3d(std::size_t rows, std::size_t columns, std::size_t layers);
-    explicit container_3d(std::size_t rows, std::size_t columns, std::size_t layers, double value);
-
-    ~container_3d();
-
-    container_3d(container_3d const &copy);
-    container_3d(container_3d &&other) noexcept;
-    container_3d(container_3d<by_enum::Row> const &copy);
-    container_3d(container_3d<by_enum::Column> const &copy);
-
-    container_3d &operator=(container_3d const &copy);
-    container_3d &operator=(container_3d &&other) noexcept;
-    container_3d &operator=(container_3d<by_enum::Row> const &copy);
-    container_3d &operator=(container_3d<by_enum::Column> const &copy);
-
-    LSS_API void from_data(std::vector<double> const &data);
-
-    LSS_API std::size_t rows() const;
-    LSS_API std::size_t columns() const;
-    LSS_API std::size_t layers() const;
-    LSS_API std::size_t total_size() const;
-
-    /**
-        @brief
-        @param  row_idx
-        @param  col_idx
-        @param  lay_idx
-        @retval value from container_3d at potision (row_idx,col_idx,lay_idx)
-    **/
-    LSS_API double operator()(std::size_t row_idx, std::size_t col_idx, std::size_t lay_idx) const;
-
-    /**
-        @brief
-        @param  row_idx
-        @param  col_idx
-        @retval layer container from container_3d at position (row_idx,col_idx)
-    **/
-    LSS_API container_t operator()(std::size_t row_idx, std::size_t col_idx) const;
-
-    /**
-        @brief
-        @param  row_idx
-        @param  col_idx
-        @param  lay_idx
-        @retval value from container_3d at potision (row_idx,col_idx,lay_idx)
-    **/
-    LSS_API double at(std::size_t row_idx, std::size_t col_idx, std::size_t lay_idx) const;
-
-    /**
-        @brief
-        @param  row_idx
-        @param  col_idx
-        @retval layer container from container_3d at potision (row_idx,col_idx)
-    **/
-    LSS_API container_t at(std::size_t row_idx, std::size_t col_idx) const;
-
-    /**
-        @brief place layer container at position (row_idx,col_idx)
-        @param row_idx
-        @param col_idx
-        @param cont
-    **/
-    LSS_API void operator()(std::size_t row_idx, std::size_t col_idx, container_t const &cont);
-
-    /**
-        @brief place value at position (row_idx,col_idx,lay_idx)
-        @param row_idx
-        @param col_idx
-        @param lay_idx
-        @param value
-    **/
-    LSS_API void operator()(std::size_t row_idx, std::size_t col_idx, std::size_t lay_idx, double value);
-
-    /**
-        @brief
-        @retval data as flat vector row-wise
-    **/
-    LSS_API container_t const data() const;
-};
-
-using rmatrix_3d = container_3d<by_enum::Row>;
-using cmatrix_3d = container_3d<by_enum::Column>;
-using lmatrix_3d = container_3d<by_enum::Layer>;
+using rmatrix_3d = container_3d<by_enum::RowPlane>;
+using cmatrix_3d = container_3d<by_enum::ColumnPlane>;
 
 using rmatrix_3d_ptr = sptr_t<rmatrix_3d>;
 using cmatrix_3d_ptr = sptr_t<cmatrix_3d>;
-using lmatrix_3d_ptr = sptr_t<lmatrix_3d>;
 
 } // namespace lss_containers
 

@@ -265,6 +265,12 @@
     <Filter Include="pde_solvers\3d\heat_type">
       <UniqueIdentifier>{51b89d72-a9bc-486c-8d49-6f3bf593a0e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pde_solvers\3d\heat_type\bounday_solver">
+      <UniqueIdentifier>{bd6dd463-3db1-49ee-8d01-c26b84c7c556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\3d\heat_type\implicit_coefficients">
+      <UniqueIdentifier>{546a731e-595c-4a9d-8595-a4fc47e3f007}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\lss_enumerations.hpp">
@@ -771,6 +777,12 @@
     <ClInclude Include="include\lss\utilities\container_3d.hpp">
       <Filter>include\lss\utilities</Filter>
     </ClInclude>
+    <ClInclude Include="pde_solvers\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.hpp">
+      <Filter>pde_solvers\3d\heat_type\bounday_solver</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.hpp">
+      <Filter>pde_solvers\3d\heat_type\implicit_coefficients</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common\lss_range.cpp">
@@ -1198,6 +1210,12 @@
     </ClCompile>
     <ClCompile Include="include\lss\utilities\container_3d.cpp">
       <Filter>include\lss\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="pde_solvers\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.cpp">
+      <Filter>pde_solvers\3d\heat_type\bounday_solver</Filter>
+    </ClCompile>
+    <ClCompile Include="pde_solvers\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.cpp">
+      <Filter>pde_solvers\3d\heat_type\implicit_coefficients</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

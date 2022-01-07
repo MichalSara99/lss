@@ -69,37 +69,4 @@ cmatrix_3d_ptr cmatrix_3d_builder::build()
     return std::make_shared<cmatrix_3d>(rows_, columns_, layers_, dvalue_);
 }
 
-lmatrix_3d_builder::lmatrix_3d_builder()
-{
-}
-
-lmatrix_3d_builder &lmatrix_3d_builder::rows(std::size_t rows)
-{
-    rows_ = rows;
-    return *this;
-}
-
-lmatrix_3d_builder &lmatrix_3d_builder::columns(std::size_t columns)
-{
-    columns_ = columns;
-    return *this;
-}
-
-lmatrix_3d_builder &lmatrix_3d_builder::layers(std::size_t layers)
-{
-    layers_ = layers;
-    return *this;
-}
-
-lmatrix_3d_builder &lmatrix_3d_builder::default_value(double value)
-{
-    dvalue_ = value;
-    return *this;
-}
-
-lmatrix_3d_ptr lmatrix_3d_builder::build()
-{
-    return std::make_shared<lmatrix_3d>(rows_, columns_, layers_, dvalue_);
-}
-
 } // namespace lss

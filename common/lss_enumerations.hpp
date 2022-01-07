@@ -25,7 +25,8 @@ enum class by_enum
 {
     Row,
     Column,
-    Layer,
+    RowPlane,
+    ColumnPlane,
 };
 
 /**

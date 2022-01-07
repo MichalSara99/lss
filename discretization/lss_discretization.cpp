@@ -103,7 +103,7 @@ void discretization_2d<std::vector, std::allocator<double>>::of_function(
 template <>
 void discretization_3d<std::vector, std::allocator<double>>::of_function(
     grid_config_3d_ptr const &grid_config, std::function<double(double, double, double)> const &fun,
-    container_3d<by_enum::Row> &container_fun)
+    container_3d<by_enum::RowPlane> &container_fun)
 {
     LSS_ASSERT(container_fun.rows() > 0, "The input container must be initialized.");
     LSS_ASSERT(container_fun.columns() > 0, "The input container must be initialized.");
@@ -126,7 +126,7 @@ void discretization_3d<std::vector, std::allocator<double>>::of_function(
 template <>
 void discretization_3d<std::vector, std::allocator<double>>::of_function(
     grid_config_3d_ptr const &grid_config, double const &time,
-    std::function<double(double, double, double, double)> const &fun, container_3d<by_enum::Row> &container_fun_t)
+    std::function<double(double, double, double, double)> const &fun, container_3d<by_enum::RowPlane> &container_fun_t)
 {
     LSS_ASSERT(container_fun_t.rows() > 0, "The input container must be initialized.");
     LSS_ASSERT(container_fun_t.columns() > 0, "The input container must be initialized.");

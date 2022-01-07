@@ -128,7 +128,7 @@ template <template <typename, typename> typename container, typename allocator> 
      */
     static void of_function(grid_config_3d_ptr const &grid_config,
                             std::function<double(double, double, double)> const &fun,
-                            container_3d<by_enum::Row> &container_fun);
+                            container_3d<by_enum::RowPlane> &container_fun);
 
     /**
      * Discretize function F(t,x,y,z) where t=time, x=first dim variable,
@@ -141,7 +141,7 @@ template <template <typename, typename> typename container, typename allocator> 
      */
     static void of_function(grid_config_3d_ptr const &grid_config, double const &time,
                             std::function<double(double, double, double, double)> const &fun,
-                            container_3d<by_enum::Row> &container_fun_t);
+                            container_3d<by_enum::RowPlane> &container_fun_t);
 };
 
 #endif ///_LSS_DISCRETIZATION_HPP_
