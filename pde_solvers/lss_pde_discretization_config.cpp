@@ -118,6 +118,27 @@ sptr_t<pde_discretization_config_1d> const pde_discretization_config_3d::pde_dis
                                                           number_of_time_points_);
 }
 
+sptr_t<pde_discretization_config_2d> const pde_discretization_config_3d::pde_discretization_12() const
+{
+    return std::make_shared<pde_discretization_config_2d>(space_range_1_, space_range_2_, number_of_space_points_1_,
+                                                          number_of_space_points_2_, time_range_,
+                                                          number_of_time_points_);
+}
+
+sptr_t<pde_discretization_config_2d> const pde_discretization_config_3d::pde_discretization_13() const
+{
+    return std::make_shared<pde_discretization_config_2d>(space_range_1_, space_range_3_, number_of_space_points_1_,
+                                                          number_of_space_points_3_, time_range_,
+                                                          number_of_time_points_);
+}
+
+sptr_t<pde_discretization_config_2d> const pde_discretization_config_3d::pde_discretization_23() const
+{
+    return std::make_shared<pde_discretization_config_2d>(space_range_2_, space_range_3_, number_of_space_points_2_,
+                                                          number_of_space_points_3_, time_range_,
+                                                          number_of_time_points_);
+}
+
 std::tuple<range_ptr, range_ptr, range_ptr> const pde_discretization_config_3d::space_range() const
 {
     return std::make_tuple(space_range_1_, space_range_2_, space_range_3_);

@@ -557,6 +557,12 @@ copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</C
     <ClInclude Include="pde_solvers\2d\heat_type\transformation\lss_heston_boundary_transform.hpp" />
     <ClInclude Include="pde_solvers\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.hpp" />
     <ClInclude Include="pde_solvers\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.hpp" />
+    <ClInclude Include="pde_solvers\3d\heat_type\lss_hhw_equation.hpp" />
+    <ClInclude Include="pde_solvers\3d\heat_type\lss_hhw_equation_implicit_kernel.hpp" />
+    <ClInclude Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_douglas_rachford_method_3d.hpp" />
+    <ClInclude Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_splitting_method_3d.hpp" />
+    <ClInclude Include="pde_solvers\3d\heat_type\time_loop\lss_hhw_implicit_time_loop.hpp" />
+    <ClInclude Include="pde_solvers\3d\heat_type\transformation\lss_hhw_boundary_transform.hpp" />
     <ClInclude Include="pde_solvers\lss_heat_data_config.hpp" />
     <ClInclude Include="pde_solvers\lss_heat_solver_config.hpp" />
     <ClInclude Include="pde_solvers\lss_pde_discretization_config.hpp" />
@@ -903,6 +909,12 @@ copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</C
     <ClCompile Include="pde_solvers\2d\heat_type\transformation\lss_heston_boundary_transform.cpp" />
     <ClCompile Include="pde_solvers\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.cpp" />
     <ClCompile Include="pde_solvers\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.cpp" />
+    <ClCompile Include="pde_solvers\3d\heat_type\lss_hhw_equation.cpp" />
+    <ClCompile Include="pde_solvers\3d\heat_type\lss_hhw_equation_implicit_kernel.cpp" />
+    <ClCompile Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_douglas_rachford_method_3d.cpp" />
+    <ClCompile Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_splitting_method_3d.cpp" />
+    <ClCompile Include="pde_solvers\3d\heat_type\time_loop\lss_hhw_implicit_time_loop.cpp" />
+    <ClCompile Include="pde_solvers\3d\heat_type\transformation\lss_hhw_boundary_transform.cpp" />
     <ClCompile Include="pde_solvers\lss_heat_data_config.cpp" />
     <ClCompile Include="pde_solvers\lss_heat_solver_config.cpp" />
     <ClCompile Include="pde_solvers\lss_pde_discretization_config.cpp" />

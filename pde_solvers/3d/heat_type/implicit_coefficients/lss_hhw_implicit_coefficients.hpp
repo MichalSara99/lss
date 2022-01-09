@@ -41,6 +41,9 @@ struct hhw_implicit_coefficients
     std::function<double(double, double, double, double)> S_2_;
     std::function<double(double, double, double, double)> S_3_;
     std::function<double(double, double, double, double)> C_;
+    std::function<double(double, double, double, double)> D_;
+    std::function<double(double, double, double, double)> E_;
+    std::function<double(double, double, double, double)> F_;
     std::function<double(double, double, double, double)> I_;
     std::function<double(double, double, double, double)> H_;
     std::function<double(double, double, double, double)> J_;

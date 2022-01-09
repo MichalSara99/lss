@@ -88,6 +88,9 @@ struct grid_config_3d
     grid_config_1d_ptr grid_1_;
     grid_config_1d_ptr grid_2_;
     grid_config_1d_ptr grid_3_;
+    grid_config_2d_ptr grid_12_;
+    grid_config_2d_ptr grid_13_;
+    grid_config_2d_ptr grid_23_;
 
   public:
     explicit grid_config_3d(pde_discretization_config_3d_ptr const &discretization_config);
@@ -95,6 +98,10 @@ struct grid_config_3d
     grid_config_1d_ptr const &grid_1() const;
     grid_config_1d_ptr const &grid_2() const;
     grid_config_1d_ptr const &grid_3() const;
+
+    grid_config_2d_ptr const &grid_12() const;
+    grid_config_2d_ptr const &grid_13() const;
+    grid_config_2d_ptr const &grid_23() const;
 
     double step_1() const;
     double step_2() const;

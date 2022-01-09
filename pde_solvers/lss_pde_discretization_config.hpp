@@ -119,6 +119,12 @@ struct pde_discretization_config_3d
 
     LSS_API sptr_t<pde_discretization_config_1d> const pde_discretization_3() const;
 
+    LSS_API sptr_t<pde_discretization_config_2d> const pde_discretization_12() const;
+
+    LSS_API sptr_t<pde_discretization_config_2d> const pde_discretization_13() const;
+
+    LSS_API sptr_t<pde_discretization_config_2d> const pde_discretization_23() const;
+
     LSS_API std::tuple<range_ptr, range_ptr, range_ptr> const space_range() const;
 
     LSS_API range_ptr const &time_range() const;

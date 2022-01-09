@@ -65,7 +65,7 @@ class hhw_explicit_boundary_solver
     hhw_explicit_boundary_solver &operator=(hhw_explicit_boundary_solver &&) = delete;
 
     void solve(container_3d<by_enum::RowPlane> const &prev_solution, boundary_3d_pair const &x_boundary_pair,
-               boundary_3d_pair const &z_boundary_pair, boundary_3d_ptr const &y_upper_boundary_ptr, double const &time,
+               boundary_3d_ptr const &y_upper_boundary_ptr, boundary_3d_pair const &z_boundary_pair, double const &time,
                container_3d<by_enum::RowPlane> &solution);
 
     void solve(container_3d<by_enum::RowPlane> const &prev_solution, boundary_3d_pair const &x_boundary_pair,

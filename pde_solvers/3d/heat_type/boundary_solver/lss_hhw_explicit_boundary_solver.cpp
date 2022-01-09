@@ -13,7 +13,7 @@ using lss_boundary::dirichlet_boundary_2d;
 using lss_boundary::dirichlet_boundary_3d;
 using lss_boundary::neumann_boundary_2d;
 using lss_boundary::neumann_boundary_3d;
-using d_1d = discretization_1d<std::vector, std::allocator<double>>;
+using d_2d = discretization_2d<std::vector, std::allocator<double>>;
 using lss_grids::grid_2d;
 
 namespace three_dimensional
@@ -341,23 +341,24 @@ hhw_explicit_boundary_solver::~hhw_explicit_boundary_solver()
 
 void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &prev_solution,
                                          boundary_3d_pair const &x_boundary_pair,
-                                         boundary_3d_pair const &z_boundary_pair,
-                                         boundary_3d_ptr const &y_upper_boundary_ptr, double const &time,
+                                         boundary_3d_ptr const &y_upper_boundary_ptr,
+                                         boundary_3d_pair const &z_boundary_pair, double const &time,
                                          container_3d<by_enum::RowPlane> &solution)
 {
-    // container_2d<by_enum::Column> csolution(solution);
-    //// 1D container for intermediate solution:
-    // container_t solution_v(coefficients_->space_size_x_, double{});
-    //// get the right-hand side of the scheme:
-    // explicit_hhw_boundary_scheme::rhs(coefficients_, grid_cfg_, 0, 0.0, horizonatal_boundary_pair, prev_solution,
-    // time,
-    //                                   solution_v);
-    // csolution(0, solution_v);
-    // auto const &upper_bnd_ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(vertical_upper_boundary_ptr);
-    // auto const &upper_bnd = [=](double t, double s) { return upper_bnd_ptr->value(t, s); };
-    // d_1d::of_function(grid_cfg_->grid_1(), time, upper_bnd, solution_v);
-    // csolution(coefficients_->space_size_y_ - 1, solution_v);
-    // solution = csolution;
+    container_3d<by_enum::ColumnPlane> cpsolution(solution);
+    // 2D container for intermediate solution:
+    container_2d<by_enum::Row> solution_v(coefficients_->space_size_x_, coefficients_->space_size_z_, double{});
+    /// get the right-hand side of the scheme:
+    explicit_hhw_boundary_scheme::rhs(coefficients_, grid_cfg_, 0, 0.0, x_boundary_pair, z_boundary_pair, prev_solution,
+                                      time, solution_v);
+    // boundary plane at Y = 0:
+    cpsolution(0, solution_v);
+    auto const &upper_bnd_ptr = std::dynamic_pointer_cast<dirichlet_boundary_3d>(y_upper_boundary_ptr);
+    auto const &upper_bnd = [=](double t, double s, double r) { return upper_bnd_ptr->value(t, s, r); };
+    d_2d::of_function(grid_cfg_->grid_13(), time, upper_bnd, solution_v);
+    // boundary plane at Y = M-1:
+    cpsolution(coefficients_->space_size_y_ - 1, solution_v);
+    solution = cpsolution;
 }
 
 void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &prev_solution,

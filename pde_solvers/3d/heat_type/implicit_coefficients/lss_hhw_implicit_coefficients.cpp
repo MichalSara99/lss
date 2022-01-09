@@ -52,6 +52,9 @@ void hhw_implicit_coefficients::initialize_coefficients(heat_data_transform_3d_p
     auto const a = heat_data_config->a_coefficient();
     auto const b = heat_data_config->b_coefficient();
     auto const c = heat_data_config->c_coefficient();
+    auto const d = heat_data_config->d_coefficient();
+    auto const e = heat_data_config->e_coefficient();
+    auto const f = heat_data_config->f_coefficient();
     auto const g = heat_data_config->g_coefficient();
     auto const h = heat_data_config->h_coefficient();
     auto const i = heat_data_config->i_coefficient();
@@ -89,6 +92,9 @@ void hhw_implicit_coefficients::initialize_coefficients(heat_data_transform_3d_p
         return (alpha_3_ * c(t, x, y, z) - sixth * rho_ * j(t, x, y, z));
     };
     C_ = [=](double t, double x, double y, double z) { return c(t, x, y, z); };
+    D_ = [=](double t, double x, double y, double z) { return d(t, x, y, z); };
+    E_ = [=](double t, double x, double y, double z) { return e(t, x, y, z); };
+    F_ = [=](double t, double x, double y, double z) { return f(t, x, y, z); };
     I_ = [=](double t, double x, double y, double z) { return i(t, x, y, z); };
     J_ = [=](double t, double x, double y, double z) { return j(t, x, y, z); };
     H_ = [=](double t, double x, double y, double z) { return h(t, x, y, z); };
