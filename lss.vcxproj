@@ -949,6 +949,7 @@ copy /Y "$(TargetDir)$(TargetName).lib" "$(SolutionDir)lib\$(TargetName).lib"</C
     <ClInclude Include="unit_tests\pde_solvers\1d\lss_pure_wave_equation_t.hpp" />
     <ClInclude Include="unit_tests\pde_solvers\2d\lss_heston_equation_t.hpp" />
     <ClInclude Include="unit_tests\pde_solvers\2d\lss_sabr_equation_t.hpp" />
+    <ClInclude Include="unit_tests\pde_solvers\3d\lss_hhw_equation_t.hpp" />
     <ClInclude Include="unit_tests\sparse_solvers\lss_core_cuda_solver_t.hpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">false</ExcludedFromBuild>

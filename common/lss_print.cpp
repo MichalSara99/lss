@@ -15,10 +15,13 @@ namespace lss_print
 {
 using lss_grids::grid_1d;
 using lss_grids::grid_2d;
+using lss_grids::grid_3d;
 using lss_grids::grid_config_1d;
 using lss_grids::grid_config_2d;
+using lss_grids::grid_config_3d;
 using lss_grids::grid_transform_config_1d;
 using lss_grids::grid_transform_config_2d;
+using lss_grids::grid_transform_config_3d;
 
 void print(discretization_config_1d_ptr const &discretization_config, grid_config_hints_1d_ptr const &grid_hints_cfg,
            container_t const &container, std::ostream &out)
@@ -134,6 +137,64 @@ void print(pde_discretization_config_1d_ptr const &pde_discretization_config,
             out << ",";
         }
         out << container(t, space_size - 1);
+        out << "\n";
+    }
+}
+
+void print(pde_discretization_config_3d_ptr const &pde_discretization_config,
+           grid_config_hints_3d_ptr const &grid_config_hints, container_3d<by_enum::RowPlane> const &container,
+           std::ostream &out)
+{
+    const auto &space_sizes = pde_discretization_config->number_of_space_points();
+    LSS_ASSERT((container.columns() == std::get<1>(space_sizes)) && (container.rows() == std::get<0>(space_sizes)) &&
+                   (container.layers() == std::get<2>(space_sizes)),
+               "The input cont container must have the correct size");
+    // create grid_config:
+    auto const &grid_cfg = std::make_shared<grid_config_3d>(pde_discretization_config);
+    // create grid_transform_config:
+    auto const &grid_trans_cfg =
+        std::make_shared<grid_transform_config_3d>(pde_discretization_config, grid_config_hints);
+    double zeta{}, eta{}, ny{};
+    out << "SPACE_POINTS_X\n";
+    const std::size_t size_x = std::get<0>(space_sizes);
+    for (std::size_t t = 0; t < size_x - 1; ++t)
+    {
+        zeta = grid_3d::value_1(grid_cfg, t);
+        out << grid_3d::transformed_value_1(grid_trans_cfg, zeta);
+        out << ",";
+    }
+    zeta = grid_3d::value_1(grid_cfg, size_x - 1);
+    out << grid_3d::transformed_value_1(grid_trans_cfg, zeta) << "\nSPACE_POINTS_Y\n";
+    const std::size_t size_y = std::get<1>(space_sizes);
+    for (std::size_t t = 0; t < size_y - 1; ++t)
+    {
+        eta = grid_3d::value_2(grid_cfg, t);
+        out << grid_3d::transformed_value_2(grid_trans_cfg, eta);
+        out << ",";
+    }
+    eta = grid_3d::value_2(grid_cfg, size_y - 1);
+    out << grid_3d::transformed_value_2(grid_trans_cfg, eta) << "\nSPACE_POINTS_Z\n";
+    const std::size_t size_z = std::get<2>(space_sizes);
+    for (std::size_t t = 0; t < size_z - 1; ++t)
+    {
+        ny = grid_3d::value_3(grid_cfg, t);
+        out << grid_3d::transformed_value_3(grid_trans_cfg, ny);
+        out << ",";
+    }
+    ny = grid_3d::value_3(grid_cfg, size_z - 1);
+    out << grid_3d::transformed_value_3(grid_trans_cfg, eta) << "\nVALUES\n";
+    for (std::size_t l = 0; l < container.layers(); ++l)
+    {
+        for (std::size_t r = 0; r < container.rows(); ++r)
+        {
+            for (std::size_t c = 0; c < container.columns() - 1; ++c)
+            {
+                out << container(r, c, l);
+                out << ",";
+            }
+            out << container(r, container.columns() - 1, l);
+            out << "\n";
+        }
         out << "\n";
     }
 }

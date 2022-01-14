@@ -33,16 +33,29 @@ void heston_equation::initialize(heat_data_config_2d_ptr const &heat_data_cfg,
 
     if (auto ver_ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(vertical_upper_boundary_ptr))
     {
-        LSS_VERIFY(ver_ptr, "vertical_upper_boundary_ptr must be of dirichlet type only");
+        // for usuall call/put option
+        LSS_VERIFY(ver_ptr, "vertical_upper_boundary_ptr may be of dirichlet type");
+    }
+    else if (auto ver_ptr = std::dynamic_pointer_cast<neumann_boundary_2d>(vertical_upper_boundary_ptr))
+    {
+        // for barrier type option
+        LSS_VERIFY(ver_ptr, "vertical_upper_boundary_ptr may be of neumann type");
     }
 
     if (auto hor_ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(std::get<0>(horizontal_boundary_pair)))
     {
         LSS_VERIFY(hor_ptr, "horizontal_boundary_pair.first must be of dirichlet type only");
     }
+
     if (auto hor_ptr = std::dynamic_pointer_cast<neumann_boundary_2d>(std::get<1>(horizontal_boundary_pair)))
     {
-        LSS_VERIFY(hor_ptr, "horizontal_boundary_pair.second must be of neumann type only");
+        // for usuall call/put option
+        LSS_VERIFY(hor_ptr, "horizontal_boundary_pair.second may be of neumann type");
+    }
+    else if (auto hor_ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(std::get<1>(horizontal_boundary_pair)))
+    {
+        // for barrier type option
+        LSS_VERIFY(hor_ptr, "horizontal_boundary_pair.second may be of dirichlet type");
     }
 
     LSS_VERIFY(splitting_method_cfg_, "splitting_method_config must not be null");

@@ -53,6 +53,10 @@ void explicit_heston_boundary_scheme::rhs(heston_implicit_coefficients_ptr const
                       (four * ni * E(time, x, y) * input(N, y_index + 1)) -
                       (ni * E(time, x, y) * input(N, y_index + 2)) - (delta * delta_ * D(time, x, y));
     }
+    else if (auto const &ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(second_bnd))
+    {
+        solution[N] = ptr->value(time, y);
+    }
 
     for (std::size_t t = 1; t < N; ++t)
     {
@@ -102,6 +106,10 @@ void explicit_heston_boundary_scheme::rhs_source(heston_implicit_coefficients_pt
                       (ni * E(time, x, y) * input(N, y_index + 2)) - (delta * delta_ * D(time, x, y)) +
                       (rho * inhom_input(N, y_index));
     }
+    else if (auto const &ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(second_bnd))
+    {
+        solution[N] = ptr->value(time, y);
+    }
 
     for (std::size_t t = 1; t < N; ++t)
     {
@@ -135,9 +143,25 @@ void heston_explicit_boundary_solver::solve(container_2d<by_enum::Row> const &pr
     explicit_heston_boundary_scheme::rhs(coefficients_, grid_cfg_, 0, 0.0, horizonatal_boundary_pair, prev_solution,
                                          time, solution_v);
     csolution(0, solution_v);
-    auto const &upper_bnd_ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(vertical_upper_boundary_ptr);
-    auto const &upper_bnd = [=](double t, double s) { return upper_bnd_ptr->value(t, s); };
-    d_1d::of_function(grid_cfg_->grid_1(), time, upper_bnd, solution_v);
+    if (auto const &ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(vertical_upper_boundary_ptr))
+    {
+        auto const &upper_bnd = [=](double t, double s) { return ptr->value(t, s); };
+        d_1d::of_function(grid_cfg_->grid_1(), time, upper_bnd, solution_v);
+    }
+    else if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_2d>(vertical_upper_boundary_ptr))
+    {
+        auto const &grid_1 = grid_cfg_->grid_1();
+        auto const &grid_2 = grid_cfg_->grid_2();
+        auto const lci = solution.columns() - 1;
+        auto const &upper_bnd = [=](double t, double s) {
+            const std::size_t i = grid_1d::index_of(grid_1, s);
+            auto const bnd_val = ptr->value(t, s);
+            auto const h_2 = grid_1d::step(grid_2);
+            return (((4.0 * prev_solution(i, lci - 1)) - prev_solution(i, lci - 2) - (2.0 * h_2 * bnd_val)) / 3.0);
+        };
+        d_1d::of_function(grid_cfg_->grid_1(), time, upper_bnd, solution_v);
+    }
+
     csolution(coefficients_->space_size_y_ - 1, solution_v);
     solution = csolution;
 }
@@ -160,19 +184,23 @@ void heston_explicit_boundary_solver::solve(container_2d<by_enum::Row> const &pr
     d_1d::of_function(grid_2, time, lower_bnd, solution_v);
     solution(0, solution_v);
     // populating upper horizontal:
-    auto const lri = solution.rows() - 1;
-    auto const two = 2.0;
-    auto const three = 3.0;
-    auto const four = 4.0;
+    if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_2d>(horizonatal_boundary_pair.second))
+    {
+        auto const lri = solution.rows() - 1;
+        auto const &upper_bnd = [=](double t, double v) {
+            const std::size_t j = grid_1d::index_of(grid_2, v);
+            auto const bnd_val = ptr->value(t, v);
+            auto const h_1 = grid_1d::step(grid_1);
+            return (((4.0 * solution(lri - 1, j)) - solution(lri - 2, j) - (2.0 * h_1 * bnd_val)) / 3.0);
+        };
+        d_1d::of_function(grid_2, time, upper_bnd, solution_v);
+    }
+    else if (auto const &ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(horizonatal_boundary_pair.second))
+    {
+        auto const &upper_bnd = [=](double t, double v) { return ptr->value(t, v); };
+        d_1d::of_function(grid_2, time, upper_bnd, solution_v);
+    }
     auto const N_x = coefficients_->space_size_x_;
-    auto const &upper_bnd_ptr = std::dynamic_pointer_cast<neumann_boundary_2d>(horizonatal_boundary_pair.second);
-    auto const &upper_bnd = [=](double t, double v) {
-        const std::size_t j = grid_1d::index_of(grid_2, v);
-        auto const bnd_val = upper_bnd_ptr->value(t, v);
-        auto const h_1 = grid_1d::step(grid_1);
-        return (((four * solution(lri - 1, j)) - solution(lri - 2, j) - (two * h_1 * bnd_val)) / three);
-    };
-    d_1d::of_function(grid_2, time, upper_bnd, solution_v);
     solution(N_x - 1, solution_v);
 }
 

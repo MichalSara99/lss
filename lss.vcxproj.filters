@@ -280,6 +280,9 @@
     <Filter Include="pde_solvers\3d\heat_type\time_loop">
       <UniqueIdentifier>{e1e11777-d4c5-4fa6-a748-b0a9621d2f2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="unit_tests\pde_solvers\3d">
+      <UniqueIdentifier>{8811aeee-7e6e-418c-858e-2031d1560651}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\lss_enumerations.hpp">
@@ -809,6 +812,9 @@
     </ClInclude>
     <ClInclude Include="pde_solvers\3d\heat_type\time_loop\lss_hhw_implicit_time_loop.hpp">
       <Filter>pde_solvers\3d\heat_type\time_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="unit_tests\pde_solvers\3d\lss_hhw_equation_t.hpp">
+      <Filter>unit_tests\pde_solvers\3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

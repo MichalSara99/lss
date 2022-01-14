@@ -68,12 +68,12 @@ class surface_gen:
 
 path = os.getcwd()
 files_path = "\\".join(path.split("\\")[:-1]) + "\\xmls"
-file_crv = files_path+"\\Black_Scholes.xml"
+file_crv = files_path+"\\sabr_barrier_double_lu_cn_srf_numerical.xml"
 
 
 srf = surface_gen(file_crv)
 srf.set_x_label('Spot')
-srf.set_y_label('Time to mat')
-srf.set_z_label('Call Option Price')
-srf.set_title('BS PDE (Euler Device explicit Scheme)')
+srf.set_y_label('Volatility')
+srf.set_z_label('Option Price')
+srf.set_title('SABR Up-and-Out Call PDE (implicit, non-uniform scheme)')
 srf.plot()

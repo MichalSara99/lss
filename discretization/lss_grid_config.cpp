@@ -83,8 +83,11 @@ grid_config_3d::grid_config_3d(pde_discretization_config_3d_ptr const &discretiz
     grid_2_ = std::make_shared<grid_config_1d>(discretization_config->pde_discretization_2());
     grid_3_ = std::make_shared<grid_config_1d>(discretization_config->pde_discretization_3());
     grid_12_ = std::make_shared<grid_config_2d>(discretization_config->pde_discretization_12());
+    grid_21_ = std::make_shared<grid_config_2d>(discretization_config->pde_discretization_21());
     grid_13_ = std::make_shared<grid_config_2d>(discretization_config->pde_discretization_13());
+    grid_31_ = std::make_shared<grid_config_2d>(discretization_config->pde_discretization_31());
     grid_23_ = std::make_shared<grid_config_2d>(discretization_config->pde_discretization_23());
+    grid_32_ = std::make_shared<grid_config_2d>(discretization_config->pde_discretization_32());
 }
 
 grid_config_1d_ptr const &grid_config_3d::grid_1() const
@@ -107,14 +110,29 @@ grid_config_2d_ptr const &grid_config_3d::grid_12() const
     return grid_12_;
 };
 
+grid_config_2d_ptr const &grid_config_3d::grid_21() const
+{
+    return grid_21_;
+};
+
 grid_config_2d_ptr const &grid_config_3d::grid_13() const
 {
     return grid_13_;
 }
 
+grid_config_2d_ptr const &grid_config_3d::grid_31() const
+{
+    return grid_31_;
+}
+
 grid_config_2d_ptr const &grid_config_3d::grid_23() const
 {
     return grid_23_;
+}
+
+grid_config_2d_ptr const &grid_config_3d::grid_32() const
+{
+    return grid_32_;
 }
 
 double grid_config_3d::step_1() const

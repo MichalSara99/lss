@@ -8,6 +8,7 @@
 #include"unit_tests/pde_solvers/1d/lss_pure_heat_equation_t.hpp"
 #include"unit_tests/pde_solvers/1d/lss_pure_wave_equation_t.hpp"
 #include"unit_tests/pde_solvers/2d/lss_heston_equation_t.hpp"
+#include"unit_tests/pde_solvers/3d/lss_hhw_equation_t.hpp"
 #include"unit_tests/pde_solvers/2d/lss_sabr_equation_t.hpp"
 #include"unit_tests/common/lss_xml_t.hpp"
 #include"unit_tests/common/lss_container_3d_t.hpp"
@@ -19,7 +20,7 @@ int main()
      // ======================================================
      // basic_rcontainer_3d_test();
      // basic_ccontainer_3d_test();
-
+     // basic_lcontainer_3d_test();
 
      // ======================================================
      // =============== lss_odes_2_degree_t ==================
@@ -129,6 +130,15 @@ int main()
     // ================= lss_sabr_equation_t ================
     // ======================================================
     // test_impl_sabr_equation_double_sweep_solver();
+    //
+    // ======================================================
+
+    // ======================================================
+    // ================== lss_hhw_equation_t ================
+    // ======================================================
+    // test_impl_hhw_equation_cuda_qr_solver();
+    //  test_impl_hhw_equation_thomas_lu_solver();
+
     //
     // ======================================================
 

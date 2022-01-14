@@ -282,9 +282,9 @@ void heat_douglas_rachford_method_3d::solve(container_3d<by_enum::RowPlane> cons
             split_1(x, z, time, low_, diag_, high_);
             implicit_hhw_scheme::rhs_intermed_2(coefficients_, grid_cfg_, i, x, k, z, prev_solution, inter_solution_1,
                                                 time, rhs_);
-            solveru_ptr_->set_diagonals(low_, diag_, high_);
-            solveru_ptr_->set_rhs(rhs_);
-            solveru_ptr_->solve(y_boundary_pair, solution_v, time, x, z);
+            solvery2_ptr_->set_diagonals(low_, diag_, high_);
+            solvery2_ptr_->set_rhs(rhs_);
+            solvery2_ptr_->solve(y_boundary_pair, solution_v, time, x, z);
             row_plane(k, solution_v);
         }
         inter_solution_2(i, row_plane);

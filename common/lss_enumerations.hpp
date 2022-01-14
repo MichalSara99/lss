@@ -27,6 +27,7 @@ enum class by_enum
     Column,
     RowPlane,
     ColumnPlane,
+    LayerPlane,
 };
 
 /**
