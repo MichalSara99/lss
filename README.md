@@ -106,6 +106,9 @@ Black-Scholes equation from implicit solver
 Heston equation DR from implicit solver
 ![Heston equation DR](/outputs/pics/impl_heston_dr_numerical.png)
 
+Heston Barrier equation DR from implicit solver
+![Heston Barrier equation DR](/outputs/pics/impl_heston_dr_uao_call.png)
+
 Heston equation CS from implicit solver
 ![Heston equation CS](/outputs/pics/impl_heston_cs_numerical.png)
 
