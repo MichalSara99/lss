@@ -12,6 +12,8 @@ It also contains some ODE and PDE solvers.
 * 1D general wave equation with variable coefficients (in space and time dimension) (supports all Dirichlet, Neumann, Robin boundary conditions)
 * 2D general Heston type model with variable coefficients (in space and time dimension)
  (support for Douglas-Rachford ADI, Craig-Sneyd ADI, Modified Craig-Sneyd ADI, Hundsdorfer-Verwer ADI)
+* 3D general Heston-Hull-White type model with variable coefficients (in space and time dimension)
+ (support for Douglas-Rachford ADI so far) - only experimental and not yet released in DLLs (to be released soon..)
 * All solvers support uniform and non-uniform grid with variable scaling
 
 ## Requirement
