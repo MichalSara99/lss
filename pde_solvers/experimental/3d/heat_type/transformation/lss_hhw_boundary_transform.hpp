@@ -3,9 +3,9 @@
 
 #include <functional>
 
-#include "../../../../boundaries/lss_boundary.hpp"
-#include "../../../../common/lss_utility.hpp"
-#include "../../../../discretization/lss_grid_transform_config.hpp"
+#include "../../../../../boundaries/lss_boundary.hpp"
+#include "../../../../../common/lss_utility.hpp"
+#include "../../../../../discretization/lss_grid_transform_config.hpp"
 
 namespace lss_pde_solvers
 {

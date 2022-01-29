@@ -64,7 +64,7 @@ template <by_enum by> class container_3d
 template <> class container_3d<by_enum::RowPlane> : public container_3d_base
 {
   private:
-    std::vector<container_2d<by_enum::Row>> data_;
+    std::vector<container_2d<by_enum::Column>> data_;
 
     explicit container_3d();
 
@@ -100,7 +100,7 @@ template <> class container_3d<by_enum::RowPlane> : public container_3d_base
         @param  row_idx
         @retval row plane container from container_3d at position (row_idx)
     **/
-    LSS_API container_2d<by_enum::Row> operator()(std::size_t row_idx) const;
+    LSS_API container_2d<by_enum::Column> operator()(std::size_t row_idx) const;
 
     /**
         @brief
@@ -116,14 +116,14 @@ template <> class container_3d<by_enum::RowPlane> : public container_3d_base
         @param  row_idx
         @retval row plane container from container_3d at potision (row_idx)
     **/
-    LSS_API container_2d<by_enum::Row> at(std::size_t row_idx) const;
+    LSS_API container_2d<by_enum::Column> at(std::size_t row_idx) const;
 
     /**
         @brief place row plane container at position (row_idx)
         @param row_idx
         @param cont
     **/
-    LSS_API void operator()(std::size_t row_idx, container_2d<by_enum::Row> const &cont);
+    LSS_API void operator()(std::size_t row_idx, container_2d<by_enum::Column> const &cont);
 
     /**
         @brief place value at position (row_idx,col_idx,lay_idx)

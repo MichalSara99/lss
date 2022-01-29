@@ -7,7 +7,7 @@
 #include "../../../common/lss_print.hpp"
 #include "../../../common/lss_range.hpp"
 #include "../../../containers/lss_container_3d.hpp"
-#include "pde_solvers/3d/heat_type/lss_hhw_equation.hpp"
+#include "pde_solvers/experimental/3d/heat_type/lss_hhw_equation.hpp"
 #include <map>
 
 using lss_boundary::dirichlet_boundary_3d;
@@ -159,6 +159,8 @@ void test_impl_hhw_equation_cuda_qr_solver()
 
 void impl_hhw_equation_thomas_lu_solver_crank_nicolson()
 {
+
+    // using lss_pde_solvers::default_heat_solver_configs::host_bwd_dssolver_cn_solver_config_ptr;
     using lss_pde_solvers::default_heat_solver_configs::host_bwd_tlusolver_cn_solver_config_ptr;
 
     std::cout << "============================================================\n";
@@ -186,33 +188,33 @@ void impl_hhw_equation_thomas_lu_solver_crank_nicolson()
     std::cout << "============================================================\n";
 
     // set up call option parameters:
-    auto const &strike = 10.0;
+    auto const &strike = 100.0;
     auto const &maturity = 1.0;
-    auto const &v_sig = 0.3;
-    auto const &v_kappa = 2.0;
+    auto const &v_sig = 0.8;
+    auto const &v_kappa = 3.0;
     auto const &v_theta = 0.2;
-    auto const &rho_12 = -0.1;
-    auto const &rho_13 = -0.3;
-    auto const &rho_23 = 0.2;
-    auto const &c_1 = 0.101;
-    auto const &c_2 = 0.001;
-    auto const &c_3 = 2.3;
-    auto const &r_a = 0.15;
-    auto const &r_sig = 0.1;
+    auto const &rho_12 = 0.6;
+    auto const &rho_13 = 0.2;
+    auto const &rho_23 = 0.4;
+    auto const &c_1 = 0.3;
+    auto const &c_2 = 0.01;
+    auto const &c_3 = 0.02;
+    auto const &r_a = 0.2;
+    auto const &r_sig = 0.05;
     // number of space subdivisions for spot:
-    std::size_t const Sd = 50;
+    std::size_t const Sd = 30;
     // number of space subdivision for volatility:
-    std::size_t const Vd = 30;
+    std::size_t const Vd = 18;
     // number of space subdivision for rate:
-    std::size_t const Rd = 25;
+    std::size_t const Rd = 18;
     // number of time subdivisions:
-    std::size_t const Td = 100;
+    std::size_t const Td = 500;
     // space Spot range:
-    auto const &spacex_range = std::make_shared<range>(0.0, 20.0);
+    auto const &spacex_range = std::make_shared<range>(50.0, 200.0);
     // space Vol range:
     auto const &spacey_range = std::make_shared<range>(0.0, 1.0);
     // space Rate range:
-    auto const &spacez_range = std::make_shared<range>(-0.05, 1.0);
+    auto const &spacez_range = std::make_shared<range>(0.12, 0.21);
     // time range
     auto const &time_range = std::make_shared<range>(0.0, maturity);
     // discretization config:

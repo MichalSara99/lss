@@ -1,11 +1,11 @@
 #include "lss_hhw_equation_implicit_kernel.hpp"
 
-#include "../../../sparse_solvers/pentadiagonal/karawia_solver/lss_karawia_solver.hpp"
-#include "../../../sparse_solvers/tridiagonal/cuda_solver/lss_cuda_solver.hpp"
-#include "../../../sparse_solvers/tridiagonal/double_sweep_solver/lss_double_sweep_solver.hpp"
-#include "../../../sparse_solvers/tridiagonal/sor_solver/lss_sor_solver.hpp"
-#include "../../../sparse_solvers/tridiagonal/sor_solver_cuda/lss_sor_solver_cuda.hpp"
-#include "../../../sparse_solvers/tridiagonal/thomas_lu_solver/lss_thomas_lu_solver.hpp"
+#include "../../../../sparse_solvers/pentadiagonal/karawia_solver/lss_karawia_solver.hpp"
+#include "../../../../sparse_solvers/tridiagonal/cuda_solver/lss_cuda_solver.hpp"
+#include "../../../../sparse_solvers/tridiagonal/double_sweep_solver/lss_double_sweep_solver.hpp"
+#include "../../../../sparse_solvers/tridiagonal/sor_solver/lss_sor_solver.hpp"
+#include "../../../../sparse_solvers/tridiagonal/sor_solver_cuda/lss_sor_solver_cuda.hpp"
+#include "../../../../sparse_solvers/tridiagonal/thomas_lu_solver/lss_thomas_lu_solver.hpp"
 #include "boundary_solver/lss_hhw_explicit_boundary_solver.hpp"
 #include "implicit_coefficients/lss_hhw_implicit_coefficients.hpp"
 //#include "splitting_method/lss_heat_craig_sneyd_method_3d.hpp"
@@ -114,6 +114,7 @@ void hhw_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method_
     }
     // create and set up lower volatility boundary solver:
     auto boundary_solver = std::make_shared<hhw_explicit_boundary_solver>(heston_coeff_holder, grid_cfg_);
+    // auto boundary_solver = std::make_shared<hhw_implicit_boundary_solver>(solver_u, heston_coeff_holder, grid_cfg_);
 
     if (is_heat_sourse_set)
     {
@@ -222,6 +223,7 @@ void hhw_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method_
     }
     // create and set up lower volatility boundary solver:
     auto boundary_solver = std::make_shared<hhw_explicit_boundary_solver>(heston_coeff_holder, grid_cfg_);
+    // auto boundary_solver = std::make_shared<hhw_implicit_boundary_solver>(solver_u, heston_coeff_holder, grid_cfg_);
 
     if (is_heat_sourse_set)
     {
@@ -328,6 +330,7 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     }
     // create and set up lower volatility boundary solver:
     auto boundary_solver = std::make_shared<hhw_explicit_boundary_solver>(heston_coeff_holder, grid_cfg_);
+    // auto boundary_solver = std::make_shared<hhw_implicit_boundary_solver>(solver_u, heston_coeff_holder, grid_cfg_);
 
     if (is_heat_sourse_set)
     {
@@ -433,6 +436,7 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     }
     // create and set up lower volatility boundary solver:
     auto boundary_solver = std::make_shared<hhw_explicit_boundary_solver>(heston_coeff_holder, grid_cfg_);
+    // auto boundary_solver = std::make_shared<hhw_implicit_boundary_solver>(solver_u, heston_coeff_holder, grid_cfg_);
 
     if (is_heat_sourse_set)
     {
@@ -537,6 +541,7 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     }
     // create and set up lower volatility boundary solver:
     auto boundary_solver = std::make_shared<hhw_explicit_boundary_solver>(heston_coeff_holder, grid_cfg_);
+    // auto boundary_solver = std::make_shared<hhw_implicit_boundary_solver>(solver_u, heston_coeff_holder, grid_cfg_);
 
     if (is_heat_sourse_set)
     {
@@ -641,6 +646,7 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     }
     // create and set up lower volatility boundary solver:
     auto boundary_solver = std::make_shared<hhw_explicit_boundary_solver>(heston_coeff_holder, grid_cfg_);
+    // auto boundary_solver = std::make_shared<hhw_implicit_boundary_solver>(solver_u, heston_coeff_holder, grid_cfg_);
 
     if (is_heat_sourse_set)
     {

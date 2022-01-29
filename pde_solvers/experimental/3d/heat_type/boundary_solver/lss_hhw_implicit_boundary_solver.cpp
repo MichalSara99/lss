@@ -1,10 +1,13 @@
-#include "lss_hhw_explicit_boundary_solver.hpp"
+#include "lss_hhw_implicit_boundary_solver.hpp"
 
 #include "../../../../boundaries/lss_dirichlet_boundary.hpp"
 #include "../../../../boundaries/lss_neumann_boundary.hpp"
 #include "../../../../discretization/lss_discretization.hpp"
 #include "../../../../discretization/lss_grid.hpp"
 #include "../../../lss_pde_discretization_config.hpp"
+
+#include <iostream>
+#include <string>
 
 namespace lss_pde_solvers
 {
@@ -19,7 +22,7 @@ using lss_grids::grid_2d;
 namespace three_dimensional
 {
 
-void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg, grid_config_3d_ptr const &grid_cfg,
+void implicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg, grid_config_3d_ptr const &grid_cfg,
                                        std::size_t const &y_index, double const &y,
                                        boundary_3d_pair const &x_boundary_pair, boundary_3d_pair const &z_boundary_pair,
                                        container_3d<by_enum::RowPlane> const &input, double const &time,
@@ -36,12 +39,11 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
     auto const &H = cfg->H_;
     auto const &M_3 = cfg->M_3_;
     auto const &P_3 = cfg->P_3_;
-    auto const alpha_1 = cfg->alpha_1_;
+    auto const &theta = cfg->theta_;
     auto const alpha_3 = cfg->alpha_3_;
     auto const gamma_1 = cfg->gamma_1_;
     auto const gamma_2 = cfg->gamma_2_;
     auto const gamma_3 = cfg->gamma_3_;
-    auto const rho = cfg->rho_;
 
     auto const &first_x_bnd = x_boundary_pair.first;
     auto const &second_x_bnd = x_boundary_pair.second;
@@ -50,7 +52,9 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
     const std::size_t N = solution.rows() - 1;
     const std::size_t L = solution.columns() - 1;
 
-    double z{};
+    double x{}, z{}, h_1{}, h_3{};
+    h_1 = grid_3d::step_1(grid_cfg);
+    h_3 = grid_3d::step_3(grid_cfg);
     if (auto const &ptr = std::dynamic_pointer_cast<dirichlet_boundary_3d>(first_x_bnd))
     {
         auto fun = [&](double z) { return ptr->value(time, y, z); };
@@ -62,38 +66,36 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
         }
         solution(0, lower);
     }
-    double x{}, h_1{}, h_3{};
+
     if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_3d>(second_x_bnd))
     {
-        h_1 = grid_3d::step_1(grid_cfg);
         x = grid_3d::value_1(grid_cfg, N);
         auto fun = [&](double z) { return two * h_1 * ptr->value(time, y, z); };
         container_t upper(L + 1, double{0.0});
         for (std::size_t k = 1; k < L; ++k)
         {
             z = grid_3d::value_3(grid_cfg, k);
-            upper[k] = (-gamma_1 * fun(z) * G(time, x, y, z)) + (M_3(time, x, y, z) * input(N, y_index, k - 1)) +
-                       ((one - two * alpha_3 * C(time, x, y, z) - three * gamma_3 * H(time, x, y, z) +
-                         rho * J(time, x, y, z)) *
-                        input(N, y_index, k)) +
-                       (P_3(time, x, y, z) * input(N, y_index, k + 1)) +
+            upper[k] = ((one - theta) * M_3(time, x, y, z) * input(N, y_index, k - 1)) +
+                       ((one - theta) * P_3(time, x, y, z) * input(N, y_index, k + 1)) +
+                       ((one - three * gamma_3 * H(time, x, y, z) - two * alpha_3 * (one - theta) * C(time, x, y, z)) *
+                        input(N, y_index, k)) -
+                       (gamma_1 * fun(z) * G(time, x, y, z)) +
                        (four * gamma_2 * H(time, x, y, z) * input(N, y_index + 1, k)) -
-                       (gamma_3 * H(time, x, y, z) * input(N, y_index + 2, k));
+                       (gamma_2 * H(time, x, y, z) * input(N, y_index + 2, k));
         }
 
-        h_3 = grid_3d::step_3(grid_cfg);
         if (auto const &ptr_z = std::dynamic_pointer_cast<neumann_boundary_3d>(first_z_bnd))
         {
             z = grid_3d::value_3(grid_cfg, 0);
             auto const beta_z = two * h_3 * ptr_z->value(time, y, z);
 
-            upper[0] = (-gamma_1 * fun(z) * G(time, x, y, z)) + (M_3(time, x, y, z) * beta_z) +
-                       ((one - two * alpha_3 * C(time, x, y, z) - three * gamma_3 * H(time, x, y, z) +
-                         rho * J(time, x, y, z)) *
-                        input(N, y_index, 0)) +
-                       (two * alpha_3 * C(time, x, y, z) * input(N, y_index, 1)) +
+            upper[0] = ((one - theta) * M_3(time, x, y, z) * beta_z) +
+                       (two * alpha_3 * (one - theta) * C(time, x, y, z) * input(N, y_index, 1)) +
+                       ((one - three * gamma_3 * H(time, x, y, z) - two * alpha_3 * (one - theta) * C(time, x, y, z)) *
+                        input(N, y_index, 0)) -
+                       (gamma_1 * fun(z) * G(time, x, y, z)) +
                        (four * gamma_2 * H(time, x, y, z) * input(N, y_index + 1, 0)) -
-                       (gamma_3 * H(time, x, y, z) * input(N, y_index + 2, 0));
+                       (gamma_2 * H(time, x, y, z) * input(N, y_index + 2, 0));
         }
 
         if (auto const &ptr_z = std::dynamic_pointer_cast<neumann_boundary_3d>(second_z_bnd))
@@ -101,13 +103,13 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
             z = grid_3d::value_3(grid_cfg, L);
             auto const beta_z = two * h_3 * ptr_z->value(time, y, z);
 
-            upper[L] = (-gamma_1 * fun(z) * G(time, x, y, z)) - (P_3(time, x, y, z) * beta_z) +
-                       ((one - two * alpha_3 * C(time, x, y, z) - three * gamma_3 * H(time, x, y, z) +
-                         rho * J(time, x, y, z)) *
-                        input(N, y_index, L)) +
-                       (two * alpha_3 * C(time, x, y, z) * input(N, y_index, L - 1)) +
+            upper[L] = (two * alpha_3 * (one - theta) * C(time, x, y, z) * input(N, y_index, L - 1)) -
+                       ((one - theta) * P_3(time, x, y, z) * beta_z) +
+                       ((one - three * gamma_3 * H(time, x, y, z) - two * alpha_3 * (one - theta) * C(time, x, y, z)) *
+                        input(N, y_index, L)) -
+                       (gamma_1 * fun(z) * G(time, x, y, z)) +
                        (four * gamma_2 * H(time, x, y, z) * input(N, y_index + 1, L)) -
-                       (gamma_3 * H(time, x, y, z) * input(N, y_index + 2, L));
+                       (gamma_2 * H(time, x, y, z) * input(N, y_index + 2, L));
         }
         solution(N, upper);
     }
@@ -115,18 +117,17 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
     double val{};
     if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_3d>(first_z_bnd))
     {
-        h_3 = grid_3d::step_3(grid_cfg);
         z = grid_3d::value_3(grid_cfg, 0);
         auto fun = [&](double x) { return two * h_3 * ptr->value(time, x, y); };
         for (std::size_t i = 1; i < N; ++i)
         {
             x = grid_3d::value_1(grid_cfg, i);
-            val = (-gamma_1 * G(time, x, y, z) * input(i - 1, y_index, 0)) + (M_3(time, x, y, z) * fun(x)) +
-                  ((one - two * alpha_3 * C(time, x, y, z) - three * gamma_2 * H(time, x, y, z) +
-                    rho * J(time, x, y, z)) *
+            val = ((one - theta) * fun(x) * M_3(time, x, y, z)) +
+                  (two * alpha_3 * (one - theta) * C(time, x, y, z) * input(i, y_index, 1)) +
+                  ((one - three * gamma_3 * H(time, x, y, z) - two * alpha_3 * (one - theta) * C(time, x, y, z)) *
                    input(i, y_index, 0)) +
-                  (gamma_1 * G(time, x, y, z) * input(i + 1, y_index, 0)) +
-                  (two * alpha_3 * C(time, x, y, z) * input(i, y_index, 1)) +
+                  (gamma_1 * G(time, x, y, z) * input(i + 1, y_index, 0)) -
+                  (gamma_1 * G(time, x, y, z) * input(i - 1, y_index, 0)) +
                   (four * gamma_2 * H(time, x, y, z) * input(i, y_index + 1, 0)) -
                   (gamma_2 * H(time, x, y, z) * input(i, y_index + 2, 0));
             solution(i, 0, val);
@@ -136,17 +137,16 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
     if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_3d>(second_z_bnd))
     {
         z = grid_3d::value_3(grid_cfg, L);
-        h_3 = grid_3d::step_3(grid_cfg);
         auto fun = [&](double x) { return two * h_3 * ptr->value(time, x, y); };
         for (std::size_t i = 1; i < N; ++i)
         {
             x = grid_3d::value_1(grid_cfg, i);
-            val = (-gamma_1 * G(time, x, y, z) * input(i - 1, y_index, L)) - (P_3(time, x, y, z) * fun(x)) +
-                  ((one - two * alpha_3 * C(time, x, y, z) - three * gamma_2 * H(time, x, y, z) +
-                    rho * J(time, x, y, z)) *
+            val = (two * alpha_3 * (one - theta) * C(time, x, y, z) * input(i, y_index, L - 1)) -
+                  ((one - theta) * fun(x) * P_3(time, x, y, z)) +
+                  ((one - three * gamma_3 * H(time, x, y, z) - two * alpha_3 * (one - theta) * C(time, x, y, z)) *
                    input(i, y_index, L)) +
-                  (gamma_1 * G(time, x, y, z) * input(i + 1, y_index, L)) +
-                  (two * alpha_3 * C(time, x, y, z) * input(i, y_index, L - 1)) +
+                  (gamma_1 * G(time, x, y, z) * input(i + 1, y_index, L)) -
+                  (gamma_1 * G(time, x, y, z) * input(i - 1, y_index, L)) +
                   (four * gamma_2 * H(time, x, y, z) * input(i, y_index + 1, L)) -
                   (gamma_2 * H(time, x, y, z) * input(i, y_index + 2, L));
             solution(i, L, val);
@@ -159,13 +159,12 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
         for (std::size_t k = 1; k < L; ++k)
         {
             z = grid_3d::value_3(grid_cfg, k);
-            val = (-gamma_1 * G(time, x, y, z) * input(i - 1, y_index, k)) +
-                  (M_3(time, x, y, z) * input(i, y_index, k - 1)) +
-                  ((one - two * alpha_3 * C(time, x, y, z) - three * gamma_2 * H(time, x, y, z) +
-                    rho * J(time, x, y, z)) *
+            val = ((one - theta) * M_3(time, x, y, z) * input(i, y_index, k - 1)) +
+                  ((one - theta) * P_3(time, x, y, z) * input(i, y_index, k + 1)) +
+                  ((one - three * gamma_3 * H(time, x, y, z) - two * alpha_3 * (one - theta) * C(time, x, y, z)) *
                    input(i, y_index, k)) +
-                  (gamma_1 * G(time, x, y, z) * input(i + 1, y_index, k)) +
-                  (P_3(time, x, y, z) * input(i, y_index, k + 1)) +
+                  (gamma_1 * G(time, x, y, z) * input(i + 1, y_index, k)) -
+                  (gamma_1 * G(time, x, y, z) * input(i - 1, y_index, k)) +
                   (four * gamma_2 * H(time, x, y, z) * input(i, y_index + 1, k)) -
                   (gamma_2 * H(time, x, y, z) * input(i, y_index + 2, k));
             solution(i, k, val);
@@ -173,7 +172,7 @@ void explicit_hhw_boundary_scheme::rhs(hhw_implicit_coefficients_ptr const &cfg,
     }
 }
 
-void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr const &cfg,
+void implicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr const &cfg,
                                               grid_config_3d_ptr const &grid_cfg, std::size_t const &y_index,
                                               double const &y, boundary_3d_pair const &x_boundary_pair,
                                               boundary_3d_pair const &z_boundary_pair,
@@ -206,7 +205,9 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
     const std::size_t N = solution.rows() - 1;
     const std::size_t L = solution.columns() - 1;
 
-    double z{};
+    double x{}, z{}, h_1{}, h_3{};
+    h_1 = grid_3d::step_1(grid_cfg);
+    h_3 = grid_3d::step_3(grid_cfg);
     if (auto const &ptr = std::dynamic_pointer_cast<dirichlet_boundary_3d>(first_x_bnd))
     {
         auto fun = [&](double z) { return ptr->value(time, y, z); };
@@ -218,10 +219,8 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
         }
         solution(0, lower);
     }
-    double x{}, h_1{}, h_3{};
     if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_3d>(second_x_bnd))
     {
-        h_1 = grid_3d::step_1(grid_cfg);
         x = grid_3d::value_1(grid_cfg, N);
         auto fun = [&](double z) { return two * h_1 * ptr->value(time, y, z); };
         container_t upper(L, double{0.0});
@@ -234,10 +233,9 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
                         input(N, y_index, k)) +
                        (P_3(time, x, y, z) * input(N, y_index, k + 1)) +
                        (four * gamma_2 * H(time, x, y, z) * input(N, y_index + 1, k)) -
-                       (gamma_3 * H(time, x, y, z) * input(N, y_index + 2, k)) + rho * inhom_input(N, y_index, k);
+                       (gamma_2 * H(time, x, y, z) * input(N, y_index + 2, k)) + rho * inhom_input(N, y_index, k);
         }
 
-        h_3 = grid_3d::step_3(grid_cfg);
         if (auto const &ptr_z = std::dynamic_pointer_cast<neumann_boundary_3d>(first_z_bnd))
         {
             z = grid_3d::value_3(grid_cfg, 0);
@@ -249,7 +247,7 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
                         input(N, y_index, 0)) +
                        (two * alpha_3 * C(time, x, y, z) * input(N, y_index, 1)) +
                        (four * gamma_2 * H(time, x, y, z) * input(N, y_index + 1, 0)) -
-                       (gamma_3 * H(time, x, y, z) * input(N, y_index + 2, 0)) + rho * inhom_input(N, y_index, 0);
+                       (gamma_2 * H(time, x, y, z) * input(N, y_index + 2, 0)) + rho * inhom_input(N, y_index, 0);
         }
 
         if (auto const &ptr_z = std::dynamic_pointer_cast<neumann_boundary_3d>(second_z_bnd))
@@ -263,7 +261,7 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
                         input(N, y_index, L)) +
                        (two * alpha_3 * C(time, x, y, z) * input(N, y_index, L - 1)) +
                        (four * gamma_2 * H(time, x, y, z) * input(N, y_index + 1, L)) -
-                       (gamma_3 * H(time, x, y, z) * input(N, y_index + 2, L)) + rho * inhom_input(N, y_index, L);
+                       (gamma_2 * H(time, x, y, z) * input(N, y_index + 2, L)) + rho * inhom_input(N, y_index, L);
         }
         solution(N, upper);
     }
@@ -271,7 +269,6 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
     double val{};
     if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_3d>(first_z_bnd))
     {
-        h_3 = grid_3d::step_3(grid_cfg);
         z = grid_3d::value_3(grid_cfg, 0);
         auto fun = [&](double x) { return two * h_3 * ptr->value(time, x, y); };
         for (std::size_t i = 1; i < N; ++i)
@@ -292,7 +289,6 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
     if (auto const &ptr = std::dynamic_pointer_cast<neumann_boundary_3d>(second_z_bnd))
     {
         z = grid_3d::value_3(grid_cfg, L);
-        h_3 = grid_3d::step_3(grid_cfg);
         auto fun = [&](double x) { return two * h_3 * ptr->value(time, x, y); };
         for (std::size_t i = 1; i < N; ++i)
         {
@@ -329,17 +325,31 @@ void explicit_hhw_boundary_scheme::rhs_source(hhw_implicit_coefficients_ptr cons
     }
 }
 
-hhw_explicit_boundary_solver::hhw_explicit_boundary_solver(hhw_implicit_coefficients_ptr const &coefficients,
-                                                           grid_config_3d_ptr const &grid_config)
-    : coefficients_{coefficients}, grid_cfg_{grid_config}
+void hhw_implicit_boundary_solver::split(double const &x, double const &y, double const &time, container_t &low,
+                                         container_t &diag, container_t &high)
+{
+    double z{};
+    for (std::size_t t = 0; t < low.size(); ++t)
+    {
+        z = grid_3d::value_3(grid_cfg_, t);
+        low[t] = (-coefficients_->theta_ * coefficients_->M_3_(time, x, y, z));
+        diag[t] = (cone_ + ctwo_ * coefficients_->theta_ * coefficients_->alpha_3_ * coefficients_->C_(time, x, y, z));
+        high[t] = (-coefficients_->theta_ * coefficients_->P_3_(time, x, y, z));
+    }
+}
+
+hhw_implicit_boundary_solver::hhw_implicit_boundary_solver(
+    lss_tridiagonal_solver::tridiagonal_solver_ptr const &solveru, hhw_implicit_coefficients_ptr const &coefficients,
+    grid_config_3d_ptr const &grid_config)
+    : solveru_ptr_{solveru}, coefficients_{coefficients}, grid_cfg_{grid_config}
 {
 }
 
-hhw_explicit_boundary_solver::~hhw_explicit_boundary_solver()
+hhw_implicit_boundary_solver::~hhw_implicit_boundary_solver()
 {
 }
 
-void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &prev_solution,
+void hhw_implicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &prev_solution,
                                          boundary_3d_pair const &x_boundary_pair,
                                          boundary_3d_ptr const &y_upper_boundary_ptr,
                                          boundary_3d_pair const &z_boundary_pair, double const &time,
@@ -347,39 +357,78 @@ void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &
 {
     container_3d<by_enum::ColumnPlane> cpsolution(solution);
     // 2D container for intermediate solution:
-    container_2d<by_enum::Row> solution_v(coefficients_->space_size_x_, coefficients_->space_size_z_, double{});
+    container_2d<by_enum::Row> solution_p(coefficients_->space_size_x_, coefficients_->space_size_z_, double{});
     /// get the right-hand side of the scheme:
-    explicit_hhw_boundary_scheme::rhs(coefficients_, grid_cfg_, 0, 0.0, x_boundary_pair, z_boundary_pair, prev_solution,
-                                      time, solution_v);
+    auto const y = grid_3d::value_2(grid_cfg_, 0);
+    implicit_hhw_boundary_scheme::rhs(coefficients_, grid_cfg_, 0, y, x_boundary_pair, z_boundary_pair, prev_solution,
+                                      time, solution_p);
+    // 1D container for intermediate solution:
+    container_t solution_v(coefficients_->space_size_z_, double{});
+    // containers for second split solver:
+    low_.resize(coefficients_->space_size_z_);
+    diag_.resize(coefficients_->space_size_z_);
+    high_.resize(coefficients_->space_size_z_);
+    double x{};
+    for (std::size_t i = 1; i < coefficients_->space_size_x_ - 1; ++i)
+    {
+        x = grid_3d::value_1(grid_cfg_, i);
+        split(x, y, time, low_, diag_, high_);
+        solveru_ptr_->set_diagonals(low_, diag_, high_);
+        solveru_ptr_->set_rhs(solution_p.at(i));
+        solveru_ptr_->solve(z_boundary_pair, solution_v, time, x, y);
+        solution_p(i, solution_v);
+    }
+    // std::cout << "solution_p Y = 0:\n";
+    // for (std::size_t j = 0; j < solution_p.rows(); ++j)
+    //{
+    //     for (std::size_t k = 0; k < solution_p.columns(); ++k)
+    //     {
+    //         std::cout << solution_p(j, k) << ",";
+    //     }
+    //     std::cout << "\n";
+    // }
+
     // boundary plane at Y = 0:
-    cpsolution(0, solution_v);
+    cpsolution(0, solution_p);
     auto const &upper_bnd_ptr = std::dynamic_pointer_cast<dirichlet_boundary_3d>(y_upper_boundary_ptr);
     auto const &upper_bnd = [=](double t, double s, double r) { return upper_bnd_ptr->value(t, s, r); };
-    d_2d::of_function(grid_cfg_->grid_13(), time, upper_bnd, solution_v);
+    d_2d::of_function(grid_cfg_->grid_13(), time, upper_bnd, solution_p);
+
     // boundary plane at Y = M-1:
-    cpsolution(coefficients_->space_size_y_ - 1, solution_v);
+    cpsolution(coefficients_->space_size_y_ - 1, solution_p);
     solution = cpsolution;
 }
 
-void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &prev_solution,
+void hhw_implicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &prev_solution,
                                          boundary_3d_pair const &x_boundary_pair,
                                          boundary_3d_pair const &z_boundary_pair, double const &time,
                                          container_3d<by_enum::RowPlane> &solution)
 {
     // 3D container for intermediate solution:
-    container_2d<by_enum::Row> solution_zy(coefficients_->space_size_z_, coefficients_->space_size_y_, double{});
+    container_2d<by_enum::Row> solution_yz(coefficients_->space_size_y_, coefficients_->space_size_z_, double{});
     container_2d<by_enum::Row> solution_xy(coefficients_->space_size_x_, coefficients_->space_size_y_, double{});
     // some constants:
     auto const &start_y = coefficients_->rangey_->lower();
     // prepare grid_xy:
     auto const &grid_12 = grid_cfg_->grid_12();
     // prepare grid_zy:
-    auto const &grid_23 = grid_cfg_->grid_32();
+    auto const &grid_23 = grid_cfg_->grid_23();
     /// populating lower X:
     auto const &lower_x_ptr = std::dynamic_pointer_cast<dirichlet_boundary_3d>(x_boundary_pair.first);
     auto const &lower_x_bnd = [=](double t, double v, double r) { return lower_x_ptr->value(t, v, r); };
-    d_2d::of_function(grid_23, time, lower_x_bnd, solution_zy);
-    solution(0, solution_zy);
+    d_2d::of_function(grid_23, time, lower_x_bnd, solution_yz);
+
+    // std::cout << "solution_v X = 0:\n";
+    // for (std::size_t j = 0; j < solution_yz.rows(); ++j)
+    //{
+    //     for (std::size_t k = 0; k < solution_yz.columns(); ++k)
+    //     {
+    //         std::cout << solution_yz(j, k) << ",";
+    //     }
+    //     std::cout << "\n";
+    // }
+
+    solution(0, solution_yz);
     // populating upper X:
     auto const lri = solution.rows() - 1;
     auto const lci = solution.columns() - 1;
@@ -393,10 +442,19 @@ void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &
         const std::size_t k = grid_3d::index_of_3(grid_cfg_, r);
         auto const bnd_val = upper_x_ptr->value(t, v, r);
         auto const h_1 = grid_3d::step_1(grid_cfg_);
-        return (((four * solution(lri - 1, j, k)) - solution(lri - 2, j, k) + (two * h_1 * bnd_val)) / three);
+        return (((four * solution(lri - 1, j, k)) - solution(lri - 2, j, k) - (two * h_1 * bnd_val)) / three);
     };
-    d_2d::of_function(grid_23, time, upper_x_bnd, solution_zy);
-    solution(lri, solution_zy);
+    d_2d::of_function(grid_23, time, upper_x_bnd, solution_yz);
+    // std::cout << "solution_v X = N-1:\n";
+    // for (std::size_t j = 0; j < solution_yz.rows(); ++j)
+    //{
+    //     for (std::size_t k = 0; k < solution_yz.columns(); ++k)
+    //     {
+    //         std::cout << solution_yz(j, k) << ",";
+    //     }
+    //     std::cout << "\n";
+    // }
+    solution(lri, solution_yz);
     // populating lower Z:
     auto const &lower_z_ptr = std::dynamic_pointer_cast<neumann_boundary_3d>(z_boundary_pair.first);
     auto const &lower_z_bnd = [=](double t, double s, double v) {
@@ -404,9 +462,18 @@ void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &
         const std::size_t j = grid_3d::index_of_2(grid_cfg_, v);
         auto const bnd_val = lower_z_ptr->value(t, s, v);
         auto const h_3 = grid_3d::step_3(grid_cfg_);
-        return (((four * solution(i, j, 1)) - solution(i, j, 2) - (two * h_3 * bnd_val)) / three);
+        return (((four * solution(i, j, 1)) - solution(i, j, 2) + (two * h_3 * bnd_val)) / three);
     };
     d_2d::of_function(grid_12, time, lower_z_bnd, solution_xy);
+    // std::cout << "solution_v Z = 0:\n";
+    // for (std::size_t j = 0; j < solution_xy.rows(); ++j)
+    //{
+    //     for (std::size_t k = 0; k < solution_xy.columns(); ++k)
+    //     {
+    //         std::cout << solution_xy(j, k) << ",";
+    //     }
+    //     std::cout << "\n";
+    // }
     for (std::size_t i = 0; i <= lri; ++i)
     {
         for (std::size_t j = 0; j <= lci; ++j)
@@ -422,12 +489,21 @@ void hhw_explicit_boundary_solver::solve(container_3d<by_enum::RowPlane> const &
         const std::size_t j = grid_3d::index_of_2(grid_cfg_, v);
         auto const bnd_val = upper_z_ptr->value(t, s, v);
         auto const h_3 = grid_3d::step_3(grid_cfg_);
-        return (((four * solution(i, j, lli - 1)) - solution(i, j, lli - 2) + (two * h_3 * bnd_val)) / three);
+        return (((four * solution(i, j, lli - 1)) - solution(i, j, lli - 2) - (two * h_3 * bnd_val)) / three);
     };
     d_2d::of_function(grid_12, time, upper_z_bnd, solution_xy);
+    // std::cout << "solution_v Z = L-1:\n";
+    // for (std::size_t j = 0; j < solution_xy.rows(); ++j)
+    //{
+    //     for (std::size_t k = 0; k < solution_xy.columns(); ++k)
+    //     {
+    //         std::cout << solution_xy(j, k) << ",";
+    //     }
+    //     std::cout << "\n";
+    // }
     for (std::size_t i = 0; i <= lri; ++i)
     {
-        for (std::size_t j = 0; j < lci; ++j)
+        for (std::size_t j = 0; j <= lci; ++j)
         {
             solution(i, j, lli, solution_xy(i, j));
         }

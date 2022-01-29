@@ -50,7 +50,7 @@ container_3d<by_enum::RowPlane>::container_3d(std::size_t rows, std::size_t colu
 {
     for (std::size_t i = 0; i < rows_; ++i)
     {
-        data_.emplace_back(container_2d<by_enum::Row>(layers_, columns_));
+        data_.emplace_back(container_2d<by_enum::Column>(columns_, layers_));
     }
 }
 
@@ -59,7 +59,7 @@ container_3d<by_enum::RowPlane>::container_3d(std::size_t rows, std::size_t colu
 {
     for (std::size_t i = 0; i < rows_; ++i)
     {
-        data_.emplace_back(container_2d<by_enum::Row>(layers_, columns_, value));
+        data_.emplace_back(container_2d<by_enum::Column>(columns_, layers_, value));
     }
 }
 
@@ -84,12 +84,12 @@ container_3d<by_enum::RowPlane>::container_3d(container_3d<by_enum::ColumnPlane>
 
     for (std::size_t r = 0; r < rows_; ++r)
     {
-        data_.emplace_back(container_2d<by_enum::Row>(layers_, columns_));
-        for (std::size_t l = 0; l < layers_; ++l)
+        data_.emplace_back(container_2d<by_enum::Column>(columns_, layers_));
+        for (std::size_t c = 0; c < columns_; ++c)
         {
-            for (std::size_t c = 0; c < columns_; ++c)
+            for (std::size_t l = 0; l < layers_; ++l)
             {
-                data_[r](l, c, copy(r, c, l));
+                data_[r](c, l, copy(r, c, l));
             }
         }
     }
@@ -100,12 +100,12 @@ container_3d<by_enum::RowPlane>::container_3d(container_3d<by_enum::LayerPlane> 
 {
     for (std::size_t r = 0; r < rows_; ++r)
     {
-        data_.emplace_back(container_2d<by_enum::Row>(layers_, columns_));
-        for (std::size_t l = 0; l < layers_; ++l)
+        data_.emplace_back(container_2d<by_enum::Column>(columns_, layers_));
+        for (std::size_t c = 0; c < columns_; ++c)
         {
-            for (std::size_t c = 0; c < columns_; ++c)
+            for (std::size_t l = 0; l < layers_; ++l)
             {
-                data_[r](l, c, copy(r, c, l));
+                data_[r](c, l, copy(r, c, l));
             }
         }
     }
@@ -145,12 +145,12 @@ container_3d<by_enum::RowPlane> &container_3d<by_enum::RowPlane>::operator=(
 
     for (std::size_t r = 0; r < rows_; ++r)
     {
-        data_.emplace_back(container_2d<by_enum::Row>(layers_, columns_));
-        for (std::size_t l = 0; l < layers_; ++l)
+        data_.emplace_back(container_2d<by_enum::Column>(columns_, layers_));
+        for (std::size_t c = 0; c < columns_; ++c)
         {
-            for (std::size_t c = 0; c < columns_; ++c)
+            for (std::size_t l = 0; l < layers_; ++l)
             {
-                data_[r](l, c, copy(r, c, l));
+                data_[r](c, l, copy(r, c, l));
             }
         }
     }
@@ -167,12 +167,12 @@ container_3d<by_enum::RowPlane> &container_3d<by_enum::RowPlane>::operator=(
 
     for (std::size_t r = 0; r < rows_; ++r)
     {
-        data_.emplace_back(container_2d<by_enum::Row>(layers_, columns_));
-        for (std::size_t l = 0; l < layers_; ++l)
+        data_.emplace_back(container_2d<by_enum::Column>(columns_, layers_));
+        for (std::size_t c = 0; c < columns_; ++c)
         {
-            for (std::size_t c = 0; c < columns_; ++c)
+            for (std::size_t l = 0; l < layers_; ++l)
             {
-                data_[r](l, c, copy(r, c, l));
+                data_[r](c, l, copy(r, c, l));
             }
         }
     }
@@ -191,7 +191,7 @@ void container_3d<by_enum::RowPlane>::from_data(std::vector<double> const &data)
             for (std::size_t c = 0; c < columns_; ++c)
             {
                 tid = c + l * columns_ + r * layers_ * columns_;
-                data_[r](l, c, data[tid]);
+                data_[r](c, l, data[tid]);
             }
         }
     }
@@ -202,10 +202,10 @@ double container_3d<by_enum::RowPlane>::operator()(std::size_t row_idx, std::siz
     LSS_ASSERT(row_idx < rows_, "Outside of row range");
     LSS_ASSERT(col_idx < columns_, "Outside of column range");
     LSS_ASSERT(lay_idx < layers_, "Outside of layer range");
-    return data_[row_idx](lay_idx, col_idx);
+    return data_[row_idx](col_idx, lay_idx);
 }
 
-container_2d<by_enum::Row> container_3d<by_enum::RowPlane>::operator()(std::size_t row_idx) const
+container_2d<by_enum::Column> container_3d<by_enum::RowPlane>::operator()(std::size_t row_idx) const
 {
     LSS_ASSERT(row_idx < rows_, "Outside of row range");
     return data_[row_idx];
@@ -216,16 +216,16 @@ double container_3d<by_enum::RowPlane>::at(std::size_t row_idx, std::size_t col_
     return operator()(row_idx, col_idx, lay_idx);
 }
 
-container_2d<by_enum::Row> container_3d<by_enum::RowPlane>::at(std::size_t row_idx) const
+container_2d<by_enum::Column> container_3d<by_enum::RowPlane>::at(std::size_t row_idx) const
 {
     return operator()(row_idx);
 }
 
-void container_3d<by_enum::RowPlane>::operator()(std::size_t row_idx, container_2d<by_enum::Row> const &cont)
+void container_3d<by_enum::RowPlane>::operator()(std::size_t row_idx, container_2d<by_enum::Column> const &cont)
 {
     LSS_ASSERT(row_idx < rows_, "Outside of row range");
-    LSS_ASSERT(cont.rows() == layers_, "Outside of layer range");
-    LSS_ASSERT(cont.columns() == columns_, "Outside of column range");
+    LSS_ASSERT(cont.rows() == columns_, "Outside of layer range");
+    LSS_ASSERT(cont.columns() == layers_, "Outside of column range");
     data_[row_idx] = std::move(cont);
 }
 
@@ -235,7 +235,7 @@ void container_3d<by_enum::RowPlane>::operator()(std::size_t row_idx, std::size_
     LSS_ASSERT(row_idx < rows_, "Outside of row range");
     LSS_ASSERT(col_idx < columns_, "Outside of column range");
     LSS_ASSERT(lay_idx < layers_, "Outside of layer range");
-    data_[row_idx](lay_idx, col_idx, value);
+    data_[row_idx](col_idx, lay_idx, value);
 }
 
 std::vector<double> const container_3d<by_enum::RowPlane>::data() const

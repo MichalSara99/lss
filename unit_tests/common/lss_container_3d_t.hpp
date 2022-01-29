@@ -110,6 +110,79 @@ void basic_rcontainer_3d_test()
     print_container(matr3d, "new matr3d");
 }
 
+void slice_rcontainer_3d_test()
+{
+    auto const rows = 3;
+    auto const cols = 4;
+    auto const lays = 2;
+
+    container_3d<by_enum::RowPlane> matr3d(rows, cols, lays);
+    // 0.layer:
+    matr3d(0, 0, 0, 0);
+    matr3d(0, 1, 0, 1);
+    matr3d(0, 2, 0, 2);
+    matr3d(0, 3, 0, 3);
+    //
+    matr3d(1, 0, 0, 4);
+    matr3d(1, 1, 0, 5);
+    matr3d(1, 2, 0, 6);
+    matr3d(1, 3, 0, 7);
+    //
+    matr3d(2, 0, 0, 8);
+    matr3d(2, 1, 0, 9);
+    matr3d(2, 2, 0, 10);
+    matr3d(2, 3, 0, 11);
+    // 1.layer:
+    matr3d(0, 0, 1, 12);
+    matr3d(0, 1, 1, 13);
+    matr3d(0, 2, 1, 14);
+    matr3d(0, 3, 1, 15);
+    //
+    matr3d(1, 0, 1, 16);
+    matr3d(1, 1, 1, 17);
+    matr3d(1, 2, 1, 18);
+    matr3d(1, 3, 1, 19);
+    //
+    matr3d(2, 0, 1, 20);
+    matr3d(2, 1, 1, 21);
+    matr3d(2, 2, 1, 22);
+    matr3d(2, 3, 1, 23);
+
+    print_container(matr3d, "matr3d");
+    std::cout << "number of rows: " << matr3d.rows() << "\n";
+    std::cout << "number of columns: " << matr3d.columns() << "\n";
+    std::cout << "number of layers: " << matr3d.layers() << "\n";
+
+    auto plane = matr3d(0);
+
+    plane(0, 0, 100.0);
+    plane(0, 1, 101.0);
+    //
+    plane(1, 0, 200.0);
+    plane(1, 1, 201.0);
+    //
+    plane(2, 0, 300.0);
+    plane(2, 1, 301.0);
+    //
+    plane(3, 0, 400.0);
+    plane(3, 1, 401.0);
+    matr3d(0, plane);
+
+    print_container(matr3d, "matr3d");
+
+    auto v1 = plane(1);
+    v1[0] = 555.0;
+    v1[1] = 666.0;
+    v1[2] = 777.0;
+    v1[3] = 888.0;
+
+    plane(1, v1);
+
+    matr3d(1, plane);
+
+    print_container(matr3d, "matr3d");
+}
+
 void basic_ccontainer_3d_test()
 {
     auto const rows = 3;
@@ -177,6 +250,75 @@ void basic_ccontainer_3d_test()
     std::cout << "\n";
     matc3d.from_data(v);
     print_container(matc3d, "new matc3d");
+}
+
+void slice_ccontainer_3d_test()
+{
+    auto const rows = 3;
+    auto const cols = 4;
+    auto const lays = 2;
+
+    container_3d<by_enum::ColumnPlane> matr3d(rows, cols, lays);
+    // 0.layer:
+    matr3d(0, 0, 0, 0);
+    matr3d(0, 1, 0, 1);
+    matr3d(0, 2, 0, 2);
+    matr3d(0, 3, 0, 3);
+    //
+    matr3d(1, 0, 0, 4);
+    matr3d(1, 1, 0, 5);
+    matr3d(1, 2, 0, 6);
+    matr3d(1, 3, 0, 7);
+    //
+    matr3d(2, 0, 0, 8);
+    matr3d(2, 1, 0, 9);
+    matr3d(2, 2, 0, 10);
+    matr3d(2, 3, 0, 11);
+    // 1.layer:
+    matr3d(0, 0, 1, 12);
+    matr3d(0, 1, 1, 13);
+    matr3d(0, 2, 1, 14);
+    matr3d(0, 3, 1, 15);
+    //
+    matr3d(1, 0, 1, 16);
+    matr3d(1, 1, 1, 17);
+    matr3d(1, 2, 1, 18);
+    matr3d(1, 3, 1, 19);
+    //
+    matr3d(2, 0, 1, 20);
+    matr3d(2, 1, 1, 21);
+    matr3d(2, 2, 1, 22);
+    matr3d(2, 3, 1, 23);
+
+    print_container(matr3d, "matr3d");
+    std::cout << "number of rows: " << matr3d.rows() << "\n";
+    std::cout << "number of columns: " << matr3d.columns() << "\n";
+    std::cout << "number of layers: " << matr3d.layers() << "\n";
+
+    auto plane = matr3d(0);
+
+    plane(0, 0, 100.0);
+    plane(0, 1, 101.0);
+    //
+    plane(1, 0, 200.0);
+    plane(1, 1, 201.0);
+    //
+    plane(2, 0, 300.0);
+    plane(2, 1, 301.0);
+    matr3d(0, plane);
+
+    print_container(matr3d, "matr3d");
+
+    auto v1 = plane(1);
+    v1[0] = 555.0;
+    v1[1] = 666.0;
+    v1[2] = 777.0;
+
+    plane(1, v1);
+
+    matr3d(1, plane);
+
+    print_container(matr3d, "matr3d");
 }
 
 void basic_lcontainer_3d_test()

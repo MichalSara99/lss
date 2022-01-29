@@ -27,9 +27,9 @@ void hhw_implicit_coefficients::initialize(pde_discretization_config_3d_ptr cons
     const double one = 1.0;
     const double half = 0.5;
     const double quarter = 0.25;
-    auto const &h_1 = one / (space_size_x_ - 1);
-    auto const &h_2 = one / (space_size_y_ - 1);
-    auto const &h_3 = one / (space_size_z_ - 1);
+    auto const h_1 = one / (space_size_x_ - 1);
+    auto const h_2 = one / (space_size_y_ - 1);
+    auto const h_3 = one / (space_size_z_ - 1);
 
     k_ = k;
     alpha_1_ = k_ / (h_1 * h_1);

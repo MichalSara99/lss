@@ -1,9 +1,9 @@
 #include "lss_hhw_boundary_transform.hpp"
 
-#include "../../../../boundaries/lss_dirichlet_boundary.hpp"
-#include "../../../../boundaries/lss_neumann_boundary.hpp"
-#include "../../../../common/lss_macros.hpp"
-#include "../../../../discretization/lss_grid.hpp"
+#include "../../../../../boundaries/lss_dirichlet_boundary.hpp"
+#include "../../../../../boundaries/lss_neumann_boundary.hpp"
+#include "../../../../../common/lss_macros.hpp"
+#include "../../../../../discretization/lss_grid.hpp"
 
 namespace lss_pde_solvers
 {

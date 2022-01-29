@@ -1,11 +1,11 @@
 #if !defined(_LSS_HHW_IMPLICIT_COEFFICIENTS_HPP_)
 #define _LSS_HHW_IMPLICIT_COEFFICIENTS_HPP_
 
-#include "../../../../common/lss_utility.hpp"
-#include "../../../../discretization/lss_discretization.hpp"
-#include "../../../lss_pde_discretization_config.hpp"
-#include "../../../lss_splitting_method_config.hpp"
-#include "../../../transformation/lss_heat_data_transform.hpp"
+#include "../../../../../common/lss_utility.hpp"
+#include "../../../../../discretization/lss_discretization.hpp"
+#include "../../../../lss_pde_discretization_config.hpp"
+#include "../../../../lss_splitting_method_config.hpp"
+#include "../../../../transformation/lss_heat_data_transform.hpp"
 
 namespace lss_pde_solvers
 {

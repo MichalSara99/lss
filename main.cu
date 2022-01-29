@@ -19,7 +19,9 @@ int main()
      // =============== lss_container_3d_t ===================
      // ======================================================
      // basic_rcontainer_3d_test();
+     // slice_rcontainer_3d_test(); 
      // basic_ccontainer_3d_test();
+     // slice_ccontainer_3d_test();  
      // basic_lcontainer_3d_test();
 
      // ======================================================
@@ -137,9 +139,8 @@ int main()
     // ================== lss_hhw_equation_t ================
     // ======================================================
     // test_impl_hhw_equation_cuda_qr_solver();
-    //  test_impl_hhw_equation_thomas_lu_solver();
-
-    //
+    test_impl_hhw_equation_thomas_lu_solver();  
+    // 
     // ======================================================
 
     // ======================================================

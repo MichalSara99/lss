@@ -4,19 +4,19 @@
 #include <functional>
 #include <map>
 
-#include "../../../boundaries/lss_boundary.hpp"
-#include "../../../common/lss_enumerations.hpp"
-#include "../../../common/lss_macros.hpp"
-#include "../../../containers/lss_container_2d.hpp"
-#include "../../../containers/lss_container_3d.hpp"
-#include "../../../discretization/lss_discretization.hpp"
-#include "../../../discretization/lss_grid_config_hints.hpp"
-#include "../../../discretization/lss_grid_transform_config.hpp"
-#include "../../lss_heat_data_config.hpp"
-#include "../../lss_heat_solver_config.hpp"
-#include "../../lss_pde_discretization_config.hpp"
-#include "../../lss_splitting_method_config.hpp"
-#include "../../transformation/lss_heat_data_transform.hpp"
+#include "../../../../boundaries/lss_boundary.hpp"
+#include "../../../../common/lss_enumerations.hpp"
+#include "../../../../common/lss_macros.hpp"
+#include "../../../../containers/lss_container_2d.hpp"
+#include "../../../../containers/lss_container_3d.hpp"
+#include "../../../../discretization/lss_discretization.hpp"
+#include "../../../../discretization/lss_grid_config_hints.hpp"
+#include "../../../../discretization/lss_grid_transform_config.hpp"
+#include "../../../lss_heat_data_config.hpp"
+#include "../../../lss_heat_solver_config.hpp"
+#include "../../../lss_pde_discretization_config.hpp"
+#include "../../../lss_splitting_method_config.hpp"
+#include "../../../transformation/lss_heat_data_transform.hpp"
 #include "transformation/lss_hhw_boundary_transform.hpp"
 
 namespace lss_pde_solvers

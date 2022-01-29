@@ -1,10 +1,10 @@
 #include "lss_hhw_equation.hpp"
 
-#include "../../../boundaries/lss_dirichlet_boundary.hpp"
-#include "../../../boundaries/lss_neumann_boundary.hpp"
-#include "../../../common/lss_macros.hpp"
-#include "../../../discretization/lss_grid.hpp"
-#include "../../../discretization/lss_grid_config.hpp"
+#include "../../../../boundaries/lss_dirichlet_boundary.hpp"
+#include "../../../../boundaries/lss_neumann_boundary.hpp"
+#include "../../../../common/lss_macros.hpp"
+#include "../../../../discretization/lss_grid.hpp"
+#include "../../../../discretization/lss_grid_config.hpp"
 //#include "lss_heston_equation_explicit_kernel.hpp"
 #include "lss_hhw_equation_implicit_kernel.hpp"
 

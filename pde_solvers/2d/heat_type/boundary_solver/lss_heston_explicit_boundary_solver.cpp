@@ -140,8 +140,9 @@ void heston_explicit_boundary_solver::solve(container_2d<by_enum::Row> const &pr
     // 1D container for intermediate solution:
     container_t solution_v(coefficients_->space_size_x_, double{});
     // get the right-hand side of the scheme:
-    explicit_heston_boundary_scheme::rhs(coefficients_, grid_cfg_, 0, 0.0, horizonatal_boundary_pair, prev_solution,
-                                         time, solution_v);
+    auto const y = grid_2d::value_2(grid_cfg_, 0);
+    explicit_heston_boundary_scheme::rhs(coefficients_, grid_cfg_, 0, y, horizonatal_boundary_pair, prev_solution, time,
+                                         solution_v);
     csolution(0, solution_v);
     if (auto const &ptr = std::dynamic_pointer_cast<dirichlet_boundary_2d>(vertical_upper_boundary_ptr))
     {

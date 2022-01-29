@@ -259,29 +259,32 @@
     <Filter Include="include\lss\ode\configs">
       <UniqueIdentifier>{66d3a721-cc2a-47c5-846a-8d3278d2712e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="pde_solvers\3d">
-      <UniqueIdentifier>{3c077afb-639e-4222-af30-c67f19e494a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pde_solvers\3d\heat_type">
-      <UniqueIdentifier>{51b89d72-a9bc-486c-8d49-6f3bf593a0e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pde_solvers\3d\heat_type\implicit_coefficients">
-      <UniqueIdentifier>{546a731e-595c-4a9d-8595-a4fc47e3f007}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pde_solvers\3d\heat_type\boundary_solver">
-      <UniqueIdentifier>{bd6dd463-3db1-49ee-8d01-c26b84c7c556}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pde_solvers\3d\heat_type\transformation">
-      <UniqueIdentifier>{fa8cb97b-7056-43fe-aead-6eb30b0a2c25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pde_solvers\3d\heat_type\splitting_method">
-      <UniqueIdentifier>{894d23af-67cb-41fd-961b-7e1ba64bea5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pde_solvers\3d\heat_type\time_loop">
-      <UniqueIdentifier>{e1e11777-d4c5-4fa6-a748-b0a9621d2f2a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="unit_tests\pde_solvers\3d">
       <UniqueIdentifier>{8811aeee-7e6e-418c-858e-2031d1560651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental">
+      <UniqueIdentifier>{96602374-7ab2-4e03-847f-ec70afeec642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental\3d">
+      <UniqueIdentifier>{c63ce834-c7e8-4664-b3c7-a9dfa3a24e92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental\3d\heat_type">
+      <UniqueIdentifier>{0ffab78c-d204-4d26-934a-455bf3e78d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental\3d\heat_type\implicit_coefficients">
+      <UniqueIdentifier>{7cd85175-1696-40a0-8d08-56e641135860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental\3d\heat_type\boundary_solver">
+      <UniqueIdentifier>{1a438927-881d-4862-bc38-abd8b74ddae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental\3d\heat_type\transformation">
+      <UniqueIdentifier>{5a72d3b7-8b6b-4220-ae7a-5fecdfc19e42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental\3d\heat_type\time_loop">
+      <UniqueIdentifier>{735f32e4-8871-46ca-8b01-e5d90015bec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pde_solvers\experimental\3d\heat_type\splitting_method">
+      <UniqueIdentifier>{bcce2ef8-c7d7-4884-a370-2dd7f0811468}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -789,32 +792,32 @@
     <ClInclude Include="include\lss\utilities\container_3d.hpp">
       <Filter>include\lss\utilities</Filter>
     </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.hpp">
-      <Filter>pde_solvers\3d\heat_type\boundary_solver</Filter>
-    </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.hpp">
-      <Filter>pde_solvers\3d\heat_type\implicit_coefficients</Filter>
-    </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\lss_hhw_equation.hpp">
-      <Filter>pde_solvers\3d\heat_type</Filter>
-    </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\transformation\lss_hhw_boundary_transform.hpp">
-      <Filter>pde_solvers\3d\heat_type\transformation</Filter>
-    </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\lss_hhw_equation_implicit_kernel.hpp">
-      <Filter>pde_solvers\3d\heat_type</Filter>
-    </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_splitting_method_3d.hpp">
-      <Filter>pde_solvers\3d\heat_type\splitting_method</Filter>
-    </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_douglas_rachford_method_3d.hpp">
-      <Filter>pde_solvers\3d\heat_type\splitting_method</Filter>
-    </ClInclude>
-    <ClInclude Include="pde_solvers\3d\heat_type\time_loop\lss_hhw_implicit_time_loop.hpp">
-      <Filter>pde_solvers\3d\heat_type\time_loop</Filter>
-    </ClInclude>
     <ClInclude Include="unit_tests\pde_solvers\3d\lss_hhw_equation_t.hpp">
       <Filter>unit_tests\pde_solvers\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\boundary_solver</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\implicit_coefficients</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\splitting_method\lss_heat_douglas_rachford_method_3d.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\splitting_method</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\splitting_method\lss_heat_splitting_method_3d.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\splitting_method</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\time_loop\lss_hhw_implicit_time_loop.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\time_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\transformation\lss_hhw_boundary_transform.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\lss_hhw_equation.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type</Filter>
+    </ClInclude>
+    <ClInclude Include="pde_solvers\experimental\3d\heat_type\lss_hhw_equation_implicit_kernel.hpp">
+      <Filter>pde_solvers\experimental\3d\heat_type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1244,29 +1247,29 @@
     <ClCompile Include="include\lss\utilities\container_3d.cpp">
       <Filter>include\lss\utilities</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.cpp">
-      <Filter>pde_solvers\3d\heat_type\boundary_solver</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\boundary_solver\lss_hhw_explicit_boundary_solver.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\boundary_solver</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.cpp">
-      <Filter>pde_solvers\3d\heat_type\implicit_coefficients</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\implicit_coefficients\lss_hhw_implicit_coefficients.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\implicit_coefficients</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\lss_hhw_equation.cpp">
-      <Filter>pde_solvers\3d\heat_type</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\splitting_method\lss_heat_douglas_rachford_method_3d.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\splitting_method</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\transformation\lss_hhw_boundary_transform.cpp">
-      <Filter>pde_solvers\3d\heat_type\transformation</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\splitting_method\lss_heat_splitting_method_3d.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\splitting_method</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\lss_hhw_equation_implicit_kernel.cpp">
-      <Filter>pde_solvers\3d\heat_type</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\time_loop\lss_hhw_implicit_time_loop.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\time_loop</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_splitting_method_3d.cpp">
-      <Filter>pde_solvers\3d\heat_type\splitting_method</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\transformation\lss_hhw_boundary_transform.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type\transformation</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\splitting_method\lss_heat_douglas_rachford_method_3d.cpp">
-      <Filter>pde_solvers\3d\heat_type\splitting_method</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\lss_hhw_equation.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type</Filter>
     </ClCompile>
-    <ClCompile Include="pde_solvers\3d\heat_type\time_loop\lss_hhw_implicit_time_loop.cpp">
-      <Filter>pde_solvers\3d\heat_type\time_loop</Filter>
+    <ClCompile Include="pde_solvers\experimental\3d\heat_type\lss_hhw_equation_implicit_kernel.cpp">
+      <Filter>pde_solvers\experimental\3d\heat_type</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

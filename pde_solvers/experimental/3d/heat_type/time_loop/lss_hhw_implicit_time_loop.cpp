@@ -1,6 +1,6 @@
 #include "lss_hhw_implicit_time_loop.hpp"
 
-#include "../../../../boundaries/lss_dirichlet_boundary.hpp"
+#include "../../../../../boundaries/lss_dirichlet_boundary.hpp"
 
 namespace lss_pde_solvers
 {
@@ -21,7 +21,7 @@ boundary_3d_pair hhw_implicit_boundaries::get_y(grid_config_2d_ptr const &grid_c
     };
     auto upper = [=](double t, double x, double z) -> double {
         const std::size_t i = grid_config_xz->index_of_1(x);
-        const std::size_t k = grid_config_xz->index_of_2(x);
+        const std::size_t k = grid_config_xz->index_of_2(z);
         return next_solution(i, lci, k);
     };
     auto y_low = std::make_shared<dirichlet_boundary_3d>(lower);
@@ -29,18 +29,18 @@ boundary_3d_pair hhw_implicit_boundaries::get_y(grid_config_2d_ptr const &grid_c
     return std::make_pair(y_low, y_high);
 }
 
-boundary_3d_pair hhw_implicit_boundaries::get_intermed_x(grid_config_2d_ptr const &grid_config_zy,
+boundary_3d_pair hhw_implicit_boundaries::get_intermed_x(grid_config_2d_ptr const &grid_config_yz,
                                                          container_3d<by_enum::RowPlane> const &next_solution)
 {
     const std::size_t lri = next_solution.rows() - 1;
     auto lower = [=](double t, double y, double z) -> double {
-        const std::size_t k = grid_config_zy->index_of_1(z);
-        const std::size_t j = grid_config_zy->index_of_2(y);
+        const std::size_t j = grid_config_yz->index_of_1(y);
+        const std::size_t k = grid_config_yz->index_of_2(z);
         return next_solution(0, j, k);
     };
     auto upper = [=](double t, double y, double z) -> double {
-        const std::size_t k = grid_config_zy->index_of_1(z);
-        const std::size_t j = grid_config_zy->index_of_2(y);
+        const std::size_t j = grid_config_yz->index_of_1(y);
+        const std::size_t k = grid_config_yz->index_of_2(z);
         return next_solution(lri, j, k);
     };
     auto x_low = std::make_shared<dirichlet_boundary_3d>(lower);
@@ -96,7 +96,7 @@ void hhw_implicit_time_loop::run(heat_splitting_method_3d_ptr const &solver_ptr,
             boundary_solver_ptr->solve(prev_solution, x_boundary_pair, y_upper_boundary_ptr, z_boundary_pair, time,
                                        next_solution);
             y_boundary_pair = hhw_implicit_boundaries::get_y(grid_config->grid_13(), next_solution);
-            x_inter_boundary_pair = hhw_implicit_boundaries::get_intermed_x(grid_config->grid_32(), prev_solution);
+            x_inter_boundary_pair = hhw_implicit_boundaries::get_intermed_x(grid_config->grid_23(), prev_solution);
             z_inter_boundary_pair = hhw_implicit_boundaries::get_intermed_z(grid_config->grid_12(), prev_solution);
             solver_ptr->solve(prev_solution, x_inter_boundary_pair, y_boundary_pair, z_inter_boundary_pair, time,
                               next_solution);
@@ -117,11 +117,36 @@ void hhw_implicit_time_loop::run(heat_splitting_method_3d_ptr const &solver_ptr,
             boundary_solver_ptr->solve(prev_solution, x_boundary_pair, y_upper_boundary_ptr, z_boundary_pair, time,
                                        next_solution);
             y_boundary_pair = hhw_implicit_boundaries::get_y(grid_config->grid_13(), next_solution);
-            x_inter_boundary_pair = hhw_implicit_boundaries::get_intermed_x(grid_config->grid_32(), prev_solution);
+            x_inter_boundary_pair = hhw_implicit_boundaries::get_intermed_x(grid_config->grid_23(), prev_solution);
             z_inter_boundary_pair = hhw_implicit_boundaries::get_intermed_z(grid_config->grid_12(), prev_solution);
             solver_ptr->solve(prev_solution, x_inter_boundary_pair, y_boundary_pair, z_inter_boundary_pair, time,
                               next_solution);
+            // std::cout << "Before:\n";
+            // for (std::size_t l = 0; l < next_solution.layers(); ++l)
+            //{
+            //     for (std::size_t r = 0; r < next_solution.rows(); ++r)
+            //     {
+            //         for (std::size_t c = 0; c < next_solution.columns(); ++c)
+            //         {
+            //             std::cout << next_solution(r, c, l) << ",";
+            //         }
+            //         std::cout << "\n";
+            //     }
+            // }
+
             boundary_solver_ptr->solve(prev_solution, x_boundary_pair, z_boundary_pair, time, next_solution);
+            // std::cout << "After:\n";
+            // for (std::size_t l = 0; l < next_solution.layers(); ++l)
+            //{
+            //     for (std::size_t r = 0; r < next_solution.rows(); ++r)
+            //     {
+            //         for (std::size_t c = 0; c < next_solution.columns(); ++c)
+            //         {
+            //             std::cout << next_solution(r, c, l) << ",";
+            //         }
+            //         std::cout << "\n";
+            //     }
+            // }
 
             prev_solution = next_solution;
             time -= k;

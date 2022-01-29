@@ -1,7 +1,7 @@
 #include "lss_heat_douglas_rachford_method_3d.hpp"
 
-#include "../../../../common/lss_macros.hpp"
-#include "../../../../discretization/lss_grid.hpp"
+#include "../../../../../common/lss_macros.hpp"
+#include "../../../../../discretization/lss_grid.hpp"
 
 namespace lss_pde_solvers
 {
@@ -44,24 +44,24 @@ void implicit_hhw_scheme::rhs_intermed_1(hhw_implicit_coefficients_ptr const &cf
         solution[t] =
             (beta_1 * D(time, x, y, z) * input(t - 1, y_index - 1, z_index)) +
             (beta_2 * E(time, x, y, z) * input(t - 1, y_index, z_index - 1)) +
-            (beta_3 * F(time, x, y, z) * input(t, y_index - 1, z_index - 1)) +
-            ((one - theta) * M_1(time, x, y, z) * input(t - 1, y_index, z_index)) +
-            (M_2(time, x, y, z) * input(t, y_index - 1, z_index)) +
-            (M_3(time, x, y, z) * input(t, y_index, z_index - 1)) +
-            (((one - two * S_2(time, x, y, z) - two * S_3(time, x, y, z)) - two * (one - theta) * S_1(time, x, y, z)) *
-             input(t, y_index, z_index)) -
-            (beta_1 * D(time, x, y, z) * input(t - 1, y_index + 1, z_index)) -
+            (beta_3 * F(time, x, y, z) * input(t, y_index - 1, z_index - 1)) -
+            (beta_1 * D(time, x, y, z) * input(t + 1, y_index - 1, z_index)) -
             (beta_2 * E(time, x, y, z) * input(t - 1, y_index, z_index + 1)) -
             (beta_3 * F(time, x, y, z) * input(t, y_index - 1, z_index + 1)) -
-            (beta_1 * D(time, x, y, z) * input(t + 1, y_index - 1, z_index)) -
+            (beta_1 * D(time, x, y, z) * input(t - 1, y_index + 1, z_index)) -
             (beta_2 * E(time, x, y, z) * input(t + 1, y_index, z_index - 1)) -
             (beta_3 * F(time, x, y, z) * input(t, y_index + 1, z_index - 1)) +
-            (P_2(time, x, y, z) * input(t, y_index + 1, z_index)) +
-            (P_3(time, x, y, z) * input(t, y_index, z_index + 1)) +
-            ((one - theta) * P_1(time, x, y, z) * input(t + 1, y_index, z_index)) +
             (beta_1 * D(time, x, y, z) * input(t + 1, y_index + 1, z_index)) +
             (beta_2 * E(time, x, y, z) * input(t + 1, y_index, z_index + 1)) +
-            (beta_3 * F(time, x, y, z) * input(t, y_index + 1, z_index + 1));
+            (beta_3 * F(time, x, y, z) * input(t, y_index + 1, z_index + 1)) +
+            (M_2(time, x, y, z) * input(t, y_index - 1, z_index)) +
+            (P_2(time, x, y, z) * input(t, y_index + 1, z_index)) +
+            (M_3(time, x, y, z) * input(t, y_index, z_index - 1)) +
+            (P_3(time, x, y, z) * input(t, y_index, z_index + 1)) +
+            ((one - theta) * M_1(time, x, y, z) * input(t - 1, y_index, z_index)) +
+            ((one - theta) * P_1(time, x, y, z) * input(t + 1, y_index, z_index)) +
+            ((one - two * S_2(time, x, y, z) - two * S_3(time, x, y, z) - two * (one - theta) * S_1(time, x, y, z)) *
+             input(t, y_index, z_index));
     }
 }
 
@@ -240,6 +240,7 @@ void heat_douglas_rachford_method_3d::solve(container_3d<by_enum::RowPlane> cons
                                                         coefficients_->space_size_z_, double{});
     // 1D container for intermediate solution:
     container_t solution_v(coefficients_->space_size_x_, double{});
+    rhs_.clear();
     low_.resize(coefficients_->space_size_x_);
     diag_.resize(coefficients_->space_size_x_);
     high_.resize(coefficients_->space_size_x_);
@@ -268,6 +269,7 @@ void heat_douglas_rachford_method_3d::solve(container_3d<by_enum::RowPlane> cons
     // 1D container for intermediate solution:
     solution_v.resize(coefficients_->space_size_y_);
     // containers for second split solver:
+    rhs_.clear();
     low_.resize(coefficients_->space_size_y_);
     diag_.resize(coefficients_->space_size_y_);
     high_.resize(coefficients_->space_size_y_);
@@ -293,6 +295,7 @@ void heat_douglas_rachford_method_3d::solve(container_3d<by_enum::RowPlane> cons
     // 1D container for final solution:
     solution_v.resize(coefficients_->space_size_z_);
     // containers for second split solver:
+    rhs_.clear();
     low_.resize(coefficients_->space_size_z_);
     diag_.resize(coefficients_->space_size_z_);
     high_.resize(coefficients_->space_size_z_);
@@ -300,7 +303,7 @@ void heat_douglas_rachford_method_3d::solve(container_3d<by_enum::RowPlane> cons
     for (std::size_t i = 1; i < coefficients_->space_size_x_ - 1; ++i)
     {
         x = grid_3d::value_1(grid_cfg_, i);
-        auto row_plane = container_2d<by_enum::Column>(solution.at(i));
+        auto row_plane_r = container_2d<by_enum::Row>(solution.at(i));
         for (std::size_t j = 1; j < coefficients_->space_size_y_ - 1; ++j)
         {
             y = grid_3d::value_2(grid_cfg_, j);
@@ -309,9 +312,9 @@ void heat_douglas_rachford_method_3d::solve(container_3d<by_enum::RowPlane> cons
             solveru_ptr_->set_diagonals(low_, diag_, high_);
             solveru_ptr_->set_rhs(rhs_);
             solveru_ptr_->solve(z_boundary_pair, solution_v, time, x, y);
-            row_plane(j, solution_v);
+            row_plane_r(j, solution_v);
         }
-        solution(i, row_plane);
+        solution(i, row_plane_r);
     }
 }
 
