@@ -185,7 +185,6 @@ void print(pde_discretization_config_3d_ptr const &pde_discretization_config,
     out << grid_3d::transformed_value_3(grid_trans_cfg, eta) << "\nVALUES\n";
     for (std::size_t l = 0; l < container.layers(); ++l)
     {
-        out << "layer: " << l << "\n";
         for (std::size_t r = 0; r < container.rows(); ++r)
         {
             for (std::size_t c = 0; c < container.columns() - 1; ++c)

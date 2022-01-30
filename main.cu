@@ -139,7 +139,7 @@ int main()
     // ================== lss_hhw_equation_t ================
     // ======================================================
     // test_impl_hhw_equation_cuda_qr_solver();
-    test_impl_hhw_equation_thomas_lu_solver();  
+    // test_impl_hhw_equation_tlu_dss_solver();  
     // 
     // ======================================================
 

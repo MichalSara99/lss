@@ -819,6 +819,12 @@
     <ClInclude Include="pde_solvers\experimental\3d\heat_type\lss_hhw_equation_implicit_kernel.hpp">
       <Filter>pde_solvers\experimental\3d\heat_type</Filter>
     </ClInclude>
+    <ClInclude Include="pde_solvers\lss_implicit_pde_scheme.hpp">
+      <Filter>pde_solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lss\pde\configs\implicit_pde_scheme.hpp">
+      <Filter>include\lss\pde\configs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common\lss_range.cpp">
@@ -1270,6 +1276,12 @@
     </ClCompile>
     <ClCompile Include="pde_solvers\experimental\3d\heat_type\lss_hhw_equation_implicit_kernel.cpp">
       <Filter>pde_solvers\experimental\3d\heat_type</Filter>
+    </ClCompile>
+    <ClCompile Include="pde_solvers\lss_implicit_pde_scheme.cpp">
+      <Filter>pde_solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="include\lss\pde\configs\implicit_pde_scheme.cpp">
+      <Filter>include\lss\pde\configs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

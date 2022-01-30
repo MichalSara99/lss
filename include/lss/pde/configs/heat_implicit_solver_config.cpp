@@ -33,15 +33,15 @@ heat_implicit_solver_config_builder &heat_implicit_solver_config_builder::tridia
 }
 
 heat_implicit_solver_config_builder &heat_implicit_solver_config_builder::implicit_pde_scheme(
-    implicit_pde_schemes implicit_pde_scheme)
+    implicit_pde_scheme_ptr implicit_pde_scheme)
 {
-    implicit_pde_scheme_ = implicit_pde_scheme;
+    implicit_pde_scheme_ptr_ = implicit_pde_scheme;
     return *this;
 }
 
 heat_implicit_solver_config_ptr heat_implicit_solver_config_builder::build()
 {
     return std::make_shared<heat_implicit_solver_config>(memory_space_, traverse_direction_, tridiagonal_method_,
-                                                         tridiagonal_factorization_, implicit_pde_scheme_);
+                                                         tridiagonal_factorization_, implicit_pde_scheme_ptr_);
 }
 } // namespace lss

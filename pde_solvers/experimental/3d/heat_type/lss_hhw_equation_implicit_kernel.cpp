@@ -1,6 +1,5 @@
 #include "lss_hhw_equation_implicit_kernel.hpp"
 
-#include "../../../../sparse_solvers/pentadiagonal/karawia_solver/lss_karawia_solver.hpp"
 #include "../../../../sparse_solvers/tridiagonal/cuda_solver/lss_cuda_solver.hpp"
 #include "../../../../sparse_solvers/tridiagonal/double_sweep_solver/lss_double_sweep_solver.hpp"
 #include "../../../../sparse_solvers/tridiagonal/sor_solver/lss_sor_solver.hpp"
@@ -60,25 +59,10 @@ void hhw_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method_
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    const double one = 1.0;
-    const double half = 0.5;
-    double theta{};
-    switch (solver_cfg_->implicit_pde_scheme())
-    {
-    case implicit_pde_schemes_enum::Euler:
-        theta = one;
-        break;
-    case implicit_pde_schemes_enum::CrankNicolson:
-        theta = half;
-        break;
-    default:
-        theta = half;
-    }
 
     // create a Heston coefficient holder:
-    auto const heston_coeff_holder =
-        std::make_shared<hhw_implicit_coefficients>(heat_data_cfg_, discretization_cfg_, splitting_cfg_, theta);
+    auto const heston_coeff_holder = std::make_shared<hhw_implicit_coefficients>(
+        heat_data_cfg_, discretization_cfg_, splitting_cfg_, solver_cfg_->implicit_pde_scheme_value());
     heat_splitting_method_3d_ptr splitting_ptr;
     auto solver_y1 = std::make_shared<cuda_solver<memory_space_enum::Device>>(space_size_x);
     solver_y1->set_factorization(solver_cfg_->tridiagonal_factorization());
@@ -168,26 +152,10 @@ void hhw_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method_
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    const double one = 1.0;
-    const double half = 0.5;
-
-    double theta{};
-    switch (solver_cfg_->implicit_pde_scheme())
-    {
-    case implicit_pde_schemes_enum::Euler:
-        theta = one;
-        break;
-    case implicit_pde_schemes_enum::CrankNicolson:
-        theta = half;
-        break;
-    default:
-        theta = half;
-    }
 
     // create a Heston coefficient holder:
-    auto const heston_coeff_holder =
-        std::make_shared<hhw_implicit_coefficients>(heat_data_cfg_, discretization_cfg_, splitting_cfg_, theta);
+    auto const heston_coeff_holder = std::make_shared<hhw_implicit_coefficients>(
+        heat_data_cfg_, discretization_cfg_, splitting_cfg_, solver_cfg_->implicit_pde_scheme_value());
     heat_splitting_method_3d_ptr splitting_ptr;
     auto solver_y1 = std::make_shared<sor_solver_cuda>(space_size_x);
     solver_y1->set_omega(omega_value);
@@ -276,25 +244,9 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    const double one = 1.0;
-    const double half = 0.5;
-    double theta{};
-    switch (solver_cfg_->implicit_pde_scheme())
-    {
-    case implicit_pde_schemes_enum::Euler:
-        theta = one;
-        break;
-    case implicit_pde_schemes_enum::CrankNicolson:
-        theta = half;
-        break;
-    default:
-        theta = half;
-    }
-
     // create a Heston coefficient holder:
-    auto const heston_coeff_holder =
-        std::make_shared<hhw_implicit_coefficients>(heat_data_cfg_, discretization_cfg_, splitting_cfg_, theta);
+    auto const heston_coeff_holder = std::make_shared<hhw_implicit_coefficients>(
+        heat_data_cfg_, discretization_cfg_, splitting_cfg_, solver_cfg_->implicit_pde_scheme_value());
     heat_splitting_method_3d_ptr splitting_ptr;
     auto solver_y1 = std::make_shared<cuda_solver<memory_space_enum::Host>>(space_size_x);
     solver_y1->set_factorization(solver_cfg_->tridiagonal_factorization());
@@ -381,26 +333,10 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    const double one = 1.0;
-    const double half = 0.5;
-
-    double theta{};
-    switch (solver_cfg_->implicit_pde_scheme())
-    {
-    case implicit_pde_schemes_enum::Euler:
-        theta = one;
-        break;
-    case implicit_pde_schemes_enum::CrankNicolson:
-        theta = half;
-        break;
-    default:
-        theta = half;
-    }
 
     // create a Heston coefficient holder:
-    auto const heston_coeff_holder =
-        std::make_shared<hhw_implicit_coefficients>(heat_data_cfg_, discretization_cfg_, splitting_cfg_, theta);
+    auto const heston_coeff_holder = std::make_shared<hhw_implicit_coefficients>(
+        heat_data_cfg_, discretization_cfg_, splitting_cfg_, solver_cfg_->implicit_pde_scheme_value());
     heat_splitting_method_3d_ptr splitting_ptr;
     auto solver_y1 = std::make_shared<sor_solver>(space_size_x);
     solver_y1->set_omega(omega_value);
@@ -489,26 +425,9 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    const double one = 1.0;
-    const double half = 0.5;
-
-    double theta{};
-    switch (solver_cfg_->implicit_pde_scheme())
-    {
-    case implicit_pde_schemes_enum::Euler:
-        theta = one;
-        break;
-    case implicit_pde_schemes_enum::CrankNicolson:
-        theta = half;
-        break;
-    default:
-        theta = half;
-    }
-
     // create a Heston coefficient holder:
-    auto const heston_coeff_holder =
-        std::make_shared<hhw_implicit_coefficients>(heat_data_cfg_, discretization_cfg_, splitting_cfg_, theta);
+    auto const heston_coeff_holder = std::make_shared<hhw_implicit_coefficients>(
+        heat_data_cfg_, discretization_cfg_, splitting_cfg_, solver_cfg_->implicit_pde_scheme_value());
     heat_splitting_method_3d_ptr splitting_ptr;
     // create and set up the main solvers:
     auto solver_y1 = std::make_shared<double_sweep_solver>(space_size_x);
@@ -594,26 +513,10 @@ void hhw_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_en
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    const double one = 1.0;
-    const double half = 0.5;
-
-    double theta{};
-    switch (solver_cfg_->implicit_pde_scheme())
-    {
-    case implicit_pde_schemes_enum::Euler:
-        theta = one;
-        break;
-    case implicit_pde_schemes_enum::CrankNicolson:
-        theta = half;
-        break;
-    default:
-        theta = half;
-    }
 
     // create a Heston coefficient holder:
-    auto const heston_coeff_holder =
-        std::make_shared<hhw_implicit_coefficients>(heat_data_cfg_, discretization_cfg_, splitting_cfg_, theta);
+    auto const heston_coeff_holder = std::make_shared<hhw_implicit_coefficients>(
+        heat_data_cfg_, discretization_cfg_, splitting_cfg_, solver_cfg_->implicit_pde_scheme_value());
     heat_splitting_method_3d_ptr splitting_ptr;
     // create and set up the main solvers:
     auto solver_y1 = std::make_shared<thomas_lu_solver>(space_size_x);

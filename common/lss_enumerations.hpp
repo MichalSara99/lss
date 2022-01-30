@@ -118,7 +118,7 @@ enum class flat_matrix_sort_enum
 
 /**
     @enum  lss_enumerations::implicit_pde_schemes_enum
-    @brief Implicit 1D PDE schemes
+    @brief Implicit 1D, 2D and 3D PDE schemes
 **/
 enum class implicit_pde_schemes_enum
 {

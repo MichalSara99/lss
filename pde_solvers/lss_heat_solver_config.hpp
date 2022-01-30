@@ -4,6 +4,7 @@
 #include "../common/lss_enumerations.hpp"
 #include "../common/lss_macros.hpp"
 #include "../common/lss_utility.hpp"
+#include "lss_implicit_pde_scheme.hpp"
 #include "lss_pde_solver_config.hpp"
 
 namespace lss_pde_solvers
@@ -12,7 +13,6 @@ namespace lss_pde_solvers
 using lss_enumerations::dimension_enum;
 using lss_enumerations::explicit_pde_schemes_enum;
 using lss_enumerations::factorization_enum;
-using lss_enumerations::implicit_pde_schemes_enum;
 using lss_enumerations::memory_space_enum;
 using lss_enumerations::traverse_direction_enum;
 using lss_enumerations::tridiagonal_method_enum;
@@ -24,7 +24,7 @@ using lss_utility::sptr_t;
 struct heat_implicit_solver_config : public pde_implicit_solver_config
 {
   private:
-    implicit_pde_schemes_enum implicit_pde_scheme_;
+    double implicit_pde_scheme_value_;
 
     explicit heat_implicit_solver_config() = delete;
 
@@ -33,10 +33,10 @@ struct heat_implicit_solver_config : public pde_implicit_solver_config
                                                  traverse_direction_enum const &traverse_direction,
                                                  tridiagonal_method_enum const &tridiagonal_method,
                                                  factorization_enum const &tridiagonal_factorization,
-                                                 implicit_pde_schemes_enum const &implicit_pde_scheme);
+                                                 implicit_pde_scheme_ptr const &implicit_pde_scheme);
     LSS_API ~heat_implicit_solver_config();
 
-    LSS_API implicit_pde_schemes_enum implicit_pde_scheme() const;
+    LSS_API double implicit_pde_scheme_value() const;
 };
 
 /**
@@ -69,149 +69,179 @@ namespace default_heat_solver_configs
 // =================================================
 // forward stepping:
 
-static auto dev_fwd_cusolver_qr_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+namespace
+{
+
+static const heat_implicit_solver_config_ptr build_implicit_config(memory_space_enum memory,
+                                                                   traverse_direction_enum traverse_direction,
+                                                                   tridiagonal_method_enum tridiagonal_method,
+                                                                   factorization_enum factorization, double value)
+{
+    return std::make_shared<heat_implicit_solver_config>(memory, traverse_direction, tridiagonal_method, factorization,
+                                                         std::make_shared<implicit_pde_scheme>(value));
+}
+
+static const heat_implicit_solver_config_ptr build_implicit_config(memory_space_enum memory,
+                                                                   traverse_direction_enum traverse_direction,
+                                                                   tridiagonal_method_enum tridiagonal_method,
+                                                                   factorization_enum factorization,
+                                                                   implicit_pde_schemes_enum scheme)
+{
+    if (scheme == implicit_pde_schemes_enum::Euler)
+        return std::make_shared<heat_implicit_solver_config>(
+            memory, traverse_direction, tridiagonal_method, factorization,
+            std::make_shared<implicit_pde_scheme>(implicit_pde_schemes_enum::Euler));
+    else
+        return std::make_shared<heat_implicit_solver_config>(
+            memory, traverse_direction, tridiagonal_method, factorization,
+            std::make_shared<implicit_pde_scheme>(implicit_pde_schemes_enum::CrankNicolson));
+}
+
+} // namespace
+
+static auto dev_fwd_cusolver_qr_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::Euler);
 
-static auto dev_fwd_cusolver_qr_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_fwd_cusolver_qr_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto dev_fwd_cusolver_lu_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_fwd_cusolver_lu_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::Euler);
 
-static auto dev_fwd_cusolver_lu_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_fwd_cusolver_lu_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto dev_fwd_cusolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_fwd_cusolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_fwd_cusolver_qr_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_cusolver_qr_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::Euler);
 
-static auto host_fwd_cusolver_qr_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_cusolver_qr_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_fwd_cusolver_lu_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_cusolver_lu_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::Euler);
 
-static auto host_fwd_cusolver_lu_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_cusolver_lu_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_fwd_cusolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_cusolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto dev_fwd_sorsolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_fwd_sorsolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Forward, tridiagonal_method_enum::SORSolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto dev_fwd_sorsolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_fwd_sorsolver_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Forward, tridiagonal_method_enum::SORSolver,
     factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_fwd_sorsolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
-    memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::SORSolver,
-    factorization_enum::None, implicit_pde_schemes_enum::Euler);
+static auto host_fwd_sorsolver_euler_solver_config_ptr =
+    build_implicit_config(memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::SORSolver,
+                          factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_fwd_sorsolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
-    memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::SORSolver,
-    factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
+static auto host_fwd_sorsolver_cn_solver_config_ptr =
+    build_implicit_config(memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::SORSolver,
+                          factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_fwd_dssolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_dssolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::DoubleSweepSolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_fwd_dssolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_dssolver_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::DoubleSweepSolver,
     factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_fwd_tlusolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_tlusolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::ThomasLUSolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_fwd_tlusolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_fwd_tlusolver_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Forward, tridiagonal_method_enum::ThomasLUSolver,
     factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
 
 // backward stepping:
 
-static auto dev_bwd_cusolver_qr_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_bwd_cusolver_qr_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::Euler);
 
-static auto dev_bwd_cusolver_qr_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_bwd_cusolver_qr_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto dev_bwd_cusolver_lu_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_bwd_cusolver_lu_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::Euler);
 
-static auto dev_bwd_cusolver_lu_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_bwd_cusolver_lu_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto dev_bwd_cusolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_bwd_cusolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_bwd_cusolver_qr_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_cusolver_qr_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::Euler);
 
-static auto host_bwd_cusolver_qr_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_cusolver_qr_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::QRMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_bwd_cusolver_lu_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_cusolver_lu_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::Euler);
 
-static auto host_bwd_cusolver_lu_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_cusolver_lu_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::LUMethod, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_bwd_cusolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_cusolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::CUDASolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto dev_bwd_sorsolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
-    memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::SORSolver,
-    factorization_enum::None, implicit_pde_schemes_enum::Euler);
-
-static auto dev_bwd_sorsolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
-    memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::SORSolver,
-    factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
-
-static auto host_bwd_sorsolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_bwd_sorsolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::SORSolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_bwd_sorsolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto dev_bwd_sorsolver_cn_solver_config_ptr = build_implicit_config(
+    memory_space_enum::Device, traverse_direction_enum::Backward, tridiagonal_method_enum::SORSolver,
+    factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
+
+static auto host_bwd_sorsolver_euler_solver_config_ptr = build_implicit_config(
+    memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::SORSolver,
+    factorization_enum::None, implicit_pde_schemes_enum::Euler);
+
+static auto host_bwd_sorsolver_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::SORSolver,
     factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_bwd_dssolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_dssolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::DoubleSweepSolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_bwd_dssolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_dssolver_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::DoubleSweepSolver,
     factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
 
-static auto host_bwd_tlusolver_euler_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_tlusolver_euler_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::ThomasLUSolver,
     factorization_enum::None, implicit_pde_schemes_enum::Euler);
 
-static auto host_bwd_tlusolver_cn_solver_config_ptr = std::make_shared<heat_implicit_solver_config>(
+static auto host_bwd_tlusolver_cn_solver_config_ptr = build_implicit_config(
     memory_space_enum::Host, traverse_direction_enum::Backward, tridiagonal_method_enum::ThomasLUSolver,
     factorization_enum::None, implicit_pde_schemes_enum::CrankNicolson);
 

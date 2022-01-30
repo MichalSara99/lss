@@ -48,22 +48,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<cuda_solver<memory_space_enum::Device>>(space_size);
     solver->set_factorization(solver_cfg_->tridiagonal_factorization());
@@ -95,23 +82,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
-
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<cuda_solver<memory_space_enum::Device>>(space_size);
     solver->set_factorization(solver_cfg_->tridiagonal_factorization());
@@ -154,22 +127,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<sor_solver_cuda>(space_size);
     solver->set_omega(omega_value);
@@ -200,22 +160,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Device, tridiagonal_method
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<sor_solver_cuda>(space_size);
     solver->set_omega(omega_value);
@@ -257,22 +204,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<cuda_solver<memory_space_enum::Host>>(space_size);
     solver->set_factorization(solver_cfg_->tridiagonal_factorization());
@@ -303,22 +237,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<cuda_solver<memory_space_enum::Host>>(space_size);
     solver->set_factorization(solver_cfg_->tridiagonal_factorization());
@@ -361,22 +282,10 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
+
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<sor_solver>(space_size);
     solver->set_omega(omega_value);
@@ -407,22 +316,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<sor_solver>(space_size);
     solver->set_omega(omega_value);
@@ -464,22 +360,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<double_sweep_solver>(space_size);
     auto const &solver_method_ptr =
@@ -510,22 +393,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<double_sweep_solver>(space_size);
     auto const &solver_method_ptr =
@@ -567,22 +437,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<thomas_lu_solver>(space_size);
     auto const &solver_method_ptr =
@@ -613,22 +470,9 @@ void heat_equation_implicit_kernel<memory_space_enum::Host, tridiagonal_method_e
     const std::size_t last_time_idx = discretization_cfg_->number_of_time_points() - 1;
     // save traverse_direction
     const traverse_direction_enum traverse_dir = solver_cfg_->traverse_direction();
-    // get propper theta accoring to clients chosen scheme:
-    double theta{};
-    if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::Euler)
-    {
-        theta = 1.0;
-    }
-    else if (solver_cfg_->implicit_pde_scheme() == implicit_pde_schemes_enum::CrankNicolson)
-    {
-        theta = 0.5;
-    }
-    else
-    {
-        throw std::exception("Unreachable");
-    }
     // create a heat coefficient holder:
-    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_, theta);
+    auto const heat_coeff_holder = std::make_shared<heat_coefficients>(heat_data_cfg_, discretization_cfg_,
+                                                                       solver_cfg_->implicit_pde_scheme_value());
     // create and set up the solver:
     auto const &solver = std::make_shared<thomas_lu_solver>(space_size);
     auto const &solver_method_ptr =

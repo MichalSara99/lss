@@ -82,6 +82,7 @@ static auto host_dssolver_solver_config_ptr = std::make_shared<ode_implicit_solv
 
 static auto host_tlusolver_solver_config_ptr = std::make_shared<ode_implicit_solver_config>(
     memory_space_enum::Host, tridiagonal_method_enum::ThomasLUSolver, factorization_enum::None);
+
 } // namespace default_ode_solver_configs
 } // namespace lss_ode_solvers
 
